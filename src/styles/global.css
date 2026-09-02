@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap';
-
 @import 'tailwindcss';
 
 @theme {
@@ -161,7 +159,7 @@
   }
 
   .prose-content a {
-    @apply text-accent link-underline dark:text-accent-dark;
+    @apply text-accent dark:text-accent-dark;
   }
 
   .prose-content pre {
