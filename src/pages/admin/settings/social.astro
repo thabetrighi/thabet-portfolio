@@ -9,22 +9,25 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
 
 <AdminLayout title={adminUi.nav.social}>
   <AdminShell title={adminUi.nav.social}>
-    <div class="admin-header">
+    <div class="adm-page-header">
       <div>
-        <h1 class="admin-title">{adminUi.nav.social}</h1>
-        <p class="admin-subtitle">روابط حساباتك على المنصات الاجتماعية</p>
+        <h1 class="adm-h1">{adminUi.nav.social}</h1>
+        <p class="adm-lead">روابط حساباتك على المنصات</p>
       </div>
     </div>
-    <form id="social-form" class="admin-card admin-grid">
+
+    <form id="social-form" class="adm-panel adm-panel-pad adm-grid">
       <input type="hidden" id="sha" />
-      <div id="links-container" class="admin-grid"></div>
-      <div id="form-status" class="admin-alert hidden"></div>
-      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
+      <div id="links-container" class="adm-grid adm-grid-2"></div>
+      <div id="form-status" class="adm-alert hidden"></div>
+      <button type="submit" class="adm-btn adm-btn--primary">{adminUi.common.save}</button>
     </form>
   </AdminShell>
 </AdminLayout>
 
 <script define:vars={{ platforms, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+  import { api, setStatus, showToast } from '../../../lib/admin/ui/client';
+
   const container = document.getElementById('links-container');
 
   function renderLinks(links) {
@@ -32,17 +35,17 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
     for (const platform of platforms) {
       const existing = links.find((l) => l.platform === platform) || { platform, url: '' };
       const field = document.createElement('div');
-      field.className = 'admin-field';
+      field.className = 'adm-field';
       field.innerHTML = `
-        <label class="admin-label">${platform}</label>
-        <input class="admin-input" data-platform="${platform}" value="${existing.url || ''}" placeholder="https://..." />
+        <label class="adm-label">${platform}</label>
+        <input class="adm-input" data-platform="${platform}" value="${existing.url || ''}" placeholder="https://..." />
       `;
       container.appendChild(field);
     }
   }
 
   async function load() {
-    const { data, res } = await window.AdminUI.api('/api/admin/settings/social');
+    const { data, res } = await api('/api/admin/settings/social');
     if (!res.ok || !data.data) return;
     document.getElementById('sha').value = data.sha || '';
     renderLinks(data.data.links || []);
@@ -54,20 +57,19 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
       platform: input.dataset.platform,
       url: input.value.trim(),
     }));
-    const { res } = await window.AdminUI.api('/api/admin/settings/social', {
+    const { res } = await api('/api/admin/settings/social', {
       method: 'PUT',
       body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data: { links } }),
     });
     const status = document.getElementById('form-status');
     if (res.ok) {
-      window.AdminUI.showToast(successMsg, 'success');
-      window.AdminUI.setStatus(status, successMsg, 'success');
+      showToast(successMsg, 'success');
+      setStatus(status, successMsg, 'success');
       load();
     } else {
-      window.AdminUI.setStatus(status, errorMsg, 'error');
+      setStatus(status, errorMsg, 'error');
     }
   });
 
-  load();
+  load().catch(() => setStatus(document.getElementById('form-status'), errorMsg, 'error'));
 </script>
-<style>.hidden{display:none}</style>

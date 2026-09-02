@@ -7,82 +7,36 @@ export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.login.title}>
-  <div class="admin-login-page">
-    <section class="admin-login-hero">
-      <div>
-        <div class="admin-brand-mark">T</div>
-        <h1>{adminUi.login.heroTitle}</h1>
-        <p>{adminUi.login.heroText}</p>
-      </div>
-      <div class="admin-login-features">
-        <div class="admin-login-feature">
-          <span class="admin-login-feature-icon">✦</span>
-          <span>{adminUi.login.feature1}</span>
-        </div>
-        <div class="admin-login-feature">
-          <span class="admin-login-feature-icon">⚡</span>
-          <span>{adminUi.login.feature2}</span>
-        </div>
-        <div class="admin-login-feature">
-          <span class="admin-login-feature-icon">🔒</span>
-          <span>{adminUi.login.feature3}</span>
-        </div>
-      </div>
-    </section>
+  <div class="adm-auth">
+    <div class="adm-auth-card">
+      <h1>{adminUi.login.title}</h1>
+      <p>{adminUi.login.subtitle}</p>
 
-    <section class="admin-login-panel">
-      <div class="admin-login-card">
-        <h2>{adminUi.login.title}</h2>
-        <p class="admin-subtitle">{adminUi.login.subtitle}</p>
-
-        <form id="admin-login-form" class="admin-grid" style="margin-top: 1.5rem;">
-          <div class="admin-field">
-            <label class="admin-label" for="email">{adminUi.login.email}</label>
-            <div class="admin-input-group">
-              <span class="admin-input-icon">@</span>
-              <input
-                class="admin-input"
-                type="email"
-                id="email"
-                name="email"
-                value={site.email}
-                required
-                autocomplete="email"
-                placeholder="contact@thabetrighi.com"
-              />
-            </div>
-          </div>
-          <div class="admin-field">
-            <label class="admin-label" for="password">{adminUi.login.password}</label>
-            <div class="admin-input-group">
-              <span class="admin-input-icon">•</span>
-              <input
-                class="admin-input"
-                type="password"
-                id="password"
-                name="password"
-                required
-                autocomplete="current-password"
-              />
-            </div>
-          </div>
-          <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
-          <div id="login-status" class="admin-alert admin-alert-error hidden"></div>
-          <button type="submit" class="admin-btn admin-btn-primary" id="login-submit" style="width:100%;">
-            {adminUi.login.submit}
-          </button>
-        </form>
-      </div>
-    </section>
+      <form id="admin-login-form" class="adm-grid" style="margin-top: 24px;">
+        <div class="adm-field">
+          <label class="adm-label" for="email">{adminUi.login.email}</label>
+          <input class="adm-input" type="email" id="email" name="email" value={site.email} required autocomplete="email" />
+        </div>
+        <div class="adm-field">
+          <label class="adm-label" for="password">{adminUi.login.password}</label>
+          <input class="adm-input" type="password" id="password" name="password" required autocomplete="current-password" />
+        </div>
+        <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
+        <div id="login-status" class="adm-alert adm-alert--error hidden"></div>
+        <button type="submit" class="adm-btn adm-btn--primary" id="login-submit" style="width:100%;">
+          {adminUi.login.submit}
+        </button>
+      </form>
+    </div>
   </div>
 </AdminLayout>
 
-<script define:vars={{ errorMsg: adminUi.login.error }}>
-  fetch('/api/admin/auth/me', { credentials: 'same-origin' })
-    .then((r) => r.json())
-    .then((data) => {
-      if (data.authenticated) window.location.href = '/admin';
-    });
+<script define:vars={{ errorMsg: adminUi.login.error, submitLabel: adminUi.login.submit }}>
+  import { api } from '../../lib/admin/ui/client';
+
+  api('/api/admin/auth/me').then(({ data }) => {
+    if (data.authenticated) window.location.href = '/admin';
+  }).catch(() => {});
 
   const form = document.getElementById('admin-login-form');
   const status = document.getElementById('login-status');
@@ -96,16 +50,14 @@ export const prerender = false;
       submit.textContent = 'جارٍ التحقق...';
     }
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const turnstile = form.querySelector('[name="cf-turnstile-response"]')?.value;
-
     try {
-      const res = await fetch('/api/admin/auth/login', {
+      const { res } = await api('/api/admin/auth/login', {
         method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, 'cf-turnstile-response': turnstile }),
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+          'cf-turnstile-response': form.querySelector('[name="cf-turnstile-response"]')?.value,
+        }),
       });
 
       if (res.ok) {
@@ -121,7 +73,7 @@ export const prerender = false;
     } finally {
       if (submit) {
         submit.disabled = false;
-        submit.textContent = 'تسجيل الدخول';
+        submit.textContent = submitLabel;
       }
     }
   });

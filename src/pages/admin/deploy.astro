@@ -7,26 +7,26 @@ export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.nav.deploy}>
-  <AdminShell>
-    <div class="admin-header">
+  <AdminShell title={adminUi.nav.deploy}>
+    <div class="adm-page-header">
       <div>
-        <h1 class="admin-title">{adminUi.nav.deploy}</h1>
-        <p class="admin-subtitle">تشغيل GitHub Actions لبناء ونشر الموقع</p>
+        <h1 class="adm-h1">{adminUi.nav.deploy}</h1>
+        <p class="adm-lead">تشغيل GitHub Actions لبناء ونشر الموقع</p>
       </div>
     </div>
 
-    <div class="admin-card admin-grid">
-      <div id="deploy-info" class="admin-subtitle">{adminUi.common.loading}</div>
-      <div class="admin-actions">
-        <button type="button" class="admin-btn admin-btn-primary" id="deploy-btn">{adminUi.common.deploy}</button>
-        <a class="admin-btn admin-btn-ghost" id="deploy-link" href="#" target="_blank" rel="noopener" style="display:none;">عرض في GitHub</a>
+    <div class="adm-panel adm-panel-pad adm-grid">
+      <div id="deploy-info" class="adm-lead">{adminUi.common.loading}</div>
+      <div class="adm-btn-row">
+        <button type="button" class="adm-btn adm-btn--primary" id="deploy-btn">{adminUi.common.deploy}</button>
+        <a class="adm-btn adm-btn--secondary" id="deploy-link" href="#" target="_blank" rel="noopener" style="display:none;">عرض في GitHub</a>
       </div>
-      <div id="deploy-status" class="admin-alert hidden"></div>
+      <div id="deploy-status" class="adm-alert hidden"></div>
     </div>
 
-    <div class="admin-card" style="margin-top:1rem;">
-      <h2 style="font-size:1rem;margin-bottom:0.75rem;">كيف يعمل النشر؟</h2>
-      <ol class="admin-subtitle" style="padding-inline-start:1.25rem;line-height:1.8;">
+    <div class="adm-panel adm-panel-pad" style="margin-top:16px;">
+      <div class="adm-h1" style="font-size:14px;margin-bottom:8px;">كيف يعمل النشر؟</div>
+      <ol class="adm-lead" style="padding-inline-start:1.25rem;line-height:1.8;">
         <li>تحفظ التغييرات من اللوحة → commit على GitHub</li>
         <li>تضغط «نشر الآن» → يشغّل workflow</li>
         <li>GitHub Actions يبني الموقع وينشره على Cloudflare</li>
@@ -36,14 +36,15 @@ export const prerender = false;
 </AdminLayout>
 
 <script define:vars={{ deployLabel: adminUi.common.deploy, deployingLabel: adminUi.common.deploying, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+  import { api, setStatus, showToast } from '../../lib/admin/ui/client';
+
   const info = document.getElementById('deploy-info');
   const status = document.getElementById('deploy-status');
   const link = document.getElementById('deploy-link');
   const btn = document.getElementById('deploy-btn');
 
   async function refresh() {
-    const res = await fetch('/api/admin/deploy');
-    const data = await res.json();
+    const { data } = await api('/api/admin/deploy');
     if (data.latestRun) {
       info.textContent = `آخر نشر: ${data.latestRun.status} / ${data.latestRun.conclusion || 'pending'} — ${new Date(data.latestRun.createdAt).toLocaleString('ar')}`;
       link.href = data.latestRun.htmlUrl;
@@ -56,16 +57,13 @@ export const prerender = false;
   btn?.addEventListener('click', async () => {
     btn.disabled = true;
     btn.textContent = deployingLabel;
-    const res = await fetch('/api/admin/deploy', { method: 'POST' });
-    const data = await res.json();
-    status.textContent = data.message || (res.ok ? successMsg : errorMsg);
-    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
-    status.classList.remove('hidden');
+    const { res, data } = await api('/api/admin/deploy', { method: 'POST' });
+    if (res.ok) showToast(successMsg, 'success');
+    setStatus(status, data.message || (res.ok ? successMsg : errorMsg), res.ok ? 'success' : 'error');
     btn.disabled = false;
     btn.textContent = deployLabel;
     refresh();
   });
 
-  refresh();
+  refresh().catch(() => { info.textContent = 'تعذّر تحميل حالة النشر'; });
 </script>
-<style>.hidden{display:none}</style>

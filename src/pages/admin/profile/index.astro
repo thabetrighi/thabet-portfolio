@@ -9,95 +9,142 @@ const locale = Astro.url.searchParams.get('locale') || 'en';
 ---
 
 <AdminLayout title={adminUi.nav.profile}>
-  <AdminShell>
-    <div class="admin-header">
+  <AdminShell title={adminUi.nav.profile}>
+    <div class="adm-page-header">
       <div>
-        <h1 class="admin-title">{adminUi.nav.profile}</h1>
-        <p class="admin-subtitle">الخبرات، المهارات، نبذة About، والسيرة</p>
+        <h1 class="adm-h1">{adminUi.nav.profile}</h1>
+        <p class="adm-lead">الخبرات، المهارات، النبذة والسيرة — محرر JSON مرئي</p>
       </div>
-      <select class="admin-select" id="locale-select" style="width:auto;">
+      <select class="adm-select" id="locale-select" style="width:110px;">
         {LOCALES.map((l) => <option value={l} selected={l === locale}>{l.toUpperCase()}</option>)}
       </select>
     </div>
 
-    <form id="profile-form" class="admin-grid">
+    <form id="profile-form" class="adm-grid">
       <input type="hidden" id="sha" />
 
-      <div class="admin-card admin-field">
-        <label class="admin-label">نبذة مختصرة (About summary)</label>
-        <textarea class="admin-textarea" id="aboutSummary" rows="3"></textarea>
+      <div class="adm-tabs" role="tablist">
+        <button type="button" class="adm-tab is-active" data-tab="about">نبذة</button>
+        <button type="button" class="adm-tab" data-tab="editor">محرر JSON</button>
       </div>
 
-      <div class="admin-card admin-field">
-        <label class="admin-label">نبذة موسعة (About extended)</label>
-        <textarea class="admin-textarea" id="aboutExtended" rows="6"></textarea>
+      <div class="adm-tab-panel" id="panel-about">
+        <div class="adm-panel adm-panel-pad adm-grid">
+          <div class="adm-field">
+            <label class="adm-label">نبذة مختصرة</label>
+            <textarea class="adm-textarea" id="aboutSummary" rows="3"></textarea>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">نبذة موسعة</label>
+            <textarea class="adm-textarea" id="aboutExtended" rows="6"></textarea>
+          </div>
+          <div class="adm-field">
+            <label class="adm-label">ملف السيرة (Resume profile)</label>
+            <textarea class="adm-textarea" id="resumeProfile" rows="4"></textarea>
+          </div>
+        </div>
       </div>
 
-      <div class="admin-card admin-field">
-        <label class="admin-label">ملف السيرة (Resume profile)</label>
-        <textarea class="admin-textarea" id="resumeProfile" rows="4"></textarea>
+      <div class="adm-tab-panel hidden" id="panel-editor">
+        <div class="adm-panel adm-panel-pad">
+          <p class="adm-lead" style="margin-bottom:12px;">
+            عدّل الخبرات والمهارات والشهادات بصرياً — بدون كتابة JSON يدوياً
+          </p>
+          <div id="profile-json-editor" class="adm-json-editor"></div>
+        </div>
       </div>
 
-      <div class="admin-card admin-field">
-        <label class="admin-label">البيانات الكاملة (JSON — experience, skills, resume)</label>
-        <textarea class="admin-textarea" id="profileJson" rows="24" style="font-family:'IBM Plex Mono',monospace;"></textarea>
-        <p class="admin-subtitle" style="margin-top:0.5rem;">للتعديل المتقدم: الخبرات والمهارات والشهادات بصيغة JSON</p>
+      <div id="form-status" class="adm-alert hidden"></div>
+      <div class="adm-btn-row">
+        <button type="submit" class="adm-btn adm-btn--primary" id="save-btn">{adminUi.common.save}</button>
       </div>
-
-      <div id="form-status" class="admin-alert hidden"></div>
-      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
     </form>
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ locale, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+<script define:vars={{ locale, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, savingMsg: adminUi.common.saving }}>
+  import { api, setStatus, showToast } from '../../../lib/admin/ui/client';
+  import { mountProfileJsonEditor, getEditorContent } from '../../../lib/admin/ui/json-editor';
+
   const select = document.getElementById('locale-select');
+  let profileData = null;
+
+  document.querySelectorAll('.adm-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.adm-tab').forEach((t) => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const id = tab.dataset.tab;
+      document.getElementById('panel-about').classList.toggle('hidden', id !== 'about');
+      document.getElementById('panel-editor').classList.toggle('hidden', id !== 'editor');
+    });
+  });
 
   select?.addEventListener('change', () => {
     window.location.href = `/admin/profile?locale=${select.value}`;
   });
 
+  function syncAboutToProfile() {
+    if (!profileData) return;
+    profileData.about = {
+      summary: document.getElementById('aboutSummary').value,
+      extended: document.getElementById('aboutExtended').value,
+    };
+    profileData.resume = { ...profileData.resume, profile: document.getElementById('resumeProfile').value };
+  }
+
+  function syncProfileToAbout() {
+    document.getElementById('aboutSummary').value = profileData?.about?.summary || '';
+    document.getElementById('aboutExtended').value = profileData?.about?.extended || '';
+    document.getElementById('resumeProfile').value = profileData?.resume?.profile || '';
+  }
+
   async function load() {
-    const res = await fetch(`/api/admin/profile/${locale}`);
-    const { data, sha } = await res.json();
-    document.getElementById('sha').value = sha || '';
-    document.getElementById('aboutSummary').value = data.about?.summary || '';
-    document.getElementById('aboutExtended').value = data.about?.extended || '';
-    document.getElementById('resumeProfile').value = data.resume?.profile || '';
-    document.getElementById('profileJson').value = JSON.stringify(data, null, 2);
+    const { data, res } = await api(`/api/admin/profile/${locale}`);
+    if (!res.ok || !data.data) {
+      setStatus(document.getElementById('form-status'), errorMsg, 'error');
+      return;
+    }
+
+    profileData = data.data;
+    document.getElementById('sha').value = data.sha || '';
+    syncProfileToAbout();
+
+    mountProfileJsonEditor(
+      document.getElementById('profile-json-editor'),
+      profileData,
+      (json) => { profileData = json; syncProfileToAbout(); },
+    );
   }
 
   document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let data;
-    try {
-      data = JSON.parse(document.getElementById('profileJson').value);
-      data.about = {
-        summary: document.getElementById('aboutSummary').value,
-        extended: document.getElementById('aboutExtended').value,
-      };
-      data.resume = { ...data.resume, profile: document.getElementById('resumeProfile').value };
-    } catch {
-      const status = document.getElementById('form-status');
-      status.textContent = 'JSON غير صالح';
-      status.className = 'admin-alert admin-alert-error';
-      status.classList.remove('hidden');
-      return;
-    }
-
-    const res = await fetch(`/api/admin/profile/${locale}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data }),
-    });
-
+    const saveBtn = document.getElementById('save-btn');
     const status = document.getElementById('form-status');
-    status.textContent = res.ok ? successMsg : errorMsg;
-    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
-    status.classList.remove('hidden');
-    if (res.ok) load();
+    saveBtn.disabled = true;
+    saveBtn.textContent = savingMsg;
+
+    const editorJson = getEditorContent();
+    if (editorJson) profileData = editorJson;
+    syncAboutToProfile();
+
+    try {
+      const { res } = await api(`/api/admin/profile/${locale}`, {
+        method: 'PUT',
+        body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data: profileData }),
+      });
+
+      if (res.ok) {
+        showToast(successMsg, 'success');
+        setStatus(status, successMsg, 'success');
+        await load();
+      } else {
+        setStatus(status, errorMsg, 'error');
+      }
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'حفظ التغييرات';
+    }
   });
 
-  load();
+  load().catch(() => setStatus(document.getElementById('form-status'), errorMsg, 'error'));
 </script>
-<style>.hidden{display:none}</style>

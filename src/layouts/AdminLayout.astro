@@ -3,10 +3,9 @@ import '../styles/admin.css';
 
 interface Props {
   title: string;
-  description?: string;
 }
 
-const { title, description } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,12 +15,10 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>{title} — لوحة التحكم</title>
-    {description && <meta name="description" content={description} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script src="/admin/admin.js" defer></script>
     <script is:inline>
       (function () {
         const theme = localStorage.getItem('admin-theme') || 'dark';
@@ -29,7 +26,7 @@ const { title, description } = Astro.props;
       })();
     </script>
   </head>
-  <body class="admin-root">
+  <body class="admin-root adm">
     <slot />
   </body>
 </html>

@@ -18,7 +18,9 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.10",
     "tailwindcss": "^4.3.3",
-    "wrangler": "^4.128.0"
+    "vanilla-jsoneditor": "^3.13.0",
+    "wrangler": "^4.128.0",
+    "zod": "^4.5.4"
   },
   "allowScripts": {
     "esbuild": true
