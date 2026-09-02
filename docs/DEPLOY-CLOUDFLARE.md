@@ -18,11 +18,22 @@
 
 1. ادخل إلى [dash.cloudflare.com](https://dash.cloudflare.com)
 2. **My Profile** → **API Tokens** → **Create Token**
-3. استخدم قالب **Edit Cloudflare Workers** أو أنشئ token مخصصًا بالصلاحيات:
-   - Account → Workers Scripts → **Edit**
-   - Account → Workers KV Storage → **Edit**
-   - Zone → Workers Routes → **Edit** (إذا ربطت نطاقًا)
-4. انسخ الـ Token — **لن يظهر مرة أخرى**
+3. **الأسهل:** اختر قالب **Edit Cloudflare Workers** كما هو (يمنح كل الصلاحيات المطلوبة)
+4. **أو** أنشئ token مخصصًا بهذه الصلاحيات **كلها**:
+
+| الصلاحية | المستوى |
+|----------|---------|
+| Account → Workers Scripts | **Edit** |
+| Account → Workers KV Storage | **Edit** |
+| Account → Workers R2 Storage | **Edit** |
+| Account → Account Settings | **Read** |
+| User → User Details | **Read** |
+| User → Memberships | **Read** |
+| Zone → Workers Routes | **Edit** (إذا ربطت نطاقًا) |
+
+5. انسخ الـ Token — **لن يظهر مرة أخرى**
+
+> إذا ظهر خطأ `Authentication error [code: 10000]` فالـ Token ناقص صلاحيات — أعد إنشاءه بالقالب أعلاه.
 
 > **لا ترسل المفتاح في محادثة عامة.** الأفضل: أضفه كـ Secret في بيئة Cloud Agent أو نفّذ النشر بنفسك محليًا.
 
