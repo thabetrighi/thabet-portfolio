@@ -7,31 +7,56 @@ export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.dashboard.title}>
-  <AdminShell>
+  <AdminShell title={adminUi.dashboard.title}>
     <div class="admin-header">
       <div>
         <h1 class="admin-title">{adminUi.dashboard.title}</h1>
         <p class="admin-subtitle">{adminUi.dashboard.subtitle}</p>
       </div>
+      <a href="/admin/deploy" class="admin-btn admin-btn-primary">{adminUi.common.deploy}</a>
     </div>
 
-    <div class="admin-grid admin-grid-3">
-      <a href="/admin/articles" class="admin-card" style="text-decoration:none;color:inherit;">
-        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.articles}</h2>
+    <div class="admin-stat-grid" id="stats-grid">
+      <div class="admin-card admin-stat">
+        <div class="admin-stat-label">{adminUi.dashboard.totalArticles}</div>
+        <div class="admin-stat-value" id="stat-articles">—</div>
+        <div class="admin-stat-meta" id="stat-articles-meta">...</div>
+      </div>
+      <div class="admin-card admin-stat">
+        <div class="admin-stat-label">{adminUi.dashboard.totalProjects}</div>
+        <div class="admin-stat-value" id="stat-projects">—</div>
+        <div class="admin-stat-meta" id="stat-projects-meta">...</div>
+      </div>
+      <div class="admin-card admin-stat">
+        <div class="admin-stat-label">{adminUi.dashboard.locales}</div>
+        <div class="admin-stat-value">3</div>
+        <div class="admin-stat-meta">AR · EN · FR</div>
+      </div>
+      <div class="admin-card admin-stat">
+        <div class="admin-stat-label">{adminUi.dashboard.systemStatus}</div>
+        <div class="admin-stat-value" style="font-size:1.1rem;" id="stat-github">...</div>
+        <div class="admin-stat-meta" id="stat-deploy">...</div>
+      </div>
+    </div>
+
+    <h2 style="font-size:1rem;font-weight:600;margin-bottom:0.75rem;">{adminUi.dashboard.quickActions}</h2>
+    <div class="admin-grid admin-grid-3" style="margin-bottom:1.25rem;">
+      <a href="/admin/articles" class="admin-card admin-card-interactive" style="text-decoration:none;color:inherit;">
+        <span class="admin-badge admin-badge-accent" style="margin-bottom:0.5rem;">{adminUi.nav.articles}</span>
         <p class="admin-subtitle">إدارة مقالات المدونة بثلاث لغات</p>
       </a>
-      <a href="/admin/projects" class="admin-card" style="text-decoration:none;color:inherit;">
-        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.projects}</h2>
+      <a href="/admin/projects" class="admin-card admin-card-interactive" style="text-decoration:none;color:inherit;">
+        <span class="admin-badge admin-badge-accent" style="margin-bottom:0.5rem;">{adminUi.nav.projects}</span>
         <p class="admin-subtitle">إدارة مشاريع Portfolio</p>
       </a>
-      <a href="/admin/deploy" class="admin-card" style="text-decoration:none;color:inherit;">
-        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.deploy}</h2>
-        <p class="admin-subtitle">نشر التغييرات عبر GitHub Actions</p>
+      <a href="/admin/settings/site" class="admin-card admin-card-interactive" style="text-decoration:none;color:inherit;">
+        <span class="admin-badge admin-badge-accent" style="margin-bottom:0.5rem;">{adminUi.nav.site}</span>
+        <p class="admin-subtitle">الاسم، البريد، الروابط والشعار</p>
       </a>
     </div>
 
-    <div class="admin-card" style="margin-top: 1rem;">
-      <h2 style="font-size:1rem;margin-bottom:0.75rem;">حالة الاتصال</h2>
+    <div class="admin-card">
+      <h2 style="font-size:1rem;font-weight:600;margin-bottom:0.75rem;">{adminUi.dashboard.systemStatus}</h2>
       <div id="github-status" class="admin-subtitle">{adminUi.common.loading}</div>
       <div id="deploy-status" class="admin-subtitle" style="margin-top:0.5rem;"></div>
     </div>
@@ -39,22 +64,42 @@ export const prerender = false;
 </AdminLayout>
 
 <script define:vars={{ connected: adminUi.dashboard.githubConnected, disconnected: adminUi.dashboard.githubDisconnected, lastDeploy: adminUi.dashboard.lastDeploy }}>
-  async function loadStatus() {
-    const me = await fetch('/api/admin/auth/me').then((r) => r.json());
-    const githubEl = document.getElementById('github-status');
-    const deployEl = document.getElementById('deploy-status');
+  async function loadDashboard() {
+    try {
+      const { data } = await window.AdminUI.api('/api/admin/stats');
 
-    if (me.github?.connected) {
-      githubEl.textContent = `${connected}: ${me.github.owner}/${me.github.repo} (${me.github.branch})`;
-    } else {
-      githubEl.textContent = disconnected;
-    }
+      document.getElementById('stat-articles').textContent = data.totals?.articles ?? 0;
+      document.getElementById('stat-projects').textContent = data.totals?.projects ?? 0;
+      document.getElementById('stat-articles-meta').textContent =
+        `AR ${data.articles?.ar ?? 0} · EN ${data.articles?.en ?? 0} · FR ${data.articles?.fr ?? 0}`;
+      document.getElementById('stat-projects-meta').textContent =
+        `AR ${data.projects?.ar ?? 0} · EN ${data.projects?.en ?? 0} · FR ${data.projects?.fr ?? 0}`;
 
-    const deploy = await fetch('/api/admin/deploy').then((r) => r.json());
-    if (deploy.latestRun) {
-      deployEl.textContent = `${lastDeploy}: ${deploy.latestRun.status} — ${deploy.latestRun.conclusion || 'pending'}`;
+      const githubEl = document.getElementById('github-status');
+      const deployEl = document.getElementById('deploy-status');
+      const statGithub = document.getElementById('stat-github');
+      const statDeploy = document.getElementById('stat-deploy');
+
+      if (data.github?.connected) {
+        githubEl.innerHTML = `<span class="admin-badge admin-badge-success">${connected}</span> ${data.github.owner}/${data.github.repo} (${data.github.branch})`;
+        statGithub.innerHTML = '<span class="admin-badge admin-badge-success">متصل</span>';
+      } else {
+        githubEl.innerHTML = `<span class="admin-badge admin-badge-warning">${disconnected}</span>`;
+        statGithub.innerHTML = '<span class="admin-badge admin-badge-warning">غير متصل</span>';
+      }
+
+      if (data.deploy) {
+        const label = `${data.deploy.status} — ${data.deploy.conclusion || 'pending'}`;
+        deployEl.textContent = `${lastDeploy}: ${label}`;
+        statDeploy.textContent = label;
+      } else {
+        deployEl.textContent = `${lastDeploy}: لا يوجد`;
+        statDeploy.textContent = 'لا يوجد نشر سابق';
+      }
+    } catch {
+      document.getElementById('github-status').textContent = 'تعذّر تحميل البيانات';
     }
   }
 
-  loadStatus();
+  loadDashboard();
 </script>

@@ -17,7 +17,8 @@
 		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAEktppIf2m0GrFD7",
 		"GITHUB_OWNER": "thabetrighi",
 		"GITHUB_REPO": "thabet-portfolio",
-		"GITHUB_BRANCH": "main"
+		"GITHUB_BRANCH": "main",
+		"ADMIN_EMAIL": "contact@thabetrighi.com"
 	},
 	"ratelimits": [
 		{

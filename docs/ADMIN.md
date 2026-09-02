@@ -34,7 +34,7 @@ src/pages/api/admin/  # REST API
 
 ```bash
 npx wrangler secret put GITHUB_TOKEN
-npx wrangler secret put GITHUB_OWNER      # مثال: thabet-righi
+npx wrangler secret put GITHUB_OWNER      # مثال: thabetrighi
 npx wrangler secret put GITHUB_REPO       # اسم المستودع
 npx wrangler secret put GITHUB_BRANCH     # main
 ```

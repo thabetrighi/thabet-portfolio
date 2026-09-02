@@ -8,8 +8,13 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
 ---
 
 <AdminLayout title={adminUi.nav.social}>
-  <AdminShell>
-    <div class="admin-header"><h1 class="admin-title">{adminUi.nav.social}</h1></div>
+  <AdminShell title={adminUi.nav.social}>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{adminUi.nav.social}</h1>
+        <p class="admin-subtitle">روابط حساباتك على المنصات الاجتماعية</p>
+      </div>
+    </div>
     <form id="social-form" class="admin-card admin-grid">
       <input type="hidden" id="sha" />
       <div id="links-container" class="admin-grid"></div>
@@ -37,10 +42,10 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
   }
 
   async function load() {
-    const res = await fetch('/api/admin/settings/social');
-    const { data, sha } = await res.json();
-    document.getElementById('sha').value = sha || '';
-    renderLinks(data.links || []);
+    const { data, res } = await window.AdminUI.api('/api/admin/settings/social');
+    if (!res.ok || !data.data) return;
+    document.getElementById('sha').value = data.sha || '';
+    renderLinks(data.data.links || []);
   }
 
   document.getElementById('social-form')?.addEventListener('submit', async (e) => {
@@ -49,16 +54,18 @@ const platforms = ['github','gitlab','linkedin','facebook','x','instagram','yout
       platform: input.dataset.platform,
       url: input.value.trim(),
     }));
-    const res = await fetch('/api/admin/settings/social', {
+    const { res } = await window.AdminUI.api('/api/admin/settings/social', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data: { links } }),
     });
     const status = document.getElementById('form-status');
-    status.textContent = res.ok ? successMsg : errorMsg;
-    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
-    status.classList.remove('hidden');
-    if (res.ok) load();
+    if (res.ok) {
+      window.AdminUI.showToast(successMsg, 'success');
+      window.AdminUI.setStatus(status, successMsg, 'success');
+      load();
+    } else {
+      window.AdminUI.setStatus(status, errorMsg, 'error');
+    }
   });
 
   load();

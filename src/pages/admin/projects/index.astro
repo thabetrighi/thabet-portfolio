@@ -9,13 +9,14 @@ const locale = Astro.url.searchParams.get('locale') || 'en';
 ---
 
 <AdminLayout title={adminUi.nav.projects}>
-  <AdminShell>
+  <AdminShell title={adminUi.nav.projects}>
     <div class="admin-header">
       <div>
         <h1 class="admin-title">{adminUi.nav.projects}</h1>
+        <p class="admin-subtitle">إدارة مشاريع Portfolio — تحرير، إضافة، وحذف</p>
       </div>
       <div class="admin-actions">
-        <select class="admin-select" id="locale-select" style="width:auto;">
+        <select class="admin-select" id="locale-select" style="width:auto;min-width:110px;">
           {LOCALES.map((l) => <option value={l} selected={l === locale}>{l.toUpperCase()}</option>)}
         </select>
         <a class="admin-btn admin-btn-primary" href={`/admin/projects/edit?locale=${locale}&new=1`}>{adminUi.common.create}</a>
@@ -23,48 +24,79 @@ const locale = Astro.url.searchParams.get('locale') || 'en';
     </div>
 
     <div class="admin-card">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>{adminUi.common.slug}</th>
-            <th>{adminUi.common.actions}</th>
-          </tr>
-        </thead>
-        <tbody id="projects-table">
-          <tr><td colspan="2">{adminUi.common.loading}</td></tr>
-        </tbody>
-      </table>
+      <div class="admin-toolbar">
+        <input class="admin-input admin-search" id="search-input" type="search" placeholder={adminUi.common.search} />
+        <span id="source-badge" class="admin-badge admin-badge-muted">...</span>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>{adminUi.common.title}</th>
+              <th>{adminUi.common.slug}</th>
+              <th>#</th>
+              <th>{adminUi.common.actions}</th>
+            </tr>
+          </thead>
+          <tbody id="projects-table">
+            <tr><td colspan="4">{adminUi.common.loading}</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ editLabel: adminUi.common.edit, locale }}>
+<script define:vars={{ editLabel: adminUi.common.edit, noData: adminUi.common.noData, locale, sourceGithub: adminUi.common.sourceGithub, sourceLocal: adminUi.common.sourceLocal }}>
   const select = document.getElementById('locale-select');
   const table = document.getElementById('projects-table');
+  const search = document.getElementById('search-input');
+  const sourceBadge = document.getElementById('source-badge');
+  let allProjects = [];
 
-  async function loadProjects(currentLocale) {
-    const res = await fetch(`/api/admin/projects?locale=${currentLocale}`);
-    const data = await res.json();
+  function renderProjects(items) {
     table.innerHTML = '';
-
-    if (!data.projects?.length) {
-      table.innerHTML = '<tr><td colspan="2">لا توجد مشاريع</td></tr>';
+    if (!items.length) {
+      table.innerHTML = `<tr><td colspan="4" class="admin-table-empty">${noData}</td></tr>`;
       return;
     }
 
-    for (const project of data.projects) {
+    for (const project of items) {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${project.slug}</td>
-        <td><a class="admin-btn admin-btn-ghost" href="/admin/projects/edit?locale=${currentLocale}&slug=${project.slug}">${editLabel}</a></td>
+        <td><strong>${project.title}</strong></td>
+        <td><code>${project.slug}</code></td>
+        <td>${project.order ?? '—'}</td>
+        <td><a class="admin-btn admin-btn-ghost admin-btn-sm" href="/admin/projects/edit?locale=${select.value}&slug=${project.slug}">${editLabel}</a></td>
       `;
       table.appendChild(row);
     }
   }
 
+  async function loadProjects() {
+    window.AdminUI.renderSkeletonRows(table, 4);
+    try {
+      const { data } = await window.AdminUI.api(`/api/admin/projects?locale=${select.value}`);
+      allProjects = data.projects || [];
+      sourceBadge.textContent = data.source === 'github' ? sourceGithub : sourceLocal;
+      sourceBadge.className = `admin-badge ${data.source === 'github' ? 'admin-badge-success' : 'admin-badge-warning'}`;
+      renderProjects(allProjects);
+    } catch {
+      table.innerHTML = `<tr><td colspan="4" class="admin-table-empty">تعذّر تحميل المشاريع</td></tr>`;
+    }
+  }
+
+  search?.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    const filtered = allProjects.filter((p) =>
+      p.title.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q),
+    );
+    renderProjects(filtered);
+  });
+
   select?.addEventListener('change', () => {
     window.location.href = `/admin/projects?locale=${select.value}`;
   });
 
-  loadProjects(locale);
+  loadProjects();
 </script>

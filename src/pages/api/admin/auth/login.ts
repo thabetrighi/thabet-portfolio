@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { verifyTurnstileToken } from '../../../../lib/turnstile';
-import { verifyAdminPassword, isAdminAuthConfigured } from '../../../../lib/admin/auth/password';
+import { verifyAdminCredentials } from '../../../../lib/admin/auth/credentials';
+import { isAdminAuthConfigured } from '../../../../lib/admin/auth/password';
 import {
   buildSessionCookie,
   createAdminSession,
@@ -12,6 +13,7 @@ import { env } from 'cloudflare:workers';
 export const prerender = false;
 
 interface LoginBody {
+  email: string;
   password: string;
   'cf-turnstile-response'?: string;
 }
@@ -45,7 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
   );
   if (!captchaOk) return adminError('captcha_failed', 403);
 
-  const valid = await verifyAdminPassword(body.password || '');
+  const valid = await verifyAdminCredentials(body.email || '', body.password || '');
   if (!valid) return adminError('invalid_credentials', 401);
 
   const { token } = await createAdminSession();

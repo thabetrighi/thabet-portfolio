@@ -37,6 +37,7 @@ interface Env {
   PUBLIC_TURNSTILE_SITE_KEY?: string;
   ADMIN_PASSWORD?: string;
   ADMIN_PASSWORD_HASH?: string;
+  ADMIN_EMAIL?: string;
   GITHUB_TOKEN?: string;
   GITHUB_OWNER?: string;
   GITHUB_REPO?: string;

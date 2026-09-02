@@ -7,25 +7,78 @@ export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.login.title}>
-  <div class="admin-login">
-    <div class="admin-login-card">
-      <h1 class="admin-title">{adminUi.login.title}</h1>
-      <p class="admin-subtitle">{adminUi.login.subtitle}</p>
-      <form id="admin-login-form" class="admin-grid" style="margin-top: 1.5rem;">
-        <div class="admin-field">
-          <label class="admin-label" for="password">{adminUi.login.password}</label>
-          <input class="admin-input" type="password" id="password" name="password" required autocomplete="current-password" />
+  <div class="admin-login-page">
+    <section class="admin-login-hero">
+      <div>
+        <div class="admin-brand-mark">T</div>
+        <h1>{adminUi.login.heroTitle}</h1>
+        <p>{adminUi.login.heroText}</p>
+      </div>
+      <div class="admin-login-features">
+        <div class="admin-login-feature">
+          <span class="admin-login-feature-icon">✦</span>
+          <span>{adminUi.login.feature1}</span>
         </div>
-        <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
-        <div id="login-status" class="admin-alert admin-alert-error hidden"></div>
-        <button type="submit" class="admin-btn admin-btn-primary" id="login-submit">{adminUi.login.submit}</button>
-      </form>
-    </div>
+        <div class="admin-login-feature">
+          <span class="admin-login-feature-icon">⚡</span>
+          <span>{adminUi.login.feature2}</span>
+        </div>
+        <div class="admin-login-feature">
+          <span class="admin-login-feature-icon">🔒</span>
+          <span>{adminUi.login.feature3}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-login-panel">
+      <div class="admin-login-card">
+        <h2>{adminUi.login.title}</h2>
+        <p class="admin-subtitle">{adminUi.login.subtitle}</p>
+
+        <form id="admin-login-form" class="admin-grid" style="margin-top: 1.5rem;">
+          <div class="admin-field">
+            <label class="admin-label" for="email">{adminUi.login.email}</label>
+            <div class="admin-input-group">
+              <span class="admin-input-icon">@</span>
+              <input
+                class="admin-input"
+                type="email"
+                id="email"
+                name="email"
+                value={site.email}
+                required
+                autocomplete="email"
+                placeholder="contact@thabetrighi.com"
+              />
+            </div>
+          </div>
+          <div class="admin-field">
+            <label class="admin-label" for="password">{adminUi.login.password}</label>
+            <div class="admin-input-group">
+              <span class="admin-input-icon">•</span>
+              <input
+                class="admin-input"
+                type="password"
+                id="password"
+                name="password"
+                required
+                autocomplete="current-password"
+              />
+            </div>
+          </div>
+          <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
+          <div id="login-status" class="admin-alert admin-alert-error hidden"></div>
+          <button type="submit" class="admin-btn admin-btn-primary" id="login-submit" style="width:100%;">
+            {adminUi.login.submit}
+          </button>
+        </form>
+      </div>
+    </section>
   </div>
 </AdminLayout>
 
 <script define:vars={{ errorMsg: adminUi.login.error }}>
-  fetch('/api/admin/auth/me')
+  fetch('/api/admin/auth/me', { credentials: 'same-origin' })
     .then((r) => r.json())
     .then((data) => {
       if (data.authenticated) window.location.href = '/admin';
@@ -38,16 +91,21 @@ export const prerender = false;
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     status?.classList.add('hidden');
-    if (submit) submit.disabled = true;
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = 'جارٍ التحقق...';
+    }
 
-    const password = (document.getElementById('password')).value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
     const turnstile = form.querySelector('[name="cf-turnstile-response"]')?.value;
 
     try {
       const res = await fetch('/api/admin/auth/login', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, 'cf-turnstile-response': turnstile }),
+        body: JSON.stringify({ email, password, 'cf-turnstile-response': turnstile }),
       });
 
       if (res.ok) {
@@ -61,11 +119,10 @@ export const prerender = false;
       }
       if (window.turnstile) window.turnstile.reset();
     } finally {
-      if (submit) submit.disabled = false;
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = 'تسجيل الدخول';
+      }
     }
   });
 </script>
-
-<style>
-  .hidden { display: none; }
-</style>

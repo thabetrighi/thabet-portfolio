@@ -7,9 +7,13 @@ export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.nav.site}>
-  <AdminShell>
+  <AdminShell title={adminUi.nav.site}>
     <div class="admin-header">
-      <h1 class="admin-title">{adminUi.nav.site}</h1>
+      <div>
+        <h1 class="admin-title">{adminUi.nav.site}</h1>
+        <p class="admin-subtitle">الاسم، البريد، الروابط والشعار</p>
+      </div>
+      <span id="source-badge" class="admin-badge admin-badge-muted">...</span>
     </div>
 
     <form id="site-form" class="admin-card admin-grid">
@@ -28,30 +32,48 @@ export const prerender = false;
         <div class="admin-field"><label class="admin-label">الشعار (مسار)</label><input class="admin-input" id="logo" placeholder="/images/logo.svg" /></div>
       </div>
       <div id="form-status" class="admin-alert hidden"></div>
-      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
+      <div class="admin-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" id="save-btn">{adminUi.common.save}</button>
+      </div>
     </form>
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+<script define:vars={{ successMsg: adminUi.common.success, errorMsg: adminUi.common.error, savingMsg: adminUi.common.saving, sourceGithub: adminUi.common.sourceGithub, sourceLocal: adminUi.common.sourceLocal }}>
   const form = document.getElementById('site-form');
   const status = document.getElementById('form-status');
+  const saveBtn = document.getElementById('save-btn');
+  const sourceBadge = document.getElementById('source-badge');
 
   async function load() {
-    const res = await fetch('/api/admin/settings/site');
-    const { data, sha } = await res.json();
-    document.getElementById('sha').value = sha || '';
-    document.getElementById('name').value = data.name;
-    document.getElementById('email').value = data.email;
-    document.getElementById('url').value = data.url;
-    document.getElementById('logo').value = data.logo || '';
-    document.getElementById('fullNameAr').value = data.fullName.ar;
-    document.getElementById('fullNameEn').value = data.fullName.en;
-    document.getElementById('fullNameFr').value = data.fullName.fr;
+    try {
+      const { data, res } = await window.AdminUI.api('/api/admin/settings/site');
+      if (!res.ok || !data.data) {
+        window.AdminUI.setStatus(status, errorMsg, 'error');
+        return;
+      }
+
+      sourceBadge.textContent = data.source === 'github' ? sourceGithub : sourceLocal;
+      sourceBadge.className = `admin-badge ${data.source === 'github' ? 'admin-badge-success' : 'admin-badge-warning'}`;
+
+      document.getElementById('sha').value = data.sha || '';
+      document.getElementById('name').value = data.data.name || '';
+      document.getElementById('email').value = data.data.email || '';
+      document.getElementById('url').value = data.data.url || '';
+      document.getElementById('logo').value = data.data.logo || '';
+      document.getElementById('fullNameAr').value = data.data.fullName?.ar || '';
+      document.getElementById('fullNameEn').value = data.data.fullName?.en || '';
+      document.getElementById('fullNameFr').value = data.data.fullName?.fr || '';
+    } catch {
+      window.AdminUI.setStatus(status, errorMsg, 'error');
+    }
   }
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    saveBtn.disabled = true;
+    saveBtn.textContent = savingMsg;
+
     const payload = {
       sha: document.getElementById('sha').value || undefined,
       data: {
@@ -66,13 +88,24 @@ export const prerender = false;
         },
       },
     };
-    const res = await fetch('/api/admin/settings/site', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-    status.textContent = res.ok ? successMsg : errorMsg;
-    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
-    status.classList.remove('hidden');
-    if (res.ok) load();
+
+    try {
+      const { res } = await window.AdminUI.api('/api/admin/settings/site', {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        window.AdminUI.showToast(successMsg, 'success');
+        window.AdminUI.setStatus(status, successMsg, 'success');
+        await load();
+      } else {
+        window.AdminUI.setStatus(status, errorMsg, 'error');
+      }
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'حفظ التغييرات';
+    }
   });
 
   load();
 </script>
-<style>.hidden{display:none}</style>

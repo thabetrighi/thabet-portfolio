@@ -2,11 +2,11 @@ import type { APIRoute } from 'astro';
 import { requireAdminApi } from '../../../../lib/admin/auth/guard';
 import { adminError, adminJson, parseJsonBody } from '../../../../lib/admin/api/response';
 import {
-  listProjects,
-  loadProject,
+  getProjectsList,
+  getProject,
   saveProject,
   suggestSlug,
-} from '../../../../lib/admin/github/content';
+} from '../../../../lib/admin/content-source';
 import type { ProjectFrontmatter } from '../../../../lib/admin/types';
 import { LOCALES } from '../../../../lib/admin/config';
 
@@ -24,11 +24,11 @@ export const GET: APIRoute = async ({ request, url }) => {
   const slug = url.searchParams.get('slug');
   try {
     if (slug) {
-      const project = await loadProject(locale, slug);
+      const project = await getProject(locale, slug);
       return adminJson({ project });
     }
-    const projects = await listProjects(locale);
-    return adminJson({ projects, locale });
+    const { projects, source } = await getProjectsList(locale);
+    return adminJson({ projects, locale, source });
   } catch (error) {
     return adminError((error as Error).message, 500);
   }

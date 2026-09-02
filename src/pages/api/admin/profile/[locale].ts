@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { requireAdminApi } from '../../../../lib/admin/auth/guard';
 import { adminError, adminJson, parseJsonBody } from '../../../../lib/admin/api/response';
-import { loadProfile, saveProfile } from '../../../../lib/admin/github/content';
+import { getProfile, saveProfile } from '../../../../lib/admin/content-source';
 import type { ProfileConfig } from '../../../../lib/admin/types';
 import { LOCALES } from '../../../../lib/admin/config';
 
@@ -17,8 +17,8 @@ export const GET: APIRoute = async ({ request, params }) => {
   }
 
   try {
-    const { data, sha } = await loadProfile(locale);
-    return adminJson({ data, sha, locale });
+    const { data, sha, source } = await getProfile(locale);
+    return adminJson({ data, sha, locale, source });
   } catch (error) {
     return adminError((error as Error).message, 500);
   }
