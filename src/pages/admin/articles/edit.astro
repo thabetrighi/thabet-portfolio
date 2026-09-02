@@ -10,82 +10,84 @@ const isNew = Astro.url.searchParams.get('new') === '1';
 ---
 
 <AdminLayout title={isNew ? 'مقال جديد' : `تعديل: ${slug}`}>
-  <AdminShell>
-    <div class="admin-header">
+  <AdminShell title={isNew ? 'مقال جديد' : 'تعديل مقال'}>
+    <div class="adm-page-header">
       <div>
-        <h1 class="admin-title">{isNew ? 'مقال جديد' : `تعديل مقال`}</h1>
-        <p class="admin-subtitle">اللغة: {locale.toUpperCase()}</p>
+        <h1 class="adm-h1">{isNew ? 'مقال جديد' : 'تعديل مقال'}</h1>
+        <p class="adm-lead">اللغة: {locale.toUpperCase()}</p>
       </div>
-      <a href={`/admin/articles?locale=${locale}`} class="admin-btn admin-btn-ghost">{adminUi.common.cancel}</a>
+      <a href={`/admin/articles?locale=${locale}`} class="adm-btn adm-btn--secondary">{adminUi.common.cancel}</a>
     </div>
 
-    <form id="article-form" class="admin-grid">
+    <form id="article-form" class="adm-panel adm-panel-pad adm-grid">
       <input type="hidden" id="sha" name="sha" />
       <input type="hidden" id="previousSlug" name="previousSlug" value={slug} />
 
-      <div class="admin-grid admin-grid-2">
-        <div class="admin-field">
-          <label class="admin-label" for="title">{adminUi.common.title}</label>
-          <input class="admin-input" id="title" name="title" required />
+      <div class="adm-grid adm-grid-2">
+        <div class="adm-field">
+          <label class="adm-label" for="title">{adminUi.common.title}</label>
+          <input class="adm-input" id="title" name="title" required />
         </div>
-        <div class="admin-field">
-          <label class="admin-label" for="slug">{adminUi.common.slug}</label>
-          <input class="admin-input" id="slug" name="slug" required />
-        </div>
-      </div>
-
-      <div class="admin-field">
-        <label class="admin-label" for="excerpt">المقتطف</label>
-        <textarea class="admin-textarea" id="excerpt" name="excerpt" rows="2" required></textarea>
-      </div>
-
-      <div class="admin-grid admin-grid-3">
-        <div class="admin-field">
-          <label class="admin-label" for="category">التصنيف</label>
-          <input class="admin-input" id="category" name="category" required />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label" for="publishedAt">تاريخ النشر</label>
-          <input class="admin-input" type="date" id="publishedAt" name="publishedAt" required />
-        </div>
-        <div class="admin-field">
-          <label class="admin-label" for="readingTime">وقت القراءة (دقائق)</label>
-          <input class="admin-input" type="number" id="readingTime" name="readingTime" min="1" required />
+        <div class="adm-field">
+          <label class="adm-label" for="slug">{adminUi.common.slug}</label>
+          <input class="adm-input" id="slug" name="slug" required />
         </div>
       </div>
 
-      <div class="admin-grid admin-grid-2">
-        <div class="admin-field">
-          <label class="admin-label" for="tags">الوسوم (مفصولة بفاصلة)</label>
-          <input class="admin-input" id="tags" name="tags" />
+      <div class="adm-field">
+        <label class="adm-label" for="excerpt">المقتطف</label>
+        <textarea class="adm-textarea" id="excerpt" name="excerpt" rows="2" required></textarea>
+      </div>
+
+      <div class="adm-grid adm-grid-3">
+        <div class="adm-field">
+          <label class="adm-label" for="category">التصنيف</label>
+          <input class="adm-input" id="category" name="category" required />
         </div>
-        <div class="admin-field">
-          <label class="admin-label" for="cover">صورة الغلاف</label>
-          <input class="admin-input" id="cover" name="cover" placeholder="/images/articles/example.svg" />
+        <div class="adm-field">
+          <label class="adm-label" for="publishedAt">تاريخ النشر</label>
+          <input class="adm-input" type="date" id="publishedAt" name="publishedAt" required />
+        </div>
+        <div class="adm-field">
+          <label class="adm-label" for="readingTime">وقت القراءة (دقائق)</label>
+          <input class="adm-input" type="number" id="readingTime" name="readingTime" min="1" required />
         </div>
       </div>
 
-      <div class="admin-field">
-        <label class="admin-label" for="body">المحتوى (Markdown)</label>
-        <textarea class="admin-textarea" id="body" name="body" rows="16" required></textarea>
+      <div class="adm-grid adm-grid-2">
+        <div class="adm-field">
+          <label class="adm-label" for="tags">الوسوم (مفصولة بفاصلة)</label>
+          <input class="adm-input" id="tags" name="tags" />
+        </div>
+        <div class="adm-field">
+          <label class="adm-label" for="cover">صورة الغلاف</label>
+          <input class="adm-input" id="cover" name="cover" placeholder="/images/articles/example.svg" />
+        </div>
       </div>
 
-      <label style="display:flex;align-items:center;gap:0.5rem;">
+      <div class="adm-field">
+        <label class="adm-label" for="body">المحتوى (Markdown)</label>
+        <textarea class="adm-textarea adm-textarea--mono" id="body" name="body" rows="16" required></textarea>
+      </div>
+
+      <label class="adm-checkbox-row">
         <input type="checkbox" id="draft" name="draft" />
         مسودة
       </label>
 
-      <div id="form-status" class="admin-alert hidden"></div>
+      <div id="form-status" class="adm-alert hidden" role="alert"></div>
 
-      <div class="admin-actions">
-        <button type="submit" class="admin-btn admin-btn-primary" id="save-btn">{adminUi.common.save}</button>
-        {!isNew && <button type="button" class="admin-btn admin-btn-danger" id="delete-btn">{adminUi.common.delete}</button>}
+      <div class="adm-btn-row">
+        <button type="submit" class="adm-btn adm-btn--primary" id="save-btn">{adminUi.common.save}</button>
+        {!isNew && <button type="button" class="adm-btn adm-btn--danger" id="delete-btn">{adminUi.common.delete}</button>}
       </div>
     </form>
   </AdminShell>
 </AdminLayout>
 
 <script define:vars={{ locale, slug, isNew, saveLabel: adminUi.common.save, savingLabel: adminUi.common.saving, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, confirmDelete: adminUi.common.confirmDelete }}>
+  import { api } from '../../../lib/admin/ui/client';
+
   const form = document.getElementById('article-form');
   const status = document.getElementById('form-status');
   const saveBtn = document.getElementById('save-btn');
@@ -93,14 +95,13 @@ const isNew = Astro.url.searchParams.get('new') === '1';
 
   function showStatus(message, ok) {
     status.textContent = message;
-    status.className = `admin-alert ${ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.className = `adm-alert ${ok ? 'adm-alert--success' : 'adm-alert--error'}`;
     status.classList.remove('hidden');
   }
 
   async function loadArticle() {
     if (isNew) return;
-    const res = await fetch(`/api/admin/articles?locale=${locale}&slug=${slug}`);
-    const data = await res.json();
+    const { data } = await api(`/api/admin/articles?locale=${locale}&slug=${slug}`);
     const { article } = data;
     if (!article) return;
 
@@ -141,12 +142,10 @@ const isNew = Astro.url.searchParams.get('new') === '1';
     };
 
     try {
-      const res = await fetch('/api/admin/articles', {
+      const { res, data } = await api('/api/admin/articles', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
       if (res.ok) {
         showStatus(successMsg, true);
         if (isNew) {
@@ -169,11 +168,9 @@ const isNew = Astro.url.searchParams.get('new') === '1';
   deleteBtn?.addEventListener('click', async () => {
     if (!confirm(confirmDelete)) return;
     const sha = document.getElementById('sha').value;
-    const res = await fetch(`/api/admin/articles/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
+    const { res } = await api(`/api/admin/articles/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
     if (res.ok) window.location.href = `/admin/articles?locale=${locale}`;
   });
 
   loadArticle();
 </script>
-
-<style>.hidden { display: none; }</style>

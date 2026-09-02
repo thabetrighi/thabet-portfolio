@@ -8,25 +8,54 @@ export const prerender = false;
 
 <AdminLayout title={adminUi.login.title}>
   <div class="adm-auth">
-    <div class="adm-auth-card">
-      <h1>{adminUi.login.title}</h1>
-      <p>{adminUi.login.subtitle}</p>
+    <div class="adm-auth-wrap">
+      <div class="adm-auth-brand">
+        <div class="adm-auth-brand-icon">T</div>
+        <h1>{adminUi.brand}</h1>
+        <p>{adminUi.login.subtitle}</p>
+      </div>
 
-      <form id="admin-login-form" class="adm-grid" style="margin-top: 24px;">
-        <div class="adm-field">
-          <label class="adm-label" for="email">{adminUi.login.email}</label>
-          <input class="adm-input" type="email" id="email" name="email" value={site.email} required autocomplete="email" />
-        </div>
-        <div class="adm-field">
-          <label class="adm-label" for="password">{adminUi.login.password}</label>
-          <input class="adm-input" type="password" id="password" name="password" required autocomplete="current-password" />
-        </div>
-        <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
-        <div id="login-status" class="adm-alert adm-alert--error hidden"></div>
-        <button type="submit" class="adm-btn adm-btn--primary" id="login-submit" style="width:100%;">
-          {adminUi.login.submit}
-        </button>
-      </form>
+      <div class="adm-auth-card">
+        <h2>{adminUi.login.title}</h2>
+        <p class="adm-auth-hint">أدخل بيانات الدخول للوصول إلى لوحة التحكم</p>
+
+        <form id="admin-login-form" class="adm-grid">
+          <div class="adm-field">
+            <label class="adm-label" for="email">{adminUi.login.email}</label>
+            <input
+              class="adm-input"
+              type="email"
+              id="email"
+              name="email"
+              value={site.email}
+              required
+              autocomplete="email"
+              placeholder="contact@thabetrighi.com"
+            />
+          </div>
+          <div class="adm-field">
+            <label class="adm-label" for="password">{adminUi.login.password}</label>
+            <input
+              class="adm-input"
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              placeholder="••••••••"
+            />
+          </div>
+          <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
+          <div id="login-status" class="adm-alert adm-alert--error hidden" role="alert"></div>
+          <button type="submit" class="adm-btn adm-btn--primary" id="login-submit" style="width:100%;">
+            {adminUi.login.submit}
+          </button>
+        </form>
+      </div>
+
+      <div class="adm-auth-foot">
+        <a href="https://thabetrighi.com" target="_blank" rel="noopener">← العودة إلى الموقع</a>
+      </div>
     </div>
   </div>
 </AdminLayout>

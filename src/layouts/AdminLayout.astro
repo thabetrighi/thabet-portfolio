@@ -9,11 +9,12 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="dark light" />
     <title>{title} — لوحة التحكم</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,10 +24,11 @@ const { title } = Astro.props;
       (function () {
         const theme = localStorage.getItem('admin-theme') || 'dark';
         document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
       })();
     </script>
   </head>
-  <body class="admin-root adm">
+  <body class="admin-root">
     <slot />
   </body>
 </html>
