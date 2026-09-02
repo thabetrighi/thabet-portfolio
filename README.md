@@ -50,6 +50,7 @@ Quick reference:
 | Change | File |
 |--------|------|
 | Name, email, links, logo | `src/lib/site.ts` |
+| Social media icons & URLs | `src/lib/social.ts` |
 | UI labels & section text | `src/i18n/ui.ts` |
 | Experience, skills, resume | `src/lib/content.ts` |
 | Articles | `content/articles/{ar,en,fr}/*.md` |
@@ -93,15 +94,22 @@ Create `content/projects/en/my-project.md` with fields: `title`, `excerpt`, `pro
 
 ## Deployment
 
-Deploy to Cloudflare Pages:
+See **[docs/DEPLOY-CLOUDFLARE.md](docs/DEPLOY-CLOUDFLARE.md)** for full guide (Arabic).
+
+Quick deploy to your Cloudflare account:
 
 ```bash
+npx wrangler login
 npm run build
+npx wrangler deploy
 ```
 
-Set environment variables in the Cloudflare dashboard:
-- `TURNSTILE_SECRET_KEY`
-- `CONTACT_EMAIL`
+Set secrets in Cloudflare dashboard or via:
+
+```bash
+npx wrangler secret put CONTACT_EMAIL
+npx wrangler secret put TURNSTILE_SECRET_KEY
+```
 
 ## Design
 
