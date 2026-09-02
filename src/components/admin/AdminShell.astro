@@ -1,5 +1,6 @@
 ---
 import { adminUi } from '../../lib/admin/ui/strings';
+import { buildAdminBreadcrumbs } from '../../lib/admin/ui/breadcrumbs';
 
 interface Props {
   title?: string;
@@ -7,6 +8,7 @@ interface Props {
 
 const { title } = Astro.props;
 const path = Astro.url.pathname;
+const searchParams = Astro.url.searchParams;
 
 const links = [
   { href: '/admin', label: adminUi.nav.dashboard, section: 'main', icon: 'dashboard' },
@@ -24,6 +26,17 @@ function isActive(href: string) {
 }
 
 const pageTitle = title || links.find((l) => isActive(l.href))?.label || adminUi.brand;
+const breadcrumbs = buildAdminBreadcrumbs(path);
+const editSlug = searchParams.get('slug');
+const isEditPage = path.endsWith('/edit');
+const locale = searchParams.get('locale');
+
+if (isEditPage && editSlug) {
+  breadcrumbs.push({ label: editSlug });
+} else if (isEditPage && searchParams.get('new') === '1') {
+  breadcrumbs.push({ label: 'جديد' });
+}
+
 const sections = [
   { id: 'main', label: adminUi.sections.main },
   { id: 'content', label: adminUi.sections.content },
@@ -32,8 +45,8 @@ const sections = [
 ];
 ---
 
-<div class="adm adm-layout">
-  <aside class="adm-sidebar" id="admin-sidebar">
+<div class="adm adm-layout" id="admin-layout">
+  <aside class="adm-sidebar" id="admin-sidebar" aria-label="القائمة الجانبية">
     <div class="adm-brand">
       <div class="adm-brand-icon">T</div>
       <div class="adm-brand-text">
@@ -75,27 +88,49 @@ const sections = [
         </>
       ))}
     </nav>
-
-    <div class="adm-sidebar-foot">
-      <a href="https://thabetrighi.com" class="adm-btn adm-btn--secondary adm-btn--sm" target="_blank" rel="noopener">{adminUi.nav.viewSite}</a>
-      <button type="button" class="adm-btn adm-btn--secondary adm-btn--sm" id="admin-logout-btn">{adminUi.nav.logout}</button>
-    </div>
   </aside>
 
   <div class="adm-main-col">
     <header class="adm-topbar">
       <div class="adm-topbar-start">
-        <button type="button" class="adm-icon-btn" id="admin-menu-toggle" aria-label="القائمة">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <button type="button" class="adm-icon-btn" id="admin-menu-toggle" aria-expanded="true" aria-label="إخفاء القائمة">
+          <svg class="adm-icon-menu" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="adm-icon-close hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
         </button>
-        <div>
-          <div class="adm-page-title">{pageTitle}</div>
-          <div class="adm-page-path">{adminUi.brand}</div>
+        <div class="adm-topbar-heading">
+          <h1 class="adm-page-title">{pageTitle}</h1>
+          <nav class="adm-breadcrumb" aria-label="مسار التنقل">
+            <ol>
+              {breadcrumbs.map((crumb, index) => (
+                <li class:list={['adm-breadcrumb__item', { 'is-current': !crumb.href }]}>
+                  {crumb.href ? (
+                    <a href={crumb.href}>{crumb.label}</a>
+                  ) : (
+                    <span aria-current="page">{crumb.label}</span>
+                  )}
+                  {index < breadcrumbs.length - 1 && (
+                    <span class="adm-breadcrumb__sep" aria-hidden="true">/</span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+          {locale && isEditPage && (
+            <span class="adm-locale-pill">{locale.toUpperCase()}</span>
+          )}
         </div>
       </div>
       <div class="adm-topbar-end">
+        <a href="https://thabetrighi.com" class="adm-topbar-link" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+          <span>{adminUi.nav.viewSite}</span>
+        </a>
         <button type="button" class="adm-icon-btn" data-theme-toggle aria-label="تبديل الوضع">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        </button>
+        <button type="button" class="adm-topbar-logout" id="admin-logout-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          <span>{adminUi.nav.logout}</span>
         </button>
       </div>
     </header>
@@ -105,7 +140,7 @@ const sections = [
   </div>
 </div>
 
-<div class="adm-overlay" id="admin-overlay"></div>
+<div class="adm-overlay" id="admin-overlay" aria-hidden="true"></div>
 
 <script>
   import { initShell } from '../../lib/admin/ui/shell';

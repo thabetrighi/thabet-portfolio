@@ -36,6 +36,9 @@ export function initDashboardPage() {
         githubEl.innerHTML = `<span class="adm-badge adm-badge--success">${connected}</span> ${data.github.owner}/${data.github.repo}`;
       }
       if (statGithub) statGithub.innerHTML = '<span class="adm-badge adm-badge--success">متصل</span>';
+    } else if (data.githubError) {
+      if (githubEl) githubEl.innerHTML = `<span class="adm-badge adm-badge--warning">${data.githubError}</span>`;
+      if (statGithub) statGithub.innerHTML = '<span class="adm-badge adm-badge--warning">خطأ</span>';
     } else {
       if (githubEl) githubEl.innerHTML = `<span class="adm-badge adm-badge--warning">${disconnected}</span>`;
       if (statGithub) statGithub.innerHTML = '<span class="adm-badge adm-badge--warning">غير متصل</span>';

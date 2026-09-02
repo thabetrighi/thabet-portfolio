@@ -46,6 +46,8 @@ export function isGitHubConfigured(): boolean {
   return getGitHubConfig() !== null;
 }
 
+const GITHUB_USER_AGENT = 'thabetrighi-admin/1.0 (+https://thabetrighi.com)';
+
 async function githubFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const config = getGitHubConfig();
   if (!config) throw new GitHubError('GitHub is not configured', 503);
@@ -57,6 +59,7 @@ async function githubFetch<T>(path: string, init: RequestInit = {}): Promise<T> 
       Authorization: `Bearer ${config.token}`,
       'X-GitHub-Api-Version': '2022-11-28',
       'Content-Type': 'application/json',
+      'User-Agent': GITHUB_USER_AGENT,
       ...init.headers,
     },
   });
