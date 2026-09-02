@@ -7,7 +7,7 @@ export const site = {
   },
   /** Optional logo path under /public — leave empty to use text name only */
   logo: '' as string,
-  email: 'hello@thabet.dev',
-  url: 'https://thabet.dev',
+  email: 'hello@thabetrighi.com',
+  url: 'https://thabetrighi.com',
   turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA',
 } as const;

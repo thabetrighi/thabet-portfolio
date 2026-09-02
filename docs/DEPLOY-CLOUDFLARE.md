@@ -12,7 +12,7 @@
 |---------|--------|
 | **Cloudflare API Token** | مفتاح API بصلاحيات Workers |
 | **Account ID** (اختياري) | يظهر في لوحة Cloudflare → Overview |
-| **نطاقك** (اختياري) | مثل `thabet.dev` إن أردت ربطه مباشرة |
+| **نطاقك** (اختياري) | مثل `thabetrighi.com` إن أردت ربطه مباشرة |
 
 ### إنشاء API Token
 
@@ -109,7 +109,7 @@ PUBLIC_TURNSTILE_SITE_KEY=your_site_key
 ### إذا النطاق على Cloudflare
 
 1. **Workers & Pages** → **thabet-portfolio** → **Settings** → **Domains & Routes**
-2. **Add** → **Custom Domain** → `thabet.dev` و `www.thabet.dev`
+2. **Add** → **Custom Domain** → `thabetrighi.com` و `www.thabetrighi.com`
 3. Cloudflare ينشئ DNS تلقائيًا
 
 ### إذا النطاق خارج Cloudflare
@@ -122,13 +122,13 @@ PUBLIC_TURNSTILE_SITE_KEY=your_site_key
 **`astro.config.mjs`:**
 
 ```javascript
-site: 'https://thabet.dev',  // نطاقك الفعلي
+site: 'https://thabetrighi.com',  // نطاقك الفعلي
 ```
 
 **`src/lib/site.ts`:**
 
 ```typescript
-url: 'https://thabet.dev',
+url: 'https://thabetrighi.com',
 email: 'your@email.com',
 ```
 

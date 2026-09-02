@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://thabet.dev',
+  site: 'https://thabetrighi.com',
   output: 'server',
   adapter: cloudflare({
     imageService: 'cloudflare',

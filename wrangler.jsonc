@@ -4,6 +4,7 @@
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "thabet-portfolio",
 	"account_id": "e095867da83877c667d0817a1596c5a9",
+	"workers_dev": true,
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
@@ -11,5 +12,15 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"routes": [
+		{
+			"pattern": "thabetrighi.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.thabetrighi.com",
+			"custom_domain": true
+		}
+	]
 }
