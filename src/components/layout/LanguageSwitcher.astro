@@ -1,0 +1,89 @@
+---
+import { locales, localeNames, getLocalizedPath, type Locale } from '../../i18n/config';
+
+interface Props {
+  locale: Locale;
+  currentPath?: string;
+  compact?: boolean;
+}
+
+const { locale, currentPath = '', compact = false } = Astro.props;
+---
+
+<div class="relative" data-lang-switcher>
+  <button
+    type="button"
+    class="flex items-center gap-1.5 border border-border px-2.5 py-1.5 font-mono text-xs uppercase tracking-wider text-ink-secondary transition-colors hover:border-accent hover:text-accent dark:border-border-dark dark:text-ink-secondary-dark dark:hover:border-accent-dark dark:hover:text-accent-dark"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label="Select language"
+    data-lang-trigger
+  >
+    {locale}
+    {!compact && (
+      <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+      </svg>
+    )}
+  </button>
+  <ul
+    class="absolute end-0 top-full z-50 mt-1 hidden min-w-[8rem] border border-border bg-surface py-1 shadow-sm dark:border-border-dark dark:bg-surface-dark"
+    role="listbox"
+    data-lang-menu
+  >
+    {locales.map((loc) => (
+      <li role="option" aria-selected={loc === locale}>
+        <a
+          href={getLocalizedPath(loc, currentPath)}
+          class:list={[
+            'block px-4 py-2 text-sm no-underline transition-colors',
+            loc === locale
+              ? 'text-accent dark:text-accent-dark font-medium'
+              : 'text-ink-secondary hover:text-ink dark:text-ink-secondary-dark dark:hover:text-ink-dark',
+          ]}
+          data-locale={loc}
+        >
+          {localeNames[loc]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  function setupLangSwitcher() {
+    document.querySelectorAll('[data-lang-switcher]').forEach((wrapper) => {
+      const trigger = wrapper.querySelector('[data-lang-trigger]') as HTMLButtonElement;
+      const menu = wrapper.querySelector('[data-lang-menu]') as HTMLUListElement;
+      if (!trigger || !menu) return;
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !menu.classList.contains('hidden');
+        menu.classList.toggle('hidden', isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      menu.querySelectorAll('a[data-locale]').forEach((link) => {
+        link.addEventListener('click', () => {
+          const loc = link.getAttribute('data-locale');
+          if (loc) {
+            document.cookie = `preferred-locale=${loc};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
+          }
+        });
+      });
+    });
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('[data-lang-menu]').forEach((menu) => {
+        menu.classList.add('hidden');
+      });
+      document.querySelectorAll('[data-lang-trigger]').forEach((btn) => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  setupLangSwitcher();
+  document.addEventListener('astro:after-swap', setupLangSwitcher);
+</script>

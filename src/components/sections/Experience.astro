@@ -1,0 +1,52 @@
+---
+import type { Locale } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import { getExperience } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+  limit?: number;
+}
+
+const { locale, limit = 3 } = Astro.props;
+const t = useTranslations(locale);
+const experiences = getExperience(locale).slice(0, limit);
+---
+
+<section class="border-t border-border dark:border-border-dark">
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-20">
+    <h2 class="section-label mb-12">{t.experience.title}</h2>
+    <ol class="relative space-y-0">
+      {experiences.map((exp, i) => (
+        <li class="grid gap-4 border-s border-border ps-6 pb-12 last:pb-0 dark:border-border-dark md:grid-cols-[200px_1fr] md:gap-8 md:ps-8">
+          <div class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+            <time>{exp.startDate}</time>
+            {' — '}
+            <time>{exp.endDate || (locale === 'ar' ? 'الحاضر' : locale === 'fr' ? 'Présent' : 'Present')}</time>
+            <p class="mt-1">{exp.location}</p>
+          </div>
+          <div>
+            <h3 class="font-display text-xl">{exp.position}</h3>
+            <p class="mt-1 text-sm text-accent dark:text-accent-dark">{exp.company}</p>
+            <p class="mt-3 text-ink-secondary dark:text-ink-secondary-dark">{exp.description}</p>
+            {exp.achievements.length > 0 && (
+              <ul class="mt-4 space-y-2">
+                {exp.achievements.map((a) => (
+                  <li class="flex gap-2 text-sm text-ink-secondary dark:text-ink-secondary-dark">
+                    <span class="text-accent dark:text-accent-dark" aria-hidden="true">—</span>
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div class="mt-4 flex flex-wrap gap-2">
+              {exp.technologies.map((tech) => (
+                <span class="tag">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

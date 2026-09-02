@@ -1,0 +1,118 @@
+---
+import type { Locale } from '../i18n/config';
+import { useTranslations } from '../i18n/ui';
+import { site } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<form id="contact-form" class="space-y-6" novalidate>
+  <div>
+    <label for="name" class="mb-2 block text-sm font-medium">{t.contact.name}</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      autocomplete="name"
+      class="w-full border border-border bg-surface px-4 py-3 text-sm transition-colors focus:border-accent focus:outline-none dark:border-border-dark dark:bg-surface-dark dark:focus:border-accent-dark"
+    />
+  </div>
+  <div>
+    <label for="email" class="mb-2 block text-sm font-medium">{t.contact.email}</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      autocomplete="email"
+      class="w-full border border-border bg-surface px-4 py-3 text-sm transition-colors focus:border-accent focus:outline-none dark:border-border-dark dark:bg-surface-dark dark:focus:border-accent-dark"
+    />
+  </div>
+  <div>
+    <label for="message" class="mb-2 block text-sm font-medium">{t.contact.message}</label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="6"
+      class="w-full resize-y border border-border bg-surface px-4 py-3 text-sm transition-colors focus:border-accent focus:outline-none dark:border-border-dark dark:bg-surface-dark dark:focus:border-accent-dark"
+    ></textarea>
+  </div>
+
+  <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>
+
+  <div id="form-status" class="hidden text-sm" role="status" aria-live="polite"></div>
+
+  <button type="submit" class="btn btn-primary" id="submit-btn">
+    {t.contact.send}
+  </button>
+</form>
+
+<script define:vars={{ successMsg: t.contact.success, errorMsg: t.contact.error, sendingMsg: t.contact.sending, sendLabel: t.contact.send }}>
+  function loadTurnstile() {
+    if (document.querySelector('script[src*="turnstile"]')) return;
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  function setupContactForm() {
+    loadTurnstile();
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const status = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    if (!form || !status || !submitBtn) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitBtn.textContent = sendingMsg;
+
+      const formData = new FormData(form);
+      const turnstileResponse = (form.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement)?.value;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message'),
+            'cf-turnstile-response': turnstileResponse,
+          }),
+        });
+
+        status.classList.remove('hidden');
+        if (res.ok) {
+          status.textContent = successMsg;
+          status.className = 'text-sm text-green-600 dark:text-green-400';
+          form.reset();
+          if (window.turnstile) window.turnstile.reset();
+        } else {
+          status.textContent = errorMsg;
+          status.className = 'text-sm text-accent dark:text-accent-dark';
+        }
+      } catch {
+        status.classList.remove('hidden');
+        status.textContent = errorMsg;
+        status.className = 'text-sm text-accent dark:text-accent-dark';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = sendLabel;
+      }
+    });
+  }
+
+  setupContactForm();
+  document.addEventListener('astro:after-swap', setupContactForm);
+</script>

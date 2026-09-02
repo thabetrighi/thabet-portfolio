@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { useTranslations } from '../../i18n/ui';
+import { site } from '../../lib/site';
+import type { Locale } from '../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t.contact.title}
+  description={t.contact.subtitle}
+  locale={locale}
+>
+  <Header slot="header" locale={locale} currentPath="contact" />
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <div class="grid gap-16 lg:grid-cols-2">
+      <div>
+        <p class="section-label mb-4">05</p>
+        <h1 class="font-display text-4xl tracking-tight md:text-5xl">{t.contact.title}</h1>
+        <p class="mt-6 text-lg text-ink-secondary dark:text-ink-secondary-dark">{t.contact.subtitle}</p>
+
+        <div class="mt-10 space-y-4">
+          <a href={`mailto:${site.email}`} class="block text-lg link-underline no-underline">{site.email}</a>
+          <a href={site.linkedin} class="block text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark no-underline" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href={site.github} class="block text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark no-underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <div>
+        <ContactForm locale={locale} />
+      </div>
+    </div>
+  </div>
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

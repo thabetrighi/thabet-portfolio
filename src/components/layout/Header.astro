@@ -1,0 +1,85 @@
+---
+import type { Locale } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import { site } from '../../lib/site';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  currentPath?: string;
+}
+
+const { locale, currentPath = '' } = Astro.props;
+const t = useTranslations(locale);
+
+const navItems = [
+  { href: 'about', label: t.nav.about },
+  { href: 'work', label: t.nav.work },
+  { href: 'articles', label: t.nav.articles },
+  { href: 'resume', label: t.nav.resume },
+  { href: 'contact', label: t.nav.contact },
+];
+
+function isActive(href: string): boolean {
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<header class="sticky top-0 z-50 border-b border-border/60 bg-paper/90 backdrop-blur-sm dark:border-border-dark/60 dark:bg-paper-dark/90">
+  <div class="mx-auto flex max-w-wide items-center justify-between gap-6 px-5 py-4 md:px-8">
+    <a
+      href={getLocalizedPath(locale)}
+      class="font-display text-lg font-medium tracking-tight no-underline text-ink dark:text-ink-dark hover:text-accent dark:hover:text-accent-dark transition-colors"
+      aria-label={site.fullName[locale]}
+    >
+      {site.fullName[locale]}
+    </a>
+
+  <!-- Desktop nav -->
+  <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+    {navItems.map((item) => (
+      <a
+        href={getLocalizedPath(locale, item.href)}
+        class:list={[
+          'px-3 py-1.5 text-sm transition-colors no-underline',
+          isActive(item.href)
+            ? 'text-accent dark:text-accent-dark font-medium'
+            : 'text-ink-secondary dark:text-ink-secondary-dark hover:text-ink dark:hover:text-ink-dark',
+        ]}
+        aria-current={isActive(item.href) ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    ))}
+    <div class="ms-3 flex items-center gap-2 border-s border-border ps-3 dark:border-border-dark">
+      <LanguageSwitcher locale={locale} currentPath={currentPath} />
+      <ThemeToggle />
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <nav class="flex items-center gap-2 md:hidden" aria-label="Mobile navigation">
+    <LanguageSwitcher locale={locale} currentPath={currentPath} compact />
+    <ThemeToggle />
+  </nav>
+  </div>
+
+  <!-- Mobile links bar -->
+  <nav class="flex gap-1 overflow-x-auto border-t border-border/40 px-5 py-2 md:hidden dark:border-border-dark/40" aria-label="Section links">
+    {navItems.map((item) => (
+      <a
+        href={getLocalizedPath(locale, item.href)}
+        class:list={[
+          'shrink-0 px-3 py-1 text-xs whitespace-nowrap no-underline',
+          isActive(item.href)
+            ? 'text-accent dark:text-accent-dark font-medium'
+            : 'text-ink-secondary dark:text-ink-secondary-dark',
+        ]}
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>

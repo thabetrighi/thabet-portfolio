@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { getProjectCollection } from '../../../lib/content';
+import { getCollection, render } from 'astro:content';
+import type { Locale } from '../../../i18n/config';
+import { locales } from '../../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const locale of locales) {
+    const collection = getProjectCollection(locale);
+    const projects = await getCollection(collection);
+    for (const project of projects) {
+      if (!project.data.draft) {
+        paths.push({ params: { locale, slug: project.id } });
+      }
+    }
+  }
+  return paths;
+}
+
+const { locale, slug } = Astro.params as { locale: Locale; slug: string };
+const t = useTranslations(locale);
+
+const collection = getProjectCollection(locale);
+const projectEntry = (await getCollection(collection)).find((p) => p.id === slug);
+
+if (!projectEntry) {
+  return Astro.redirect(`/${locale}/work`);
+}
+
+const { Content } = await render(projectEntry);
+const project = projectEntry.data;
+---
+
+<BaseLayout
+  title={project.title}
+  description={project.excerpt}
+  locale={locale}
+  ogType="article"
+  ogImage={project.cover}
+>
+  <Header slot="header" locale={locale} currentPath="work" />
+  <article class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <header class="max-w-2xl">
+      <p class="section-label mb-4">{String(project.order).padStart(2, '0')}</p>
+      <h1 class="font-display text-4xl tracking-tight md:text-5xl">{project.title}</h1>
+      <p class="mt-6 text-xl text-ink-secondary dark:text-ink-secondary-dark">{project.excerpt}</p>
+    </header>
+
+    <img
+      src={project.cover}
+      alt=""
+      class="my-12 w-full border border-border dark:border-border-dark"
+      width="1200"
+      height="675"
+    />
+
+    <div class="grid gap-12 lg:grid-cols-[1fr_280px]">
+      <div class="prose-content">
+        <h2>{t.work.problem}</h2>
+        <p>{project.problem}</p>
+        <h2>{t.work.solution}</h2>
+        <p>{project.solution}</p>
+        <Content />
+        <h2>{t.work.result}</h2>
+        <p>{project.result}</p>
+      </div>
+
+      <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+        <div>
+          <h3 class="section-label mb-2">{t.work.role}</h3>
+          <p class="text-sm">{project.role}</p>
+        </div>
+        <div>
+          <h3 class="section-label mb-2">{t.work.technologies}</h3>
+          <div class="flex flex-wrap gap-2">
+            {project.technologies.map((tech) => (
+              <span class="tag">{tech}</span>
+            ))}
+          </div>
+        </div>
+        {(project.github || project.demo) && (
+          <div class="flex flex-col gap-2">
+            {project.github && (
+              <a href={project.github} class="text-sm link-underline no-underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+            )}
+            {project.demo && (
+              <a href={project.demo} class="text-sm link-underline no-underline" target="_blank" rel="noopener noreferrer">Live Demo</a>
+            )}
+          </div>
+        )}
+      </aside>
+    </div>
+  </article>
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>
+
+<div id="reading-progress" class="fixed top-0 start-0 z-50 h-0.5 bg-accent dark:bg-accent-dark transition-[width] duration-100" style="width: 0%"></div>
+
+<script>
+  function setupReadingProgress() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = `${docHeight > 0 ? (scrollTop / docHeight) * 100 : 0}%`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+  setupReadingProgress();
+  document.addEventListener('astro:after-swap', setupReadingProgress);
+</script>

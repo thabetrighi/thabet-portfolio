@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Hero from '../../components/sections/Hero.astro';
+import AboutPreview from '../../components/sections/AboutPreview.astro';
+import Experience from '../../components/sections/Experience.astro';
+import Skills from '../../components/sections/Skills.astro';
+import WorkPreview from '../../components/sections/WorkPreview.astro';
+import ArticlesPreview from '../../components/sections/ArticlesPreview.astro';
+import { useTranslations } from '../../i18n/ui';
+import { getProjectCollection, getArticleCollection } from '../../lib/content';
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+
+const projectCollection = getProjectCollection(locale);
+const articleCollection = getArticleCollection(locale);
+
+const projects = (await getCollection(projectCollection))
+  .filter((p) => !p.data.draft)
+  .map((p) => ({
+    slug: p.id,
+    title: p.data.title,
+    excerpt: p.data.excerpt,
+    cover: p.data.cover,
+    order: p.data.order,
+  }));
+
+const articles = (await getCollection(articleCollection))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .map((a) => ({
+    slug: a.id,
+    title: a.data.title,
+    excerpt: a.data.excerpt,
+    category: a.data.category,
+    publishedAt: a.data.publishedAt,
+    readingTime: a.data.readingTime,
+  }));
+---
+
+<BaseLayout
+  title={t.meta.homeTitle}
+  description={t.meta.homeDescription}
+  locale={locale}
+>
+  <Header slot="header" locale={locale} currentPath="" />
+  <Hero locale={locale} />
+  <AboutPreview locale={locale} />
+  <Experience locale={locale} />
+  <Skills locale={locale} />
+  <WorkPreview locale={locale} projects={projects} />
+  <ArticlesPreview locale={locale} articles={articles} />
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

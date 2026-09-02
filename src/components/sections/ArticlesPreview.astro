@@ -1,0 +1,63 @@
+---
+import type { Locale } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+
+interface Article {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  publishedAt: Date;
+  readingTime: number;
+}
+
+interface Props {
+  locale: Locale;
+  articles: Article[];
+  limit?: number;
+}
+
+const { locale, articles, limit = 3 } = Astro.props;
+const t = useTranslations(locale);
+const recent = articles.slice(0, limit);
+
+function formatDate(date: Date, loc: Locale): string {
+  return date.toLocaleDateString(loc === 'ar' ? 'ar-DZ' : loc === 'fr' ? 'fr-FR' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<section class="border-t border-border dark:border-border-dark">
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-20">
+    <div class="mb-12 flex items-end justify-between gap-4">
+      <h2 class="section-label">{t.articles.title}</h2>
+      <a href={getLocalizedPath(locale, 'articles')} class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark no-underline">
+        {t.articles.allArticles}
+      </a>
+    </div>
+
+    <div class="divide-y divide-border dark:divide-border-dark">
+      {recent.map((article) => (
+        <article class="grid gap-4 py-8 first:pt-0 md:grid-cols-[140px_1fr] md:gap-8">
+          <div class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+            <time datetime={article.publishedAt.toISOString()}>{formatDate(article.publishedAt, locale)}</time>
+            <p class="mt-1">{article.readingTime} {t.articles.readingTime}</p>
+          </div>
+          <div>
+            <span class="tag mb-3">{article.category}</span>
+            <h3 class="font-display text-xl">
+              <a href={getLocalizedPath(locale, `articles/${article.slug}`)} class="text-ink link-underline dark:text-ink-dark no-underline">
+                {article.title}
+              </a>
+            </h3>
+            <p class="mt-2 text-sm text-ink-secondary dark:text-ink-secondary-dark">{article.excerpt}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

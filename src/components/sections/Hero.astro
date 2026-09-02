@@ -1,0 +1,54 @@
+---
+import type { Locale } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import { site } from '../../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24 lg:py-32">
+  <div class="grid gap-12 lg:grid-cols-[1fr_auto] lg:gap-16">
+    <div class="max-w-2xl">
+      <p class="section-label mb-6">Software Engineer</p>
+      <h1 class="font-display text-4xl leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
+        {site.fullName[locale]}
+      </h1>
+      <p class="mt-6 text-xl leading-relaxed text-ink-secondary dark:text-ink-secondary-dark md:text-2xl md:leading-relaxed">
+        {t.hero.identity}
+      </p>
+      <p class="mt-4 max-w-lg text-ink-muted dark:text-ink-muted-dark">
+        {t.hero.description}
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href={getLocalizedPath(locale, 'work')} class="btn btn-primary no-underline">
+          {t.hero.ctaWork}
+        </a>
+        <a href={getLocalizedPath(locale, 'articles')} class="btn no-underline">
+          {t.hero.ctaArticles}
+        </a>
+        <a href={getLocalizedPath(locale, 'contact')} class="btn btn-ghost no-underline">
+          {t.hero.ctaContact}
+        </a>
+      </div>
+    </div>
+
+    <aside class="flex flex-col gap-4 border-s border-border ps-6 dark:border-border-dark lg:min-w-[220px]">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-2 w-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-40"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+        </span>
+        <span class="font-mono text-xs text-ink-secondary dark:text-ink-secondary-dark">{t.hero.available}</span>
+      </div>
+      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.timezone}</p>
+      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.building}</p>
+      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.years}</p>
+    </aside>
+  </div>
+</section>

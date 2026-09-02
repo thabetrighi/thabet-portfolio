@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { getLocalizedPath } from '../../../i18n/config';
+import { getArticleCollection } from '../../../lib/content';
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+
+const articles = (await getCollection(getArticleCollection(locale)))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString(locale === 'ar' ? 'ar-DZ' : locale === 'fr' ? 'fr-FR' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title={t.articles.title}
+  description={t.articles.title}
+  locale={locale}
+>
+  <Header slot="header" locale={locale} currentPath="articles" />
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <header class="mb-16">
+      <p class="section-label mb-4">03</p>
+      <h1 class="font-display text-4xl tracking-tight md:text-5xl">{t.articles.title}</h1>
+    </header>
+
+    <div class="divide-y divide-border dark:divide-border-dark">
+      {articles.map((article) => (
+        <article class="grid gap-4 py-10 md:grid-cols-[160px_1fr] md:gap-10">
+          <div class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+            <time datetime={article.data.publishedAt.toISOString()}>{formatDate(article.data.publishedAt)}</time>
+            <p class="mt-1">{article.data.readingTime} {t.articles.readingTime}</p>
+          </div>
+          <div>
+            <span class="tag mb-3">{article.data.category}</span>
+            <h2 class="font-display text-2xl">
+              <a href={getLocalizedPath(locale, `articles/${article.id}`)} class="text-ink link-underline dark:text-ink-dark no-underline">
+                {article.data.title}
+              </a>
+            </h2>
+            <p class="mt-3 text-ink-secondary dark:text-ink-secondary-dark">{article.data.excerpt}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {article.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

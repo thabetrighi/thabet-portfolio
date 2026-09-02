@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { getArticleCollection } from '../../../lib/content';
+import { getCollection, render } from 'astro:content';
+import { locales, getLocalizedPath, type Locale } from '../../../i18n/config';
+import { site } from '../../../lib/site';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const locale of locales) {
+    const collection = getArticleCollection(locale);
+    const articles = await getCollection(collection);
+    for (const article of articles) {
+      if (!article.data.draft) {
+        paths.push({ params: { locale, slug: article.id } });
+      }
+    }
+  }
+  return paths;
+}
+
+const { locale, slug } = Astro.params as { locale: Locale; slug: string };
+const t = useTranslations(locale);
+
+const collection = getArticleCollection(locale);
+const articleEntry = (await getCollection(collection)).find((a) => a.id === slug);
+
+if (!articleEntry) {
+  return Astro.redirect(`/${locale}/articles`);
+}
+
+const { Content } = await render(articleEntry);
+const article = articleEntry.data;
+
+// Find alternate translations
+const alternates: { locale: Locale; slug: string }[] = [];
+for (const loc of locales) {
+  const altCollection = getArticleCollection(loc);
+  const altArticles = await getCollection(altCollection);
+  const match = altArticles.find(
+    (a) => a.id === slug || a.data.translationOf === slug || (article.translationOf && a.id === article.translationOf)
+  );
+  if (match && !match.data.draft) {
+    alternates.push({ locale: loc, slug: match.id });
+  }
+}
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString(locale === 'ar' ? 'ar-DZ' : locale === 'fr' ? 'fr-FR' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+const canonicalUrl = new URL(getLocalizedPath(locale, `articles/${slug}`), site.url).href;
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.excerpt}
+  locale={locale}
+  ogType="article"
+  ogImage={article.cover || '/og/default.svg'}
+  canonical={canonicalUrl}
+  article={{ publishedAt: article.publishedAt, tags: article.tags }}
+>
+  <Header slot="header" locale={locale} currentPath="articles" />
+
+  <div id="reading-progress" class="fixed top-0 start-0 z-50 h-0.5 bg-accent dark:bg-accent-dark" style="width: 0%"></div>
+
+  <article class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <header class="prose-content">
+      <div class="mb-6 flex flex-wrap items-center gap-3 font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+        <span class="tag">{article.category}</span>
+        <time datetime={article.publishedAt.toISOString()}>{formatDate(article.publishedAt)}</time>
+        <span>{article.readingTime} {t.articles.readingTime}</span>
+      </div>
+      <h1 class="font-display text-4xl leading-tight tracking-tight md:text-5xl">{article.title}</h1>
+      <p class="mt-6 text-xl text-ink-secondary dark:text-ink-secondary-dark">{article.excerpt}</p>
+    </header>
+
+    {article.cover && (
+      <img
+        src={article.cover}
+        alt=""
+        class="my-12 w-full max-w-content mx-auto"
+        width="840"
+        height="472"
+        loading="eager"
+      />
+    )}
+
+    <div class="prose-content mt-12">
+      <Content />
+    </div>
+
+    {alternates.length > 1 && (
+      <nav class="prose-content mt-16 border-t border-border pt-8 dark:border-border-dark" aria-label={t.articles.otherVersions}>
+        <p class="section-label mb-4">{t.articles.otherVersions}</p>
+        <ul class="flex flex-wrap gap-4">
+          {alternates.map((alt) => (
+            <li>
+              <a
+                href={getLocalizedPath(alt.locale, `articles/${alt.slug}`)}
+                class:list={[
+                  'text-sm no-underline link-underline',
+                  alt.locale === locale ? 'text-accent dark:text-accent-dark font-medium' : 'text-ink-secondary dark:text-ink-secondary-dark',
+                ]}
+              >
+                {alt.locale === 'ar' ? 'العربية' : alt.locale === 'fr' ? 'Français' : 'English'}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.publishedAt.toISOString(),
+    author: { '@type': 'Person', name: site.fullName[locale], url: site.url },
+    image: article.cover ? new URL(article.cover, site.url).href : undefined,
+    inLanguage: locale,
+    url: canonicalUrl,
+  })} />
+
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>
+
+<script>
+  function setupReadingProgress() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = `${docHeight > 0 ? (scrollTop / docHeight) * 100 : 0}%`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+  setupReadingProgress();
+  document.addEventListener('astro:after-swap', setupReadingProgress);
+</script>

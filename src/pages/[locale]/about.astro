@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Experience from '../../components/sections/Experience.astro';
+import Skills from '../../components/sections/Skills.astro';
+import { useTranslations } from '../../i18n/ui';
+import { getAbout } from '../../lib/content';
+import type { Locale } from '../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+const about = getAbout(locale);
+const paragraphs = about.extended.split('\n\n');
+---
+
+<BaseLayout
+  title={t.about.title}
+  description={about.summary}
+  locale={locale}
+>
+  <Header slot="header" locale={locale} currentPath="about" />
+  <article class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <header class="max-w-2xl">
+      <p class="section-label mb-4">01</p>
+      <h1 class="font-display text-4xl tracking-tight md:text-5xl">{t.about.title}</h1>
+      <p class="mt-6 text-xl leading-relaxed text-ink-secondary dark:text-ink-secondary-dark">
+        {about.summary}
+      </p>
+    </header>
+
+    <div class="prose-content mt-12">
+      {paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </article>
+  <Experience locale={locale} />
+  <Skills locale={locale} />
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

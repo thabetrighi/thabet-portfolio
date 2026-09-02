@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import { useTranslations } from '../../i18n/ui';
+import { getLocalizedPath } from '../../i18n/config';
+import type { Locale } from '../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t.notFound.title}
+  description={t.notFound.title}
+  locale={locale}
+  noindex={true}
+>
+  <Header slot="header" locale={locale} />
+  <div class="mx-auto flex max-w-wide flex-col items-start px-5 py-32 md:px-8">
+    <p class="font-mono text-6xl text-ink-muted dark:text-ink-muted-dark">404</p>
+    <h1 class="mt-4 font-display text-3xl">{t.notFound.title}</h1>
+    <a href={getLocalizedPath(locale)} class="btn mt-8 no-underline">
+      {t.notFound.back}
+    </a>
+  </div>
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>

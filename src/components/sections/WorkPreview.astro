@@ -1,0 +1,75 @@
+---
+import type { Locale } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+
+interface Project {
+  slug: string;
+  title: string;
+  excerpt: string;
+  cover: string;
+  order: number;
+}
+
+interface Props {
+  locale: Locale;
+  projects: Project[];
+  limit?: number;
+}
+
+const { locale, projects, limit = 3 } = Astro.props;
+const t = useTranslations(locale);
+const featured = projects.filter((p) => p.order).sort((a, b) => a.order - b.order).slice(0, limit);
+---
+
+<section class="border-t border-border dark:border-border-dark">
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-20">
+    <div class="mb-12 flex items-end justify-between gap-4">
+      <h2 class="section-label">{t.work.title}</h2>
+      <a href={getLocalizedPath(locale, 'work')} class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark no-underline">
+        {t.work.viewAll}
+      </a>
+    </div>
+
+    <div class="space-y-20">
+      {featured.map((project, i) => (
+        <article class:list={[
+          'grid gap-8 lg:gap-12',
+          i % 2 === 0 ? 'lg:grid-cols-[1.2fr_1fr]' : 'lg:grid-cols-[1fr_1.2fr]',
+        ]}>
+          <div class:list={['flex flex-col justify-center', i % 2 === 1 && 'lg:order-2']}>
+            <span class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+              {String(project.order).padStart(2, '0')}
+            </span>
+            <h3 class="mt-2 font-display text-2xl md:text-3xl">
+              <a href={getLocalizedPath(locale, `work/${project.slug}`)} class="text-ink link-underline dark:text-ink-dark no-underline">
+                {project.title}
+              </a>
+            </h3>
+            <p class="mt-4 text-ink-secondary dark:text-ink-secondary-dark">{project.excerpt}</p>
+            <a
+              href={getLocalizedPath(locale, `work/${project.slug}`)}
+              class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent link-underline dark:text-accent-dark no-underline"
+            >
+              {t.work.viewCase}
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <a
+            href={getLocalizedPath(locale, `work/${project.slug}`)}
+            class:list={['block overflow-hidden border border-border dark:border-border-dark', i % 2 === 1 && 'lg:order-1']}
+          >
+            <img
+              src={project.cover}
+              alt=""
+              loading="lazy"
+              width="800"
+              height="500"
+              class="aspect-[8/5] w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+            />
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

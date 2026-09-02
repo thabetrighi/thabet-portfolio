@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/layout/Header.astro';
+import Footer from '../../../components/layout/Footer.astro';
+import { useTranslations } from '../../../i18n/ui';
+import { getLocalizedPath } from '../../../i18n/config';
+import { getProjectCollection } from '../../../lib/content';
+import { getCollection } from 'astro:content';
+import type { Locale } from '../../../i18n/config';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ar', 'en', 'fr'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+
+const projects = (await getCollection(getProjectCollection(locale)))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title={t.work.title}
+  description={t.work.title}
+  locale={locale}
+>
+  <Header slot="header" locale={locale} currentPath="work" />
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <header class="mb-16">
+      <p class="section-label mb-4">02</p>
+      <h1 class="font-display text-4xl tracking-tight md:text-5xl">{t.work.title}</h1>
+    </header>
+
+    <div class="space-y-24">
+      {projects.map((project) => (
+        <article class="grid gap-8 border-t border-border pt-12 dark:border-border-dark lg:grid-cols-2 lg:gap-12">
+          <div>
+            <span class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+              {String(project.data.order).padStart(2, '0')}
+            </span>
+            <h2 class="mt-2 font-display text-2xl md:text-3xl">
+              <a href={getLocalizedPath(locale, `work/${project.id}`)} class="text-ink link-underline dark:text-ink-dark no-underline">
+                {project.data.title}
+              </a>
+            </h2>
+            <p class="mt-4 text-ink-secondary dark:text-ink-secondary-dark">{project.data.excerpt}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {project.data.technologies.map((tech) => (
+                <span class="tag">{tech}</span>
+              ))}
+            </div>
+            <a
+              href={getLocalizedPath(locale, `work/${project.id}`)}
+              class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent link-underline dark:text-accent-dark no-underline"
+            >
+              {t.work.viewCase} →
+            </a>
+          </div>
+          <a href={getLocalizedPath(locale, `work/${project.id}`)} class="block overflow-hidden border border-border dark:border-border-dark">
+            <img
+              src={project.data.cover}
+              alt=""
+              loading="lazy"
+              width="800"
+              height="500"
+              class="aspect-[8/5] w-full object-cover"
+            />
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+  <Footer slot="footer" locale={locale} />
+</BaseLayout>
