@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { config } = Astro.props;
+const json = JSON.stringify(config).replace(/</g, '\\u003c');
 ---
 
-<script type="application/json" id="adm-page-config">{JSON.stringify(config)}</script>
+<script type="application/json" id="adm-page-config" set:html={json}></script>
