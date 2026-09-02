@@ -1,0 +1,9 @@
+---
+interface Props {
+  config: Record<string, unknown>;
+}
+
+const { config } = Astro.props;
+---
+
+<script type="application/json" id="adm-page-config">{JSON.stringify(config)}</script>

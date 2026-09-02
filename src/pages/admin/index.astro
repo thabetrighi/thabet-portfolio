@@ -1,12 +1,18 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import AdminShell from '../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../lib/admin/ui/strings';
 
 export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.dashboard.title}>
+  <AdminPageConfig config={{
+    connected: adminUi.dashboard.githubConnected,
+    disconnected: adminUi.dashboard.githubDisconnected,
+    lastDeploy: adminUi.dashboard.lastDeploy,
+  }} />
   <AdminShell title={adminUi.dashboard.title}>
     <div class="adm-page-header">
       <div>
@@ -65,40 +71,7 @@ export const prerender = false;
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ connected: adminUi.dashboard.githubConnected, disconnected: adminUi.dashboard.githubDisconnected, lastDeploy: adminUi.dashboard.lastDeploy }}>
-  import { api } from '../../lib/admin/ui/client';
-
-  async function loadDashboard() {
-    const { data } = await api('/api/admin/stats');
-
-    document.getElementById('stat-articles').textContent = data.totals?.articles ?? 0;
-    document.getElementById('stat-projects').textContent = data.totals?.projects ?? 0;
-    document.getElementById('stat-articles-meta').textContent =
-      `AR ${data.articles?.ar ?? 0} · EN ${data.articles?.en ?? 0} · FR ${data.articles?.fr ?? 0}`;
-    document.getElementById('stat-projects-meta').textContent =
-      `AR ${data.projects?.ar ?? 0} · EN ${data.projects?.en ?? 0} · FR ${data.projects?.fr ?? 0}`;
-
-    const githubEl = document.getElementById('github-status');
-    const deployEl = document.getElementById('deploy-status');
-    const statGithub = document.getElementById('stat-github');
-    const statDeploy = document.getElementById('stat-deploy');
-
-    if (data.github?.connected) {
-      githubEl.innerHTML = `<span class="adm-badge adm-badge--success">${connected}</span> ${data.github.owner}/${data.github.repo}`;
-      statGithub.innerHTML = '<span class="adm-badge adm-badge--success">متصل</span>';
-    } else {
-      githubEl.innerHTML = `<span class="adm-badge adm-badge--warning">${disconnected}</span>`;
-      statGithub.innerHTML = '<span class="adm-badge adm-badge--warning">غير متصل</span>';
-    }
-
-    if (data.deploy) {
-      const label = `${data.deploy.status} — ${data.deploy.conclusion || 'pending'}`;
-      deployEl.textContent = `${lastDeploy}: ${label}`;
-      statDeploy.textContent = label;
-    }
-  }
-
-  loadDashboard().catch(() => {
-    document.getElementById('github-status').textContent = 'تعذّر تحميل البيانات';
-  });
+<script>
+  import { initDashboardPage } from '../../lib/admin/ui/pages/dashboard';
+  initDashboardPage();
 </script>

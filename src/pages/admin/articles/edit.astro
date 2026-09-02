@@ -1,6 +1,7 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 
 export const prerender = false;
@@ -10,6 +11,16 @@ const isNew = Astro.url.searchParams.get('new') === '1';
 ---
 
 <AdminLayout title={isNew ? 'مقال جديد' : `تعديل: ${slug}`}>
+  <AdminPageConfig config={{
+    locale,
+    slug,
+    isNew,
+    saveLabel: adminUi.common.save,
+    savingLabel: adminUi.common.saving,
+    successMsg: adminUi.common.success,
+    errorMsg: adminUi.common.error,
+    confirmDelete: adminUi.common.confirmDelete,
+  }} />
   <AdminShell title={isNew ? 'مقال جديد' : 'تعديل مقال'}>
     <div class="adm-page-header">
       <div>
@@ -85,92 +96,7 @@ const isNew = Astro.url.searchParams.get('new') === '1';
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ locale, slug, isNew, saveLabel: adminUi.common.save, savingLabel: adminUi.common.saving, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, confirmDelete: adminUi.common.confirmDelete }}>
-  import { api } from '../../../lib/admin/ui/client';
-
-  const form = document.getElementById('article-form');
-  const status = document.getElementById('form-status');
-  const saveBtn = document.getElementById('save-btn');
-  const deleteBtn = document.getElementById('delete-btn');
-
-  function showStatus(message, ok) {
-    status.textContent = message;
-    status.className = `adm-alert ${ok ? 'adm-alert--success' : 'adm-alert--error'}`;
-    status.classList.remove('hidden');
-  }
-
-  async function loadArticle() {
-    if (isNew) return;
-    const { data } = await api(`/api/admin/articles?locale=${locale}&slug=${slug}`);
-    const { article } = data;
-    if (!article) return;
-
-    document.getElementById('sha').value = article.sha || '';
-    document.getElementById('title').value = article.frontmatter.title || '';
-    document.getElementById('slug').value = article.slug || '';
-    document.getElementById('excerpt').value = article.frontmatter.excerpt || '';
-    document.getElementById('category').value = article.frontmatter.category || '';
-    document.getElementById('publishedAt').value = String(article.frontmatter.publishedAt).slice(0, 10);
-    document.getElementById('readingTime').value = article.frontmatter.readingTime || 5;
-    document.getElementById('tags').value = (article.frontmatter.tags || []).join(', ');
-    document.getElementById('cover').value = article.frontmatter.cover || '';
-    document.getElementById('body').value = article.body || '';
-    document.getElementById('draft').checked = Boolean(article.frontmatter.draft);
-  }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    saveBtn.disabled = true;
-    saveBtn.textContent = savingLabel;
-
-    const payload = {
-      locale,
-      slug: document.getElementById('slug').value,
-      previousSlug: document.getElementById('previousSlug').value,
-      sha: document.getElementById('sha').value || undefined,
-      frontmatter: {
-        title: document.getElementById('title').value,
-        excerpt: document.getElementById('excerpt').value,
-        category: document.getElementById('category').value,
-        publishedAt: document.getElementById('publishedAt').value,
-        readingTime: Number(document.getElementById('readingTime').value),
-        tags: document.getElementById('tags').value.split(',').map((t) => t.trim()).filter(Boolean),
-        cover: document.getElementById('cover').value || undefined,
-        draft: document.getElementById('draft').checked,
-      },
-      body: document.getElementById('body').value,
-    };
-
-    try {
-      const { res, data } = await api('/api/admin/articles', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        showStatus(successMsg, true);
-        if (isNew) {
-          window.location.href = `/admin/articles/edit?locale=${locale}&slug=${data.slug}`;
-        } else {
-          document.getElementById('sha').value = '';
-          document.getElementById('previousSlug').value = data.slug;
-        }
-      } else {
-        showStatus(data.error || errorMsg, false);
-      }
-    } catch {
-      showStatus(errorMsg, false);
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = saveLabel;
-    }
-  });
-
-  deleteBtn?.addEventListener('click', async () => {
-    if (!confirm(confirmDelete)) return;
-    const sha = document.getElementById('sha').value;
-    const { res } = await api(`/api/admin/articles/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
-    if (res.ok) window.location.href = `/admin/articles?locale=${locale}`;
-  });
-
-  loadArticle();
+<script>
+  import { initArticlesEditPage } from '../../../lib/admin/ui/pages/articles-edit';
+  initArticlesEditPage();
 </script>

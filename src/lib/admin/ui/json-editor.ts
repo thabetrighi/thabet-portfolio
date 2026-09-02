@@ -1,5 +1,3 @@
-import 'vanilla-jsoneditor/themes/jse-theme-default.css';
-
 import { createJSONEditor, type Content, type JSONEditor } from 'vanilla-jsoneditor/standalone.js';
 
 let editor: JSONEditor | null = null;

@@ -1,12 +1,19 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import AdminShell from '../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../lib/admin/ui/strings';
 
 export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.nav.deploy}>
+  <AdminPageConfig config={{
+    deployLabel: adminUi.common.deploy,
+    deployingLabel: adminUi.common.deploying,
+    successMsg: adminUi.common.success,
+    errorMsg: adminUi.common.error,
+  }} />
   <AdminShell title={adminUi.nav.deploy}>
     <div class="adm-page-header">
       <div>
@@ -35,35 +42,7 @@ export const prerender = false;
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ deployLabel: adminUi.common.deploy, deployingLabel: adminUi.common.deploying, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
-  import { api, setStatus, showToast } from '../../lib/admin/ui/client';
-
-  const info = document.getElementById('deploy-info');
-  const status = document.getElementById('deploy-status');
-  const link = document.getElementById('deploy-link');
-  const btn = document.getElementById('deploy-btn');
-
-  async function refresh() {
-    const { data } = await api('/api/admin/deploy');
-    if (data.latestRun) {
-      info.textContent = `آخر نشر: ${data.latestRun.status} / ${data.latestRun.conclusion || 'pending'} — ${new Date(data.latestRun.createdAt).toLocaleString('ar')}`;
-      link.href = data.latestRun.htmlUrl;
-      link.style.display = 'inline-flex';
-    } else {
-      info.textContent = 'لا يوجد نشر سابق أو workflow غير مضبوط بعد';
-    }
-  }
-
-  btn?.addEventListener('click', async () => {
-    btn.disabled = true;
-    btn.textContent = deployingLabel;
-    const { res, data } = await api('/api/admin/deploy', { method: 'POST' });
-    if (res.ok) showToast(successMsg, 'success');
-    setStatus(status, data.message || (res.ok ? successMsg : errorMsg), res.ok ? 'success' : 'error');
-    btn.disabled = false;
-    btn.textContent = deployLabel;
-    refresh();
-  });
-
-  refresh().catch(() => { info.textContent = 'تعذّر تحميل حالة النشر'; });
+<script>
+  import { initDeployPage } from '../../lib/admin/ui/pages/deploy';
+  initDeployPage();
 </script>

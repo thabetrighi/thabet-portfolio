@@ -1,12 +1,21 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 
 export const prerender = false;
 ---
 
 <AdminLayout title={adminUi.nav.site}>
+  <AdminPageConfig config={{
+    successMsg: adminUi.common.success,
+    errorMsg: adminUi.common.error,
+    savingMsg: adminUi.common.saving,
+    saveLabel: adminUi.common.save,
+    sourceGithub: adminUi.common.sourceGithub,
+    sourceLocal: adminUi.common.sourceLocal,
+  }} />
   <AdminShell title={adminUi.nav.site}>
     <div class="adm-page-header">
       <div>
@@ -39,68 +48,7 @@ export const prerender = false;
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ successMsg: adminUi.common.success, errorMsg: adminUi.common.error, savingMsg: adminUi.common.saving, sourceGithub: adminUi.common.sourceGithub, sourceLocal: adminUi.common.sourceLocal }}>
-  import { api, setStatus, showToast } from '../../../lib/admin/ui/client';
-
-  const form = document.getElementById('site-form');
-  const status = document.getElementById('form-status');
-  const saveBtn = document.getElementById('save-btn');
-  const sourceBadge = document.getElementById('source-badge');
-
-  async function load() {
-    const { data, res } = await api('/api/admin/settings/site');
-    if (!res.ok || !data.data) {
-      setStatus(status, errorMsg, 'error');
-      return;
-    }
-
-    sourceBadge.textContent = data.source === 'github' ? sourceGithub : sourceLocal;
-    sourceBadge.className = `adm-badge ${data.source === 'github' ? 'adm-badge--success' : 'adm-badge--warning'}`;
-
-    document.getElementById('sha').value = data.sha || '';
-    document.getElementById('name').value = data.data.name || '';
-    document.getElementById('email').value = data.data.email || '';
-    document.getElementById('url').value = data.data.url || '';
-    document.getElementById('logo').value = data.data.logo || '';
-    document.getElementById('fullNameAr').value = data.data.fullName?.ar || '';
-    document.getElementById('fullNameEn').value = data.data.fullName?.en || '';
-    document.getElementById('fullNameFr').value = data.data.fullName?.fr || '';
-  }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    saveBtn.disabled = true;
-    saveBtn.textContent = savingMsg;
-
-    const payload = {
-      sha: document.getElementById('sha').value || undefined,
-      data: {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        url: document.getElementById('url').value,
-        logo: document.getElementById('logo').value,
-        fullName: {
-          ar: document.getElementById('fullNameAr').value,
-          en: document.getElementById('fullNameEn').value,
-          fr: document.getElementById('fullNameFr').value,
-        },
-      },
-    };
-
-    try {
-      const { res } = await api('/api/admin/settings/site', { method: 'PUT', body: JSON.stringify(payload) });
-      if (res.ok) {
-        showToast(successMsg, 'success');
-        setStatus(status, successMsg, 'success');
-        await load();
-      } else {
-        setStatus(status, errorMsg, 'error');
-      }
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'حفظ التغييرات';
-    }
-  });
-
-  load().catch(() => setStatus(status, errorMsg, 'error'));
+<script>
+  import { initSiteSettingsPage } from '../../../lib/admin/ui/pages/site-settings';
+  initSiteSettingsPage();
 </script>

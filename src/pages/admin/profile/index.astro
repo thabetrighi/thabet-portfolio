@@ -1,6 +1,7 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 import { LOCALES } from '../../../lib/admin/config';
 
@@ -9,6 +10,13 @@ const locale = Astro.url.searchParams.get('locale') || 'en';
 ---
 
 <AdminLayout title={adminUi.nav.profile}>
+  <AdminPageConfig config={{
+    locale,
+    successMsg: adminUi.common.success,
+    errorMsg: adminUi.common.error,
+    savingMsg: adminUi.common.saving,
+    saveLabel: adminUi.common.save,
+  }} />
   <AdminShell title={adminUi.nav.profile}>
     <div class="adm-page-header">
       <div>
@@ -62,89 +70,7 @@ const locale = Astro.url.searchParams.get('locale') || 'en';
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ locale, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, savingMsg: adminUi.common.saving }}>
-  import { api, setStatus, showToast } from '../../../lib/admin/ui/client';
-  import { mountProfileJsonEditor, getEditorContent } from '../../../lib/admin/ui/json-editor';
-
-  const select = document.getElementById('locale-select');
-  let profileData = null;
-
-  document.querySelectorAll('.adm-tab').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.adm-tab').forEach((t) => t.classList.remove('is-active'));
-      tab.classList.add('is-active');
-      const id = tab.dataset.tab;
-      document.getElementById('panel-about').classList.toggle('hidden', id !== 'about');
-      document.getElementById('panel-editor').classList.toggle('hidden', id !== 'editor');
-    });
-  });
-
-  select?.addEventListener('change', () => {
-    window.location.href = `/admin/profile?locale=${select.value}`;
-  });
-
-  function syncAboutToProfile() {
-    if (!profileData) return;
-    profileData.about = {
-      summary: document.getElementById('aboutSummary').value,
-      extended: document.getElementById('aboutExtended').value,
-    };
-    profileData.resume = { ...profileData.resume, profile: document.getElementById('resumeProfile').value };
-  }
-
-  function syncProfileToAbout() {
-    document.getElementById('aboutSummary').value = profileData?.about?.summary || '';
-    document.getElementById('aboutExtended').value = profileData?.about?.extended || '';
-    document.getElementById('resumeProfile').value = profileData?.resume?.profile || '';
-  }
-
-  async function load() {
-    const { data, res } = await api(`/api/admin/profile/${locale}`);
-    if (!res.ok || !data.data) {
-      setStatus(document.getElementById('form-status'), errorMsg, 'error');
-      return;
-    }
-
-    profileData = data.data;
-    document.getElementById('sha').value = data.sha || '';
-    syncProfileToAbout();
-
-    mountProfileJsonEditor(
-      document.getElementById('profile-json-editor'),
-      profileData,
-      (json) => { profileData = json; syncProfileToAbout(); },
-    );
-  }
-
-  document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const saveBtn = document.getElementById('save-btn');
-    const status = document.getElementById('form-status');
-    saveBtn.disabled = true;
-    saveBtn.textContent = savingMsg;
-
-    const editorJson = getEditorContent();
-    if (editorJson) profileData = editorJson;
-    syncAboutToProfile();
-
-    try {
-      const { res } = await api(`/api/admin/profile/${locale}`, {
-        method: 'PUT',
-        body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data: profileData }),
-      });
-
-      if (res.ok) {
-        showToast(successMsg, 'success');
-        setStatus(status, successMsg, 'success');
-        await load();
-      } else {
-        setStatus(status, errorMsg, 'error');
-      }
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = 'حفظ التغييرات';
-    }
-  });
-
-  load().catch(() => setStatus(document.getElementById('form-status'), errorMsg, 'error'));
+<script>
+  import { initProfilePage } from '../../../lib/admin/ui/pages/profile';
+  initProfilePage();
 </script>

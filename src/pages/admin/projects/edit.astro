@@ -1,6 +1,7 @@
 ---
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
+import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 
 export const prerender = false;
@@ -10,6 +11,16 @@ const isNew = Astro.url.searchParams.get('new') === '1';
 ---
 
 <AdminLayout title={isNew ? 'مشروع جديد' : `تعديل: ${slug}`}>
+  <AdminPageConfig config={{
+    locale,
+    slug,
+    isNew,
+    saveLabel: adminUi.common.save,
+    savingLabel: adminUi.common.saving,
+    successMsg: adminUi.common.success,
+    errorMsg: adminUi.common.error,
+    confirmDelete: adminUi.common.confirmDelete,
+  }} />
   <AdminShell title={isNew ? 'مشروع جديد' : 'تعديل مشروع'}>
     <div class="adm-page-header">
       <div>
@@ -105,94 +116,7 @@ const isNew = Astro.url.searchParams.get('new') === '1';
   </AdminShell>
 </AdminLayout>
 
-<script define:vars={{ locale, slug, isNew, saveLabel: adminUi.common.save, savingLabel: adminUi.common.saving, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, confirmDelete: adminUi.common.confirmDelete }}>
-  import { api } from '../../../lib/admin/ui/client';
-
-  const form = document.getElementById('project-form');
-  const status = document.getElementById('form-status');
-  const saveBtn = document.getElementById('save-btn');
-  const deleteBtn = document.getElementById('delete-btn');
-
-  function showStatus(message, ok) {
-    status.textContent = message;
-    status.className = `adm-alert ${ok ? 'adm-alert--success' : 'adm-alert--error'}`;
-    status.classList.remove('hidden');
-  }
-
-  async function loadProject() {
-    if (isNew) return;
-    const { data } = await api(`/api/admin/projects?locale=${locale}&slug=${slug}`);
-    const { project } = data;
-    if (!project) return;
-
-    document.getElementById('sha').value = project.sha || '';
-    document.getElementById('title').value = project.frontmatter.title || '';
-    document.getElementById('slug').value = project.slug || '';
-    document.getElementById('excerpt').value = project.frontmatter.excerpt || '';
-    document.getElementById('problem').value = project.frontmatter.problem || '';
-    document.getElementById('solution').value = project.frontmatter.solution || '';
-    document.getElementById('role').value = project.frontmatter.role || '';
-    document.getElementById('result').value = project.frontmatter.result || '';
-    document.getElementById('technologies').value = (project.frontmatter.technologies || []).join(', ');
-    document.getElementById('cover').value = project.frontmatter.cover || '';
-    document.getElementById('order').value = project.frontmatter.order || 1;
-    document.getElementById('github').value = project.frontmatter.github || '';
-    document.getElementById('demo').value = project.frontmatter.demo || '';
-    document.getElementById('body').value = project.body || '';
-    document.getElementById('featured').checked = project.frontmatter.featured !== false;
-  }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    saveBtn.disabled = true;
-    saveBtn.textContent = savingLabel;
-
-    const payload = {
-      locale,
-      slug: document.getElementById('slug').value,
-      sha: document.getElementById('sha').value || undefined,
-      frontmatter: {
-        title: document.getElementById('title').value,
-        excerpt: document.getElementById('excerpt').value,
-        problem: document.getElementById('problem').value,
-        solution: document.getElementById('solution').value,
-        role: document.getElementById('role').value,
-        result: document.getElementById('result').value,
-        technologies: document.getElementById('technologies').value.split(',').map((t) => t.trim()).filter(Boolean),
-        cover: document.getElementById('cover').value,
-        order: Number(document.getElementById('order').value),
-        featured: document.getElementById('featured').checked,
-        github: document.getElementById('github').value || undefined,
-        demo: document.getElementById('demo').value || undefined,
-      },
-      body: document.getElementById('body').value,
-    };
-
-    try {
-      const { res, data } = await api('/api/admin/projects', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        showStatus(successMsg, true);
-        if (isNew) window.location.href = `/admin/projects/edit?locale=${locale}&slug=${data.slug}`;
-      } else {
-        showStatus(data.error || errorMsg, false);
-      }
-    } catch {
-      showStatus(errorMsg, false);
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = saveLabel;
-    }
-  });
-
-  deleteBtn?.addEventListener('click', async () => {
-    if (!confirm(confirmDelete)) return;
-    const sha = document.getElementById('sha').value;
-    const { res } = await api(`/api/admin/projects/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
-    if (res.ok) window.location.href = `/admin/projects?locale=${locale}`;
-  });
-
-  loadProject();
+<script>
+  import { initProjectsEditPage } from '../../../lib/admin/ui/pages/projects-edit';
+  initProjectsEditPage();
 </script>
