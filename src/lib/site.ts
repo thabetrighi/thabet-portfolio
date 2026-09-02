@@ -5,6 +5,8 @@ export const site = {
     en: 'Thabet',
     fr: 'Thabet',
   },
+  /** Optional logo path under /public — leave empty to use text name only */
+  logo: '' as string,
   email: 'hello@thabet.dev',
   url: 'https://thabet.dev',
   github: 'https://github.com/thabet',

@@ -41,6 +41,22 @@ CONTACT_EMAIL=hello@thabet.dev
 
 Turnstile test keys work in development. Never expose secret keys in the frontend.
 
+## Content & customization
+
+**Full guide (Arabic):** [docs/CONTENT-GUIDE.md](docs/CONTENT-GUIDE.md)
+
+Quick reference:
+
+| Change | File |
+|--------|------|
+| Name, email, links, logo | `src/lib/site.ts` |
+| UI labels & section text | `src/i18n/ui.ts` |
+| Experience, skills, resume | `src/lib/content.ts` |
+| Articles | `content/articles/{ar,en,fr}/*.md` |
+| Projects | `content/projects/{ar,en,fr}/*.md` |
+| Images, favicon, CV | `public/` |
+| Site URL (SEO) | `astro.config.mjs` → `site` |
+
 ## Content Structure
 
 ```

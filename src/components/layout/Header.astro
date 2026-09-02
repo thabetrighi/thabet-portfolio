@@ -31,9 +31,12 @@ function isActive(href: string): boolean {
   <div class="mx-auto flex max-w-wide items-center justify-between gap-6 px-5 py-4 md:px-8">
     <a
       href={getLocalizedPath(locale)}
-      class="font-display text-lg font-medium tracking-tight no-underline text-ink dark:text-ink-dark hover:text-accent dark:hover:text-accent-dark transition-colors"
+      class="flex items-center gap-2.5 font-display text-lg font-medium tracking-tight no-underline text-ink dark:text-ink-dark hover:text-accent dark:hover:text-accent-dark transition-colors"
       aria-label={site.fullName[locale]}
     >
+      {site.logo ? (
+        <img src={site.logo} alt={site.fullName[locale]} class="h-7 w-auto" width="28" height="28" />
+      ) : null}
       {site.fullName[locale]}
     </a>
 
