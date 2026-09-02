@@ -11,9 +11,9 @@ export const ui = {
     },
     hero: {
       role: 'مهندس Laravel أول',
-      identity: 'أبني منصات SaaS، واجهات REST API، وأنظمة مؤسسية قابلة للتوسع.',
+      identity: 'أبني أنظمة ويب قابلة للتوسع — منصات SaaS، واجهات API، وتطبيقات مؤسسية موثوقة.',
       description:
-        'متخصص في Laravel وVue.js والتكاملات الخارجية والمعالجة الخلفية. خبرة في الفعاليات، التعليم الإلكتروني، الاستشارات، المنح، والأنظمة متعددة المستأجرين.',
+        'مهندس Laravel متمرس في هندسة الخلفية والتكاملات والأنظمة متعددة المستأجرين. أعمل مع فرق وعملاء في مجالات متنوعة حسب طبيعة المنتج واحتياج العمل.',
       ctaWork: 'عرض أعمالي',
       ctaArticles: 'قراءة المقالات',
       ctaContact: 'تواصل معي',
@@ -27,7 +27,12 @@ export const ui = {
       more: 'المزيد عني',
     },
     experience: {
-      title: 'الخبرة',
+      title: 'الخبرة المهنية',
+      subtitle: 'خبرة عملية في بناء وتطوير أنظمة ويب معقدة عبر قطاعات ومجالات متعددة — وليس في مجال واحد فقط.',
+      highlights: 'أبرز المساهمات',
+      platforms: 'منصات وأنظمة شاركت في تطويرها',
+      techStack: 'التقنيات',
+      present: 'حتى الآن',
     },
     skills: {
       title: 'مجالات الخبرة',
@@ -40,11 +45,12 @@ export const ui = {
       title: 'أعمال مختارة',
       viewAll: 'جميع المشاريع',
       viewCase: 'دراسة الحالة',
-      problem: 'المشكلة',
+      problem: 'التحدي',
       solution: 'الحل',
-      role: 'الدور',
+      role: 'دوري',
       result: 'النتيجة',
       technologies: 'التقنيات',
+      company: 'الشركة',
     },
     articles: {
       title: 'مقالات',
@@ -85,7 +91,7 @@ export const ui = {
       homeDescription:
         'ثابت ريغي — مهندس Laravel أول يبني منصات SaaS وواجهات REST API وأنظمة مؤسسية. مشاريع، مقالات، وسيرة ذاتية.',
       aboutDescription: 'نبذة عن ثابت ريغي — خبرة في Laravel وVue.js، منصات مؤسسية، وتكاملات SAP والدفع وSMS.',
-      workDescription: 'مشاريع مختارة: منصات فعاليات، تعليم إلكتروني، استشارات، منح، وعضويات.',
+      workDescription: 'أعمال مختارة: منصات مؤسسية، أنظمة توزيع، تطبيقات سطح مكتب وموبايل — مع تفاصيل تقنية لكل مشروع.',
       articlesDescription: 'مقالات تقنية عن Laravel، Vue.js، الأداء، التكاملات، وهندسة الأنظمة.',
       resumeDescription: 'السيرة الذاتية، التعليم، المهارات، واللغات.',
     },
@@ -108,9 +114,9 @@ export const ui = {
         { title: 'التواصل الواضح', description: 'أشرح القرارات التقنية بلغة يفهمها الفريق والعميل.' },
       ],
     },
-    techMarquee: {
+      techMarquee: {
       title: 'التقنيات التي أعمل بها',
-      items: ['Laravel', 'Vue.js', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP', 'REST APIs', 'JWT', 'Queues'],
+      items: ['Laravel', 'Vue.js', 'React', 'Tauri', 'Expo', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP'],
     },
     cta: {
       title: 'لديك مشروع في بالك؟',
@@ -128,9 +134,9 @@ export const ui = {
     },
     hero: {
       role: 'Senior Laravel Engineer',
-      identity: 'I build scalable SaaS platforms, REST APIs, and enterprise systems.',
+      identity: 'I build scalable web systems — SaaS platforms, APIs, and reliable enterprise applications.',
       description:
-        'Specialized in Laravel, Vue.js, third-party integrations, and background processing. Experienced across events, e-learning, consultations, grants, and multi-tenant platforms.',
+        'Experienced Laravel engineer focused on backend architecture, integrations, and multi-tenant systems. I work across diverse business domains based on product needs.',
       ctaWork: 'View my work',
       ctaArticles: 'Read articles',
       ctaContact: 'Contact me',
@@ -144,7 +150,12 @@ export const ui = {
       more: 'More about me',
     },
     experience: {
-      title: 'Experience',
+      title: 'Professional Experience',
+      subtitle: 'Hands-on experience building complex web systems across multiple industries — not limited to a single domain.',
+      highlights: 'Key contributions',
+      platforms: 'Platforms & systems contributed to',
+      techStack: 'Technologies',
+      present: 'Present',
     },
     skills: {
       title: 'Areas of expertise',
@@ -157,11 +168,12 @@ export const ui = {
       title: 'Selected work',
       viewAll: 'All projects',
       viewCase: 'Case study',
-      problem: 'Problem',
+      problem: 'Challenge',
       solution: 'Solution',
-      role: 'Role',
-      result: 'Result',
+      role: 'My role',
+      result: 'Outcome',
       technologies: 'Technologies',
+      company: 'Company',
     },
     articles: {
       title: 'Articles',
@@ -202,7 +214,7 @@ export const ui = {
       homeDescription:
         'Thabet Righi — Senior Laravel Engineer building SaaS platforms, REST APIs, and enterprise systems. Projects, articles, and resume.',
       aboutDescription: 'About Thabet Righi — Laravel & Vue.js experience, enterprise platforms, and SAP, payment & SMS integrations.',
-      workDescription: 'Selected projects: event platforms, e-learning, consultations, grants, and membership systems.',
+      workDescription: 'Selected work: enterprise platforms, distribution systems, desktop and mobile apps — with technical detail for each project.',
       articlesDescription: 'Technical articles on Laravel, Vue.js, performance, integrations, and system design.',
       resumeDescription: 'Resume, education, skills, and languages.',
     },
@@ -227,7 +239,7 @@ export const ui = {
     },
     techMarquee: {
       title: 'Technologies I work with',
-      items: ['Laravel', 'Vue.js', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP', 'REST APIs', 'JWT', 'Queues'],
+      items: ['Laravel', 'Vue.js', 'React', 'Tauri', 'Expo', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP'],
     },
     cta: {
       title: 'Have a project in mind?',
@@ -245,9 +257,9 @@ export const ui = {
     },
     hero: {
       role: 'Ingénieur Laravel Senior',
-      identity: 'Je conçois des plateformes SaaS évolutives, des API REST et des systèmes d\'entreprise.',
+      identity: 'Je conçois des systèmes web évolutifs — plateformes SaaS, API et applications d\'entreprise fiables.',
       description:
-        'Spécialisé en Laravel, Vue.js, intégrations tierces et traitement en arrière-plan. Expérience en événements, e-learning, consultations, subventions et plateformes multi-tenant.',
+        'Ingénieur Laravel expérimenté en architecture backend, intégrations et systèmes multi-tenant. J\'interviens dans des domaines variés selon les besoins du produit.',
       ctaWork: 'Voir mes projets',
       ctaArticles: 'Lire les articles',
       ctaContact: 'Me contacter',
@@ -261,7 +273,12 @@ export const ui = {
       more: 'En savoir plus',
     },
     experience: {
-      title: 'Expérience',
+      title: 'Expérience professionnelle',
+      subtitle: 'Expérience concrète dans la construction de systèmes web complexes dans plusieurs secteurs — sans se limiter à un seul domaine.',
+      highlights: 'Contributions clés',
+      platforms: 'Plateformes & systèmes développés',
+      techStack: 'Technologies',
+      present: 'Présent',
     },
     skills: {
       title: 'Domaines d\'expertise',
@@ -274,11 +291,12 @@ export const ui = {
       title: 'Projets sélectionnés',
       viewAll: 'Tous les projets',
       viewCase: 'Étude de cas',
-      problem: 'Problème',
+      problem: 'Défi',
       solution: 'Solution',
-      role: 'Rôle',
+      role: 'Mon rôle',
       result: 'Résultat',
       technologies: 'Technologies',
+      company: 'Entreprise',
     },
     articles: {
       title: 'Articles',
@@ -319,7 +337,7 @@ export const ui = {
       homeDescription:
         'Thabet Righi — Ingénieur Laravel Senior qui conçoit des plateformes SaaS, des API REST et des systèmes d\'entreprise. Projets, articles et CV.',
       aboutDescription: 'À propos de Thabet Righi — expérience Laravel & Vue.js, plateformes d\'entreprise, intégrations SAP, paiement et SMS.',
-      workDescription: 'Projets sélectionnés : événements, e-learning, consultations, subventions et adhésions.',
+      workDescription: 'Projets sélectionnés : plateformes d\'entreprise, systèmes de distribution, applications desktop et mobile.',
       articlesDescription: 'Articles techniques sur Laravel, Vue.js, performance, intégrations et architecture.',
       resumeDescription: 'CV, formation, compétences et langues.',
     },
@@ -344,7 +362,7 @@ export const ui = {
     },
     techMarquee: {
       title: 'Technologies que j\'utilise',
-      items: ['Laravel', 'Vue.js', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP', 'REST APIs', 'JWT', 'Queues'],
+      items: ['Laravel', 'Vue.js', 'React', 'Tauri', 'Expo', 'PHP', 'MySQL', 'PostgreSQL', 'Redis', 'SAP'],
     },
     cta: {
       title: 'Un projet en tête ?',

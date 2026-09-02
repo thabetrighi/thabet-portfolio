@@ -6,7 +6,7 @@
       "startDate": "Sep 2021",
       "endDate": null,
       "location": "Riyadh, Saudi Arabia",
-      "description": "Design, development, maintenance, and continuous improvement of multiple large-scale digital platforms and internal enterprise systems — spanning backend architecture, REST APIs, Vue.js applications, database design, third-party integrations, authentication, background jobs, and production support.",
+      "description": "I design, build, and maintain large-scale web platforms and internal business systems. My work spans backend architecture, REST APIs, Vue.js applications, database design, third-party integrations, authentication, background jobs, performance optimization, and production support — across whatever domain the product requires.",
       "technologies": [
         "Laravel",
         "Vue.js",
@@ -15,17 +15,30 @@
         "PostgreSQL",
         "Redis",
         "REST APIs",
-        "Queues & Jobs"
+        "Queues & Jobs",
+        "Tauri",
+        "React",
+        "Expo"
       ],
-      "achievements": [
-        "Advanced Event Management Platform — lifecycle management, registrations, dynamic scheduling, evaluations, payments, and real-time Zoom/YouTube streaming",
-        "Webinar Management Platform — scheduling, secure session tokens, multilingual support, SMS/email notifications, and meeting service integrations",
-        "Consultation Management Platform — consultant profiles, calendar sync, appointments, secure video consultations, and client workflows",
-        "E-Learning Management Platform — courses, learning paths, enrollments, progress tracking, assessments, subscriptions, and role-based dashboards",
-        "Grant Management & Funding Platform — SAP integration, budget/contract workflows, digital signatures, and financial approval processes",
-        "Membership Management Platform — subscriptions, digital membership cards, CRM integration, and automated member workflows",
-        "Driving School Management System — trainee registration, lesson scheduling, attendance, examinations, invoicing, and online payments",
-        "Multiple internal enterprise platforms — custom workflows, admin systems, reporting, auth, and third-party integrations across diverse business domains"
+      "highlights": [
+        "Architected and extended multi-tenant Laravel platforms with clean service layers and maintainable APIs",
+        "Integrated payment gateways (Mada, HyperPay, Tap, Moyasar), SMS providers, SAP, CRM, and streaming services",
+        "Built background processing pipelines with queues, Redis caching, and performance-focused query optimization",
+        "Delivered desktop (Tauri + React) and mobile (Expo) products alongside core web platforms",
+        "Resolved complex production issues, modernized legacy modules, and supported CI/CD deployments"
+      ],
+      "platformTags": [
+        "Event Management",
+        "Webinars",
+        "Consultations",
+        "E-Learning",
+        "Grants & SAP",
+        "Memberships",
+        "Driving Schools",
+        "Parcel Distribution",
+        "POS Desktop",
+        "Health Mobile App",
+        "Internal Enterprise Systems"
       ]
     },
     {
@@ -34,19 +47,24 @@
       "startDate": "Aug 2019",
       "endDate": "Nov 2019",
       "location": "Algeria",
-      "description": "Contributed to a vehicle rental and transportation management platform supporting booking, fleet operations, driver management, pricing, and real-time tracking.",
+      "description": "Contributed to a vehicle rental and transportation management platform, working on backend APIs and operational workflows for booking, fleet management, and real-time tracking.",
       "technologies": [
         "Laravel",
         "PHP",
         "MySQL",
         "REST APIs",
-        "Mobile Integration"
+        "Mobile Integration",
+        "GPS Tracking"
       ],
-      "achievements": [
-        "Vehicle and fleet management modules",
-        "Booking and driver scheduling workflows",
-        "Automated pricing and real-time tracking features",
-        "Administrative dashboards and operational reporting"
+      "highlights": [
+        "Developed fleet and vehicle management modules with booking workflows",
+        "Implemented driver scheduling and automated pricing logic",
+        "Integrated real-time tracking features and administrative reporting dashboards"
+      ],
+      "platformTags": [
+        "VTC Car Rental",
+        "Fleet Operations",
+        "Transportation Management"
       ]
     }
   ],
@@ -68,15 +86,27 @@
       ]
     },
     {
-      "name": "Frontend",
+      "name": "Frontend & Desktop",
       "items": [
         "JavaScript",
         "Vue.js",
+        "React",
         "Vuex",
+        "Tauri",
         "HTML5",
         "CSS",
         "Component Architecture",
         "State Management"
+      ]
+    },
+    {
+      "name": "Mobile",
+      "items": [
+        "Expo",
+        "React Native",
+        "TypeScript",
+        "Mobile APIs",
+        "Cross-platform UI"
       ]
     },
     {
@@ -100,6 +130,7 @@
         "CRM Systems",
         "SMS APIs",
         "Payment Gateways",
+        "SyncPower",
         "Third-Party REST APIs"
       ]
     },
@@ -147,11 +178,11 @@
     }
   ],
   "about": {
-    "summary": "Senior Laravel engineer who builds scalable SaaS platforms, REST APIs, and enterprise systems — with a focus on clean architecture, maintainability, and production reliability.",
-    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI specialize in PHP, Laravel, Vue.js, database architecture, API development, third-party integrations, authentication, background processing, performance optimization, and multi-tenant systems. My work spans education, events, webinars, consultations, memberships, grants, training, and enterprise workflows.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality. I am particularly experienced in working with existing Laravel applications, understanding complex business logic, resolving difficult backend issues, modernizing legacy implementations, and extending systems with new features and integrations."
+    "summary": "Senior Laravel engineer who builds scalable web systems — SaaS platforms, APIs, desktop and mobile applications — with a focus on clean architecture, maintainability, and production reliability.",
+    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI work across diverse business domains depending on product needs — not limited to one industry. My experience includes education, events, logistics, retail POS, health apps, consultations, memberships, grants, and internal enterprise workflows.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality. I am particularly experienced in working with existing Laravel applications, understanding complex business logic, resolving difficult backend issues, modernizing legacy implementations, and extending systems with new features and integrations."
   },
   "resume": {
-    "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, and enterprise systems. Specialized in Laravel, Vue.js, multi-tenant architecture, third-party integrations (SAP, payments, SMS, streaming), and production-grade backend engineering. Currently at TechTrans, Riyadh.",
+    "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, enterprise systems, desktop (Tauri + React), and mobile (Expo) applications. Specialized in Laravel, Vue.js, multi-tenant architecture, and third-party integrations. Currently at TechTrans, Riyadh.",
     "education": [
       {
         "institution": "University of El Oued",

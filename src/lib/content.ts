@@ -11,7 +11,10 @@ export interface Experience {
   location: string;
   description: string;
   technologies: string[];
-  achievements: string[];
+  /** Key accomplishments at this role — not individual platform listings */
+  highlights: string[];
+  /** Platforms/systems worked on — shown as internal tags in the experience section */
+  platformTags: string[];
 }
 
 export interface SkillArea {

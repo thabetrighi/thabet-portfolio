@@ -126,6 +126,19 @@
     @apply dark:border-border-dark dark:text-ink-secondary-dark;
   }
 
+  .tag-muted {
+    @apply normal-case tracking-normal font-sans text-[11px];
+    @apply bg-surface/80 dark:bg-surface-dark/60;
+  }
+
+  .experience-card {
+    @apply transition-shadow duration-300;
+  }
+
+  .experience-card:hover {
+    @apply shadow-sm dark:shadow-none;
+  }
+
   .section-label {
     @apply font-mono text-xs uppercase tracking-[0.15em] text-ink-muted dark:text-ink-muted-dark;
   }
