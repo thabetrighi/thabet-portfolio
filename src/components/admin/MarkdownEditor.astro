@@ -1,0 +1,23 @@
+---
+interface Props {
+  id?: string;
+  label?: string;
+  required?: boolean;
+  rows?: number;
+}
+
+const { id = 'body', label = 'المحتوى (Markdown)', required = true, rows = 16 } = Astro.props;
+---
+
+<div class="adm-field adm-md-editor-root" data-md-root={id}>
+  <label class="adm-label" for={id}>{label}</label>
+  <textarea
+    class="adm-textarea adm-textarea--mono"
+    id={id}
+    name={id}
+    rows={rows}
+    required={required}
+    spellcheck="false"
+    dir="auto"
+  ></textarea>
+</div>

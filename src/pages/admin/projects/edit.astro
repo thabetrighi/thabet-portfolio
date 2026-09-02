@@ -2,6 +2,7 @@
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
 import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
+import MarkdownEditor from '../../../components/admin/MarkdownEditor.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 
 export const prerender = false;
@@ -85,31 +86,39 @@ const isNew = Astro.url.searchParams.get('new') === '1';
         </div>
       </div>
 
-      <div class="adm-grid adm-grid-2">
+      <div class="adm-grid adm-grid-3">
         <div class="adm-field">
           <label class="adm-label" for="github">GitHub (اختياري)</label>
-          <input class="adm-input" id="github" type="url" />
+          <input class="adm-input" id="github" type="url" placeholder="https://github.com/..." dir="ltr" />
         </div>
         <div class="adm-field">
           <label class="adm-label" for="demo">Demo (اختياري)</label>
-          <input class="adm-input" id="demo" type="url" />
+          <input class="adm-input" id="demo" type="url" placeholder="https://..." dir="ltr" />
+        </div>
+        <div class="adm-field">
+          <label class="adm-label" for="translationOf">ترجمة لـ (slug)</label>
+          <input class="adm-input" id="translationOf" placeholder="my-project-en" dir="ltr" />
         </div>
       </div>
 
-      <div class="adm-field">
-        <label class="adm-label" for="body">المحتوى (Markdown)</label>
-        <textarea class="adm-textarea adm-textarea--mono" id="body" rows="14" required></textarea>
-      </div>
+      <MarkdownEditor id="body" label="المحتوى (Markdown)" rows={16} />
 
-      <label class="adm-checkbox-row">
-        <input type="checkbox" id="featured" checked />
-        مميز
-      </label>
+      <div class="adm-grid adm-grid-2">
+        <label class="adm-checkbox-row">
+          <input type="checkbox" id="featured" checked />
+          مميز (يظهر في الصفحة الرئيسية)
+        </label>
+        <label class="adm-checkbox-row">
+          <input type="checkbox" id="draft" />
+          مسودة (لن يُنشر على الموقع)
+        </label>
+      </div>
 
       <div id="form-status" class="adm-alert hidden" role="alert"></div>
 
       <div class="adm-btn-row">
         <button type="submit" class="adm-btn adm-btn--primary" id="save-btn">{adminUi.common.save}</button>
+        <button type="button" class="adm-btn adm-btn--secondary" id="preview-btn">معاينة قبل النشر</button>
         {!isNew && <button type="button" class="adm-btn adm-btn--danger" id="delete-btn">{adminUi.common.delete}</button>}
       </div>
     </form>

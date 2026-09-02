@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 import { requireAdminApi } from '../../../../lib/admin/auth/guard';
-import { adminError, adminJson, parseJsonBody } from '../../../../lib/admin/api/response';
+import { adminError, adminJson } from '../../../../lib/admin/api/response';
+import { parseValidatedJsonBody } from '../../../../lib/admin/validation';
+import { projectSaveSchema } from '../../../../lib/admin/schemas/content';
 import {
   getProjectsList,
   getProject,
   saveProject,
-  suggestSlug,
 } from '../../../../lib/admin/content-source';
-import type { ProjectFrontmatter } from '../../../../lib/admin/types';
 import { LOCALES } from '../../../../lib/admin/config';
 
 export const prerender = false;
@@ -34,29 +34,30 @@ export const GET: APIRoute = async ({ request, url }) => {
   }
 };
 
-interface ProjectBody {
-  locale: string;
-  slug: string;
-  frontmatter: ProjectFrontmatter;
-  body: string;
-  sha?: string;
-}
-
 export const POST: APIRoute = async ({ request }) => {
   const denied = await requireAdminApi(request);
   if (denied) return denied;
 
+  const parsed = await parseValidatedJsonBody(request, projectSaveSchema);
+  if (!parsed.ok) return parsed.response;
+
+  const body = parsed.data;
+  const frontmatter = {
+    ...body.frontmatter,
+    github: body.frontmatter.github || undefined,
+    demo: body.frontmatter.demo || undefined,
+    translationOf: body.frontmatter.translationOf || undefined,
+  };
+
   try {
-    const body = await parseJsonBody<ProjectBody>(request);
-    const slug = body.slug || suggestSlug(body.frontmatter.title);
     const result = await saveProject(
       body.locale,
-      slug,
-      body.frontmatter,
+      body.slug,
+      frontmatter,
       body.body,
       body.sha,
     );
-    return adminJson({ success: true, slug, commitSha: result.commitSha });
+    return adminJson({ success: true, slug: body.slug, commitSha: result.commitSha });
   } catch (error) {
     return adminError((error as Error).message, 500);
   }

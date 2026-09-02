@@ -2,6 +2,7 @@
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import AdminShell from '../../../components/admin/AdminShell.astro';
 import AdminPageConfig from '../../../components/admin/AdminPageConfig.astro';
+import MarkdownEditor from '../../../components/admin/MarkdownEditor.astro';
 import { adminUi } from '../../../lib/admin/ui/strings';
 
 export const prerender = false;
@@ -65,31 +66,35 @@ const isNew = Astro.url.searchParams.get('new') === '1';
         </div>
       </div>
 
-      <div class="adm-grid adm-grid-2">
+      <div class="adm-grid adm-grid-3">
         <div class="adm-field">
           <label class="adm-label" for="tags">الوسوم (مفصولة بفاصلة)</label>
-          <input class="adm-input" id="tags" name="tags" />
+          <input class="adm-input" id="tags" name="tags" placeholder="astro, cloudflare" />
         </div>
         <div class="adm-field">
           <label class="adm-label" for="cover">صورة الغلاف</label>
           <input class="adm-input" id="cover" name="cover" placeholder="/images/articles/example.svg" />
         </div>
+        <div class="adm-field">
+          <label class="adm-label" for="translationOf">ترجمة لـ (slug)</label>
+          <input class="adm-input" id="translationOf" name="translationOf" placeholder="my-article-en" dir="ltr" />
+        </div>
       </div>
 
-      <div class="adm-field">
-        <label class="adm-label" for="body">المحتوى (Markdown)</label>
-        <textarea class="adm-textarea adm-textarea--mono" id="body" name="body" rows="16" required></textarea>
-      </div>
+      <MarkdownEditor id="body" label="المحتوى (Markdown)" rows={18} />
 
-      <label class="adm-checkbox-row">
-        <input type="checkbox" id="draft" name="draft" />
-        مسودة
-      </label>
+      <div class="adm-grid adm-grid-2">
+        <label class="adm-checkbox-row">
+          <input type="checkbox" id="draft" name="draft" />
+          مسودة (لن تُنشر على الموقع)
+        </label>
+      </div>
 
       <div id="form-status" class="adm-alert hidden" role="alert"></div>
 
       <div class="adm-btn-row">
         <button type="submit" class="adm-btn adm-btn--primary" id="save-btn">{adminUi.common.save}</button>
+        <button type="button" class="adm-btn adm-btn--secondary" id="preview-btn">معاينة قبل النشر</button>
         {!isNew && <button type="button" class="adm-btn adm-btn--danger" id="delete-btn">{adminUi.common.delete}</button>}
       </div>
     </form>

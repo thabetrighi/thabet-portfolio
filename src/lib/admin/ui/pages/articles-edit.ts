@@ -1,5 +1,16 @@
 import { api } from '../client';
 import { readPageConfig } from '../read-config';
+import { articleSaveSchema } from '../../schemas/content';
+import { sanitizeSlug } from '../../validation';
+import { initMarkdownEditor } from '../markdown-editor';
+import { openPublishPreview } from '../publish-preview';
+import {
+  bindSlugFromTitle,
+  clearFieldErrors,
+  showFieldError,
+  translateValidationError,
+  validateWithSchema,
+} from '../form-validation';
 
 interface EditConfig {
   locale: string;
@@ -24,11 +35,46 @@ function field<T extends HTMLElement>(id: string) {
   return document.getElementById(id) as T;
 }
 
+function buildPayload() {
+  return {
+    locale: readPageConfig<EditConfig>().locale,
+    slug: field<HTMLInputElement>('slug').value.trim(),
+    previousSlug: field<HTMLInputElement>('previousSlug').value || undefined,
+    sha: field<HTMLInputElement>('sha').value || undefined,
+    frontmatter: {
+      title: field<HTMLInputElement>('title').value.trim(),
+      excerpt: field<HTMLTextAreaElement>('excerpt').value.trim(),
+      category: field<HTMLInputElement>('category').value.trim(),
+      publishedAt: field<HTMLInputElement>('publishedAt').value,
+      readingTime: Number(field<HTMLInputElement>('readingTime').value),
+      tags: field<HTMLInputElement>('tags').value.split(',').map((t) => t.trim()).filter(Boolean),
+      cover: field<HTMLInputElement>('cover').value.trim() || undefined,
+      translationOf: field<HTMLInputElement>('translationOf').value.trim() || undefined,
+      draft: field<HTMLInputElement>('draft').checked,
+    },
+    body: field<HTMLTextAreaElement>('body').value,
+  };
+}
+
 export function initArticlesEditPage() {
   const config = readPageConfig<EditConfig>();
   const form = document.getElementById('article-form');
   const saveBtn = field<HTMLButtonElement>('save-btn');
   const deleteBtn = field<HTMLButtonElement>('delete-btn');
+  const previewBtn = field<HTMLButtonElement>('preview-btn');
+
+  const mdRoot = document.querySelector<HTMLElement>('[data-md-root="body"]');
+  const mdEditor = mdRoot ? initMarkdownEditor(mdRoot) : null;
+
+  const titleInput = field<HTMLInputElement>('title');
+  const slugInput = field<HTMLInputElement>('slug');
+  bindSlugFromTitle(titleInput, slugInput, config.isNew);
+
+  titleInput.addEventListener('blur', () => {
+    if (!slugInput.value && titleInput.value) {
+      slugInput.value = sanitizeSlug(titleInput.value);
+    }
+  });
 
   async function loadArticle() {
     if (config.isNew) return;
@@ -45,34 +91,39 @@ export function initArticlesEditPage() {
     field<HTMLInputElement>('readingTime').value = String(article.frontmatter.readingTime || 5);
     field<HTMLInputElement>('tags').value = (article.frontmatter.tags || []).join(', ');
     field<HTMLInputElement>('cover').value = article.frontmatter.cover || '';
-    field<HTMLTextAreaElement>('body').value = article.body || '';
+    field<HTMLInputElement>('translationOf').value = article.frontmatter.translationOf || '';
+    const body = article.body || '';
+    if (mdEditor) mdEditor.setValue(body);
+    else field<HTMLTextAreaElement>('body').value = body;
     field<HTMLInputElement>('draft').checked = Boolean(article.frontmatter.draft);
+  }
+
+  function validateForm() {
+    clearFieldErrors(form!);
+    const payload = buildPayload();
+    const result = validateWithSchema(articleSaveSchema, payload);
+    if (!result.ok) {
+      if (result.field) {
+        const fieldId = result.field.startsWith('frontmatter.')
+          ? result.field.replace('frontmatter.', '')
+          : result.field;
+        showFieldError(fieldId, result.message);
+      }
+      showStatus(result.message, false);
+      return null;
+    }
+    return result.data;
   }
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const payload = validateForm();
+    if (!payload) return;
+
     if (saveBtn) {
       saveBtn.disabled = true;
       saveBtn.textContent = config.savingLabel;
     }
-
-    const payload = {
-      locale: config.locale,
-      slug: field<HTMLInputElement>('slug').value,
-      previousSlug: field<HTMLInputElement>('previousSlug').value,
-      sha: field<HTMLInputElement>('sha').value || undefined,
-      frontmatter: {
-        title: field<HTMLInputElement>('title').value,
-        excerpt: field<HTMLTextAreaElement>('excerpt').value,
-        category: field<HTMLInputElement>('category').value,
-        publishedAt: field<HTMLInputElement>('publishedAt').value,
-        readingTime: Number(field<HTMLInputElement>('readingTime').value),
-        tags: field<HTMLInputElement>('tags').value.split(',').map((t) => t.trim()).filter(Boolean),
-        cover: field<HTMLInputElement>('cover').value || undefined,
-        draft: field<HTMLInputElement>('draft').checked,
-      },
-      body: field<HTMLTextAreaElement>('body').value,
-    };
 
     try {
       const { res, data } = await api('/api/admin/articles', {
@@ -88,7 +139,7 @@ export function initArticlesEditPage() {
           field<HTMLInputElement>('previousSlug').value = data.slug;
         }
       } else {
-        showStatus(data.error || config.errorMsg, false);
+        showStatus(translateValidationError(data.error) || config.errorMsg, false);
       }
     } catch {
       showStatus(config.errorMsg, false);
@@ -98,6 +149,21 @@ export function initArticlesEditPage() {
         saveBtn.textContent = config.saveLabel;
       }
     }
+  });
+
+  previewBtn?.addEventListener('click', () => {
+    const payload = buildPayload();
+    openPublishPreview(
+      {
+        title: payload.frontmatter.title,
+        excerpt: payload.frontmatter.excerpt,
+        category: payload.frontmatter.category,
+        publishedAt: payload.frontmatter.publishedAt,
+        tags: payload.frontmatter.tags,
+      },
+      payload.body,
+      'article',
+    );
   });
 
   deleteBtn?.addEventListener('click', async () => {

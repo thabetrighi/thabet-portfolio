@@ -14,9 +14,9 @@ export const siteConfigSchema = z.object({
 
 export const socialConfigSchema = z.object({
   links: z.array(z.object({
-    platform: z.string().min(1),
-    url: z.string(),
-  })),
+    platform: z.string().min(1).max(50),
+    url: z.union([z.string().url(), z.literal('')]),
+  })).max(20),
 });
 
 export const profileConfigSchema = z.object({
