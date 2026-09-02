@@ -1,59 +1,52 @@
 {
   "experience": [
     {
-      "company": "TechFlow SaaS",
-      "position": "Senior Software Engineer",
-      "startDate": "2022",
+      "company": "TechTrans",
+      "position": "Laravel & Vue.js Developer",
+      "startDate": "Sep 2021",
       "endDate": null,
-      "location": "Remote",
-      "description": "Lead backend architecture for a multi-tenant analytics platform serving 200+ enterprise clients.",
+      "location": "Riyadh, Saudi Arabia",
+      "description": "Design, development, maintenance, and continuous improvement of multiple large-scale digital platforms and internal enterprise systems — spanning backend architecture, REST APIs, Vue.js applications, database design, third-party integrations, authentication, background jobs, and production support.",
       "technologies": [
         "Laravel",
+        "Vue.js",
+        "PHP",
+        "MySQL",
         "PostgreSQL",
         "Redis",
-        "Cloudflare Workers"
+        "REST APIs",
+        "Queues & Jobs"
       ],
       "achievements": [
-        "Reduced API response time by 60% through query optimization and edge caching",
-        "Designed event-driven pipeline processing 2M events/day",
-        "Mentored team of 4 engineers on API design patterns"
+        "Advanced Event Management Platform — lifecycle management, registrations, dynamic scheduling, evaluations, payments, and real-time Zoom/YouTube streaming",
+        "Webinar Management Platform — scheduling, secure session tokens, multilingual support, SMS/email notifications, and meeting service integrations",
+        "Consultation Management Platform — consultant profiles, calendar sync, appointments, secure video consultations, and client workflows",
+        "E-Learning Management Platform — courses, learning paths, enrollments, progress tracking, assessments, subscriptions, and role-based dashboards",
+        "Grant Management & Funding Platform — SAP integration, budget/contract workflows, digital signatures, and financial approval processes",
+        "Membership Management Platform — subscriptions, digital membership cards, CRM integration, and automated member workflows",
+        "Driving School Management System — trainee registration, lesson scheduling, attendance, examinations, invoicing, and online payments",
+        "Multiple internal enterprise platforms — custom workflows, admin systems, reporting, auth, and third-party integrations across diverse business domains"
       ]
     },
     {
-      "company": "DigitalCraft Agency",
-      "position": "Full-Stack Developer",
-      "startDate": "2019",
-      "endDate": "2022",
-      "location": "Algiers, Algeria",
-      "description": "Built custom web applications and e-commerce solutions for regional clients.",
+      "company": "Tawfiq Company",
+      "position": "Laravel & Mobile Developer",
+      "startDate": "Aug 2019",
+      "endDate": "Nov 2019",
+      "location": "Algeria",
+      "description": "Contributed to a vehicle rental and transportation management platform supporting booking, fleet operations, driver management, pricing, and real-time tracking.",
       "technologies": [
-        "Vue.js",
         "Laravel",
-        "MySQL",
-        "Docker"
-      ],
-      "achievements": [
-        "Delivered 12 client projects on time and within budget",
-        "Introduced CI/CD pipeline reducing deployment time from hours to minutes",
-        "Built reusable component library adopted across projects"
-      ]
-    },
-    {
-      "company": "StartupLab",
-      "position": "Backend Developer",
-      "startDate": "2017",
-      "endDate": "2019",
-      "location": "Remote",
-      "description": "Developed REST APIs and microservices for early-stage SaaS products.",
-      "technologies": [
         "PHP",
-        "Node.js",
-        "MongoDB",
-        "AWS"
+        "MySQL",
+        "REST APIs",
+        "Mobile Integration"
       ],
       "achievements": [
-        "Architected authentication system used across 3 products",
-        "Implemented automated testing increasing coverage to 85%"
+        "Vehicle and fleet management modules",
+        "Booking and driver scheduling workflows",
+        "Automated pricing and real-time tracking features",
+        "Administrative dashboards and operational reporting"
       ]
     }
   ],
@@ -61,69 +54,125 @@
     {
       "name": "Backend",
       "items": [
-        "Laravel",
         "PHP",
-        "Node.js",
-        "APIs",
-        "Databases"
+        "Laravel",
+        "REST APIs",
+        "API Architecture",
+        "Authentication & Authorization",
+        "JWT",
+        "SSO",
+        "SAML",
+        "Rate Limiting",
+        "Queues & Jobs",
+        "Service Layers"
       ]
     },
     {
       "name": "Frontend",
       "items": [
-        "Vue",
         "JavaScript",
-        "React",
+        "Vue.js",
+        "Vuex",
+        "HTML5",
         "CSS",
-        "Modern Web"
+        "Component Architecture",
+        "State Management"
       ]
     },
     {
-      "name": "Infrastructure",
+      "name": "Databases",
       "items": [
-        "Cloudflare",
-        "Linux",
-        "Docker",
-        "CI/CD"
+        "MySQL",
+        "PostgreSQL",
+        "Redis",
+        "Database Design",
+        "Query Optimization",
+        "Caching"
+      ]
+    },
+    {
+      "name": "Integrations",
+      "items": [
+        "Zoom API",
+        "YouTube API",
+        "BigBlueButton",
+        "SAP",
+        "CRM Systems",
+        "SMS APIs",
+        "Payment Gateways",
+        "Third-Party REST APIs"
+      ]
+    },
+    {
+      "name": "Payments",
+      "items": [
+        "Mada",
+        "HyperPay",
+        "Tap",
+        "Moyasar"
+      ]
+    },
+    {
+      "name": "Communication & SMS",
+      "items": [
+        "Unifonic",
+        "Deewan",
+        "Taqnyat"
+      ]
+    },
+    {
+      "name": "DevOps & Tools",
+      "items": [
+        "Git",
+        "GitHub",
+        "GitLab",
+        "CI/CD",
+        "Laravel Forge",
+        "Deployment",
+        "Version Control"
       ]
     },
     {
       "name": "Architecture",
       "items": [
-        "SaaS",
-        "API Architecture",
-        "Distributed Systems",
-        "Performance",
-        "Security"
+        "Clean Architecture",
+        "Multi-Tenancy",
+        "SaaS Platforms",
+        "Modular Service Layers",
+        "Background Processing",
+        "API Security",
+        "Performance Optimization",
+        "Legacy Modernization"
       ]
     }
   ],
   "about": {
-    "summary": "I think in systems. Whether it is an API contract, a database schema, or a deployment pipeline — I care about how pieces connect and how they fail gracefully.",
-    "extended": "Over eight years, I have moved between agency work and product teams. I prefer building products that solve real operational problems: dashboards that teams actually use, APIs that do not break at scale, and tools that respect the developer maintaining them.\n\nOutside of code, I write about backend architecture and infrastructure. I believe the best engineering decisions are the ones you can explain simply."
+    "summary": "Senior Laravel engineer who builds scalable SaaS platforms, REST APIs, and enterprise systems — with a focus on clean architecture, maintainability, and production reliability.",
+    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI specialize in PHP, Laravel, Vue.js, database architecture, API development, third-party integrations, authentication, background processing, performance optimization, and multi-tenant systems. My work spans education, events, webinars, consultations, memberships, grants, training, and enterprise workflows.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality. I am particularly experienced in working with existing Laravel applications, understanding complex business logic, resolving difficult backend issues, modernizing legacy implementations, and extending systems with new features and integrations."
   },
   "resume": {
-    "profile": "Software engineer with 8+ years building web products, APIs, and distributed systems. Experienced in Laravel, Vue.js, and Cloudflare infrastructure. Based in Algeria, working remotely with international teams.",
+    "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, and enterprise systems. Specialized in Laravel, Vue.js, multi-tenant architecture, third-party integrations (SAP, payments, SMS, streaming), and production-grade backend engineering. Currently at TechTrans, Riyadh.",
     "education": [
       {
-        "institution": "University of Science and Technology Houari Boumediene",
-        "degree": "B.S. Computer Science",
-        "period": "2013 – 2017",
-        "location": "Algiers, Algeria"
-      }
-    ],
-    "certifications": [
-      {
-        "name": "Cloudflare Developer Certification",
-        "issuer": "Cloudflare",
-        "year": "2024"
+        "institution": "University of El Oued",
+        "degree": "Ph.D. in Computer Science (Doctoral Student)",
+        "period": "Oct 2019 – Oct 2025",
+        "location": "El Oued, Algeria"
       },
       {
-        "name": "AWS Cloud Practitioner",
-        "issuer": "Amazon Web Services",
-        "year": "2022"
+        "institution": "University of Ouargla",
+        "degree": "Master's Degree in Computer Science",
+        "period": "Sep 2015 – Aug 2017",
+        "location": "Ouargla, Algeria"
+      },
+      {
+        "institution": "University of Ouargla",
+        "degree": "Bachelor's Degree in Computer Science",
+        "period": "Sep 2012 – Aug 2015",
+        "location": "Ouargla, Algeria"
       }
     ],
+    "certifications": [],
     "languages": [
       {
         "language": "Arabic",
@@ -131,11 +180,11 @@
       },
       {
         "language": "English",
-        "level": "Professional"
+        "level": "Basic"
       },
       {
         "language": "French",
-        "level": "Professional"
+        "level": "Basic"
       }
     ],
     "cvFiles": {

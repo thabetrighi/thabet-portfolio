@@ -1,59 +1,52 @@
 {
   "experience": [
     {
-      "company": "TechFlow SaaS",
-      "position": "Ingénieur logiciel senior",
-      "startDate": "2022",
+      "company": "TechTrans",
+      "position": "Développeur Laravel & Vue.js",
+      "startDate": "Sept. 2021",
       "endDate": null,
-      "location": "Télétravail",
-      "description": "Direction de l'architecture backend d'une plateforme d'analytics multi-tenant pour 200+ clients entreprise.",
+      "location": "Riyad, Arabie saoudite",
+      "description": "Conception, développement, maintenance et amélioration continue de multiples plateformes numériques à grande échelle et systèmes d'entreprise internes — architecture backend, API REST, applications Vue.js, conception de bases de données, intégrations tierces, authentification, tâches en arrière-plan et support en production.",
       "technologies": [
         "Laravel",
+        "Vue.js",
+        "PHP",
+        "MySQL",
         "PostgreSQL",
         "Redis",
-        "Cloudflare Workers"
+        "REST APIs",
+        "Queues & Jobs"
       ],
       "achievements": [
-        "Réduction du temps de réponse API de 60% via optimisation et cache edge",
-        "Conception d'un pipeline événementiel traitant 2M événements/jour",
-        "Mentorat d'une équipe de 4 ingénieurs sur les patterns API"
+        "Plateforme avancée de gestion d'événements — cycle de vie, inscriptions, planification dynamique, évaluations, paiements et streaming Zoom/YouTube en direct",
+        "Plateforme de gestion de webinaires — planification, jetons de session sécurisés, multilingue, notifications SMS/email et intégrations de visioconférence",
+        "Plateforme de gestion de consultations — profils consultants, synchronisation calendrier, rendez-vous, consultations vidéo sécurisées et workflows clients",
+        "Plateforme e-learning — cours, parcours d'apprentissage, inscriptions, suivi de progression, évaluations, abonnements et tableaux de bord par rôle",
+        "Plateforme de gestion de subventions — intégration SAP, workflows budgétaires/contrats, signatures numériques et processus d'approbation financière",
+        "Plateforme de gestion d'adhésions — abonnements, cartes d'adhésion numériques, intégration CRM et workflows membres automatisés",
+        "Système de gestion d'auto-école — inscription stagiaires, planification des leçons, présence, examens, facturation et paiements en ligne",
+        "Multiples plateformes d'entreprise internes — workflows personnalisés, systèmes d'administration, rapports, authentification et intégrations tierces"
       ]
     },
     {
-      "company": "DigitalCraft Agency",
-      "position": "Développeur Full-Stack",
-      "startDate": "2019",
-      "endDate": "2022",
-      "location": "Alger, Algérie",
-      "description": "Développement d'applications web et solutions e-commerce pour des clients régionaux.",
+      "company": "Tawfiq Company",
+      "position": "Développeur Laravel & Mobile",
+      "startDate": "Août 2019",
+      "endDate": "Nov. 2019",
+      "location": "Algérie",
+      "description": "Contribution au développement d'une plateforme de location de véhicules et de gestion du transport — réservations, opérations de flotte, gestion des chauffeurs, tarification et suivi en temps réel.",
       "technologies": [
-        "Vue.js",
         "Laravel",
-        "MySQL",
-        "Docker"
-      ],
-      "achievements": [
-        "Livraison de 12 projets clients dans les délais",
-        "Introduction d'un pipeline CI/CD réduisant le déploiement de heures à minutes",
-        "Création d'une bibliothèque de composants réutilisables"
-      ]
-    },
-    {
-      "company": "StartupLab",
-      "position": "Développeur Backend",
-      "startDate": "2017",
-      "endDate": "2019",
-      "location": "Télétravail",
-      "description": "Développement d'API REST et microservices pour des produits SaaS en phase initiale.",
-      "technologies": [
         "PHP",
-        "Node.js",
-        "MongoDB",
-        "AWS"
+        "MySQL",
+        "REST APIs",
+        "Mobile Integration"
       ],
       "achievements": [
-        "Architecture d'un système d'authentification partagé entre 3 produits",
-        "Mise en place de tests automatisés portant la couverture à 85%"
+        "Modules de gestion des véhicules et de la flotte",
+        "Workflows de réservation et planification des chauffeurs",
+        "Tarification automatisée et suivi en temps réel",
+        "Tableaux de bord administratifs et rapports opérationnels"
       ]
     }
   ],
@@ -61,69 +54,125 @@
     {
       "name": "Backend",
       "items": [
-        "Laravel",
         "PHP",
-        "Node.js",
-        "APIs",
-        "Bases de données"
+        "Laravel",
+        "REST APIs",
+        "Architecture API",
+        "Authentification & Autorisation",
+        "JWT",
+        "SSO",
+        "SAML",
+        "Rate Limiting",
+        "Files d'attente & Jobs",
+        "Couches de services"
       ]
     },
     {
       "name": "Frontend",
       "items": [
-        "Vue",
         "JavaScript",
-        "React",
+        "Vue.js",
+        "Vuex",
+        "HTML5",
         "CSS",
-        "Web moderne"
+        "Architecture composants",
+        "Gestion d'état"
       ]
     },
     {
-      "name": "Infrastructure",
+      "name": "Bases de données",
       "items": [
-        "Cloudflare",
-        "Linux",
-        "Docker",
-        "CI/CD"
+        "MySQL",
+        "PostgreSQL",
+        "Redis",
+        "Conception BDD",
+        "Optimisation requêtes",
+        "Mise en cache"
+      ]
+    },
+    {
+      "name": "Intégrations",
+      "items": [
+        "Zoom API",
+        "YouTube API",
+        "BigBlueButton",
+        "SAP",
+        "Systèmes CRM",
+        "APIs SMS",
+        "Passerelles de paiement",
+        "REST APIs tierces"
+      ]
+    },
+    {
+      "name": "Paiements",
+      "items": [
+        "Mada",
+        "HyperPay",
+        "Tap",
+        "Moyasar"
+      ]
+    },
+    {
+      "name": "Communication & SMS",
+      "items": [
+        "Unifonic",
+        "Deewan",
+        "Taqnyat"
+      ]
+    },
+    {
+      "name": "DevOps & Outils",
+      "items": [
+        "Git",
+        "GitHub",
+        "GitLab",
+        "CI/CD",
+        "Laravel Forge",
+        "Déploiement",
+        "Contrôle de version"
       ]
     },
     {
       "name": "Architecture",
       "items": [
-        "SaaS",
-        "Architecture API",
-        "Systèmes distribués",
-        "Performance",
-        "Sécurité"
+        "Clean Architecture",
+        "Multi-Tenancy",
+        "Plateformes SaaS",
+        "Couches de services modulaires",
+        "Traitement asynchrone",
+        "Sécurité API",
+        "Optimisation performance",
+        "Modernisation legacy"
       ]
     }
   ],
   "about": {
-    "summary": "Je pense en systèmes. Qu'il s'agisse d'un contrat API, d'un schéma de base de données ou d'un pipeline de déploiement — je me soucie de la façon dont les pièces s'assemblent et échouent proprement.",
-    "extended": "En huit ans, j'ai alterné entre agences et équipes produit. Je préfère construire des produits qui résolvent de vrais problèmes opérationnels : des tableaux de bord utilisés, des API qui tiennent à l'échelle, et des outils qui respectent le développeur qui les maintient.\n\nEn dehors du code, j'écris sur l'architecture backend et l'infrastructure. Les meilleures décisions d'ingénierie sont celles qu'on peut expliquer simplement."
+    "summary": "Ingénieur Laravel senior qui conçoit des plateformes SaaS évolutives, des API REST et des systèmes d'entreprise — avec un accent sur l'architecture propre, la maintenabilité et la fiabilité en production.",
+    "extended": "Je suis ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience professionnelle dans la conception et le développement d'applications web évolutives, de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJe me spécialise en PHP, Laravel, Vue.js, architecture de bases de données, développement d'API, intégrations tierces, authentification, traitement en arrière-plan, optimisation des performances et systèmes multi-tenant. Mon travail couvre l'éducation, les événements, les webinaires, les consultations, les adhésions, les subventions, la formation et les workflows d'entreprise.\n\nTout au long de ma carrière, j'ai contribué et dirigé le développement sur l'ensemble du cycle de vie logiciel — de l'analyse des besoins et l'architecture système à l'implémentation, l'intégration, le débogage, l'optimisation, le déploiement et la maintenance continue.\n\nJe me concentre sur la construction de systèmes propres, maintenables, sécurisés et évolutifs plutôt que sur la simple livraison de fonctionnalités. Je suis particulièrement expérimenté dans le travail sur des applications Laravel existantes, la compréhension de logiques métier complexes, la résolution de problèmes backend difficiles, la modernisation d'implémentations legacy et l'extension de systèmes avec de nouvelles fonctionnalités et intégrations."
   },
   "resume": {
-    "profile": "Ingénieur logiciel avec 8+ ans d'expérience dans le développement de produits web, API et systèmes distribués. Expérience en Laravel, Vue.js et infrastructure Cloudflare. Basé en Algérie, travail à distance avec des équipes internationales.",
+    "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience dans la construction de plateformes SaaS, d'API REST et de systèmes d'entreprise. Spécialisé en Laravel, Vue.js, architecture multi-tenant, intégrations tierces (SAP, paiements, SMS, streaming) et ingénierie backend de production. Actuellement chez TechTrans, Riyad.",
     "education": [
       {
-        "institution": "Université des Sciences et de la Technologie Houari Boumediene",
-        "degree": "Licence en informatique",
-        "period": "2013 – 2017",
-        "location": "Alger, Algérie"
-      }
-    ],
-    "certifications": [
-      {
-        "name": "Certification développeur Cloudflare",
-        "issuer": "Cloudflare",
-        "year": "2024"
+        "institution": "Université d'El Oued",
+        "degree": "Doctorat en informatique (doctorant)",
+        "period": "Oct. 2019 – Oct. 2025",
+        "location": "El Oued, Algérie"
       },
       {
-        "name": "AWS Cloud Practitioner",
-        "issuer": "Amazon Web Services",
-        "year": "2022"
+        "institution": "Université d'Ouargla",
+        "degree": "Master en informatique",
+        "period": "Sept. 2015 – Août 2017",
+        "location": "Ouargla, Algérie"
+      },
+      {
+        "institution": "Université d'Ouargla",
+        "degree": "Licence en informatique",
+        "period": "Sept. 2012 – Août 2015",
+        "location": "Ouargla, Algérie"
       }
     ],
+    "certifications": [],
     "languages": [
       {
         "language": "Arabe",
@@ -131,17 +180,17 @@
       },
       {
         "language": "Anglais",
-        "level": "Professionnel"
+        "level": "Notions de base"
       },
       {
         "language": "Français",
-        "level": "Professionnel"
+        "level": "Notions de base"
       }
     ],
     "cvFiles": {
-      "fr": "/cv/thabet-cv-fr.pdf",
       "en": "/cv/thabet-cv-en.pdf",
-      "ar": "/cv/thabet-cv-ar.pdf"
+      "ar": "/cv/thabet-cv-ar.pdf",
+      "fr": "/cv/thabet-cv-fr.pdf"
     }
   }
 }

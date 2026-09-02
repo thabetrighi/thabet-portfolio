@@ -60,17 +60,19 @@ const hreflangAlternates = staticPageAlternates('resume');
       ))}
     </section>
 
-    <section class="mb-16">
-      <h2 class="section-label mb-8">{t.resume.certifications}</h2>
-      <ul class="space-y-4">
-        {resume.certifications.map((cert) => (
-          <li class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-            <span class="font-medium">{cert.name}</span>
-            <span class="text-sm text-ink-muted dark:text-ink-muted-dark">{cert.issuer} · {cert.year}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
+    {resume.certifications.length > 0 && (
+      <section class="mb-16">
+        <h2 class="section-label mb-8">{t.resume.certifications}</h2>
+        <ul class="space-y-4">
+          {resume.certifications.map((cert) => (
+            <li class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
+              <span class="font-medium">{cert.name}</span>
+              <span class="text-sm text-ink-muted dark:text-ink-muted-dark">{cert.issuer} · {cert.year}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <section class="mb-16">
       <h2 class="section-label mb-8">{t.resume.languages}</h2>
