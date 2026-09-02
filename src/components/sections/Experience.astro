@@ -11,7 +11,8 @@ interface Props {
 
 const { locale, limit } = Astro.props;
 const t = useTranslations(locale);
-const experiences = getExperience(locale).slice(0, limit ?? undefined);
+const all = getExperience(locale);
+const experiences = limit != null ? all.slice(0, limit) : all;
 const presentLabel = t.experience.present;
 ---
 

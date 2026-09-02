@@ -1,12 +1,12 @@
 {
   "experience": [
     {
-      "company": "TechTrans",
+      "company": "TechTrans (À distance)",
       "position": "Développeur Laravel & Vue.js",
       "startDate": "Sept. 2021",
       "endDate": null,
-      "location": "Riyad, Arabie saoudite",
-      "description": "Je conçois, développe et maintiens des plateformes web à grande échelle et des systèmes d'entreprise internes — architecture backend, API, applications admin, bases de données, intégrations, authentification, traitement asynchrone et support production.",
+      "location": "Algérie",
+      "description": "Je conçois, développe et maintiens à distance des plateformes web à grande échelle et des systèmes d'entreprise internes — architecture backend, API, applications admin, bases de données, intégrations, authentification, traitement asynchrone et support production.",
       "technologies": [
         "Plateformes web",
         "Développement API",
@@ -36,10 +36,10 @@
     {
       "company": "Freelance",
       "position": "Développeur logiciel indépendant",
-      "startDate": "2018",
+      "startDate": "2016",
       "endDate": "Août 2021",
-      "location": "Algérie · À distance",
-      "description": "Livraison de projets logiciels privés pour des clients dans la logistique, le retail, la santé et le transport — de l'analyse à l'architecture, l'implémentation, l'intégration et la livraison.",
+      "location": "Algérie",
+      "description": "Livraison de projets logiciels privés en parallèle avec l'enseignement et le travail en entreprise — logistique, retail, santé et transport, de l'analyse à la livraison.",
       "technologies": [
         "Systèmes web",
         "Applications desktop",
@@ -61,6 +61,52 @@
         "Location VTC",
         "Gestion de flotte",
         "Gestion du transport"
+      ]
+    },
+    {
+      "company": "Tawfiq Company",
+      "position": "Développeur Laravel & Mobile",
+      "startDate": "2019",
+      "endDate": "Août 2021",
+      "location": "Algérie",
+      "description": "Contribution au développement d'une plateforme de location de véhicules et de gestion du transport — API backend et workflows opérationnels pour réservation, flotte et suivi en temps réel.",
+      "technologies": [
+        "Systèmes web",
+        "Applications mobile",
+        "Développement API",
+        "Suivi & opérations"
+      ],
+      "highlights": [
+        "Modules de gestion de flotte et véhicules avec workflows de réservation",
+        "Planification chauffeurs et tarification automatisée",
+        "Suivi en temps réel et tableaux de bord de reporting"
+      ],
+      "platformTags": [
+        "Location VTC",
+        "Gestion de flotte",
+        "Gestion du transport"
+      ]
+    },
+    {
+      "company": "Enseignement — Collège",
+      "position": "Professeur d'informatique",
+      "startDate": "2016",
+      "endDate": "2019",
+      "location": "Algérie",
+      "description": "Enseignement de l'informatique au collège, avec cours pratiques et exercices pour aider les élèves à comprendre les bases de l'informatique et de la programmation.",
+      "technologies": [
+        "Enseignement informatique",
+        "Contenu pédagogique",
+        "Exercices pratiques"
+      ],
+      "highlights": [
+        "Préparation de cours et exercices pratiques en informatique",
+        "Simplification des concepts de programmation pour les élèves",
+        "Projets logiciels indépendants menés en parallèle"
+      ],
+      "platformTags": [
+        "Enseignement informatique",
+        "Collège"
       ]
     }
   ],
@@ -177,7 +223,7 @@
     "extended": "Ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience dans la conception de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJ'interviens dans des domaines variés selon les besoins du produit. Avant mon rôle actuel, j'ai travaillé en freelance sur des projets privés en logistique, retail, santé et transport.\n\nJ'ai contribué au cycle de vie complet — analyse, architecture, implémentation, intégration, optimisation, déploiement et maintenance.\n\nJe me concentre sur des systèmes propres, maintenables, sécurisés et évolutifs."
   },
   "resume": {
-    "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience — plateformes SaaS, API, systèmes d'entreprise, desktop et mobile. Expérience salariée et projets indépendants. Basé à Riyad.",
+    "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience — plateformes SaaS, API, systèmes d'entreprise, desktop et mobile. Expérience en télétravail, projets indépendants et enseignement. Basé en Algérie.",
     "education": [
       {
         "institution": "Université d'El Oued",
