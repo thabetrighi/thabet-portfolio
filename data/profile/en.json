@@ -1,11 +1,11 @@
 {
   "experience": [
     {
-      "company": "TechTrans (Remote)",
+      "company": "TechTrans",
       "position": "Laravel & Vue.js Developer",
       "startDate": "Sep 2021",
       "endDate": null,
-      "location": "Algeria",
+      "location": "Riyadh, Saudi Arabia (Remote)",
       "description": "I design, build, and maintain large-scale web platforms and internal business systems remotely. My work spans backend architecture, APIs, admin applications, database design, third-party integrations, authentication, background processing, performance optimization, and production support — across whatever domain the product requires.",
       "technologies": [
         "Web Platforms",
@@ -36,38 +36,29 @@
     {
       "company": "Freelance",
       "position": "Independent Software Developer",
-      "startDate": "2016",
-      "endDate": "Aug 2021",
+      "startDate": "2020",
+      "endDate": "2021",
       "location": "Algeria",
-      "description": "Delivered private, client-specific software projects in parallel with teaching and company work. Covered logistics, retail, health, and transport — from analysis and architecture to implementation, integration, and handover.",
+      "description": "Worked as an independent developer on scattered projects: building a shipping and distribution system, solving technical problems for various clients, and delivering work through freelance platforms. Full project details are listed in the Work section.",
       "technologies": [
         "Web Systems",
-        "Desktop Applications",
-        "Mobile Applications",
-        "Operations Dashboards",
-        "External Integrations"
+        "Technical Problem Solving",
+        "Freelance Platforms",
+        "Independent Projects"
       ],
       "highlights": [
-        "Built end-to-end platforms for parcel distribution, fleet operations, and transport coordination",
-        "Delivered a desktop POS application optimized for daily retail checkout workflows",
-        "Developed a mobile health application focused on guided tracking and user clarity",
-        "Created VTC rental systems with booking, pricing, and operational management modules",
-        "Worked directly with clients on requirements, delivery timelines, and post-launch support"
+        "Developed an integrated shipping and distribution system for a private client",
+        "Resolved software and technical issues across diverse existing projects",
+        "Completed tasks and projects through freelance marketplaces",
+        "Direct client communication from analysis through delivery"
       ],
-      "platformTags": [
-        "Parcel Distribution & Shipping",
-        "Desktop POS",
-        "Colon Health Mobile App",
-        "VTC Vehicle Rental",
-        "Fleet Management",
-        "Transport Management"
-      ]
+      "platformTags": []
     },
     {
       "company": "Tawfiq Company",
       "position": "Laravel & Mobile Developer",
       "startDate": "2019",
-      "endDate": "Aug 2021",
+      "endDate": "2019",
       "location": "Algeria",
       "description": "Contributed to a vehicle rental and transportation management platform, focusing on backend APIs and operational workflows for booking, fleet management, and real-time tracking.",
       "technologies": [
@@ -101,8 +92,7 @@
       ],
       "highlights": [
         "Prepared practical IT lessons and exercises for middle school students",
-        "Simplified programming and computing concepts for learners",
-        "Worked in parallel on independent software projects during the same period"
+        "Simplified programming and computing concepts for learners"
       ],
       "platformTags": [
         "Computer Science Teaching",
@@ -220,7 +210,7 @@
   ],
   "about": {
     "summary": "Senior Laravel engineer who builds scalable web systems — SaaS platforms, APIs, desktop and mobile applications — with a focus on clean architecture, maintainability, and production reliability.",
-    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI work across diverse business domains depending on product needs — not limited to one industry. Before my current role, I spent several years as an independent developer delivering private projects in logistics, retail, health, and transport.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality."
+    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI work across diverse business domains depending on product needs — not limited to one industry. My path includes teaching IT, work at Tawfiq Company, freelance development (2020–2021), and today remote work with TechTrans.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality."
   },
   "resume": {
     "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, enterprise systems, desktop and mobile applications. Experienced in remote employment, independent projects, and teaching. Based in Algeria.",

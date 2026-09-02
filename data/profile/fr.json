@@ -1,11 +1,11 @@
 {
   "experience": [
     {
-      "company": "TechTrans (À distance)",
+      "company": "TechTrans",
       "position": "Développeur Laravel & Vue.js",
       "startDate": "Sept. 2021",
       "endDate": null,
-      "location": "Algérie",
+      "location": "Riyad, Arabie saoudite (À distance)",
       "description": "Je conçois, développe et maintiens à distance des plateformes web à grande échelle et des systèmes d'entreprise internes — architecture backend, API, applications admin, bases de données, intégrations, authentification, traitement asynchrone et support production.",
       "technologies": [
         "Plateformes web",
@@ -36,38 +36,29 @@
     {
       "company": "Freelance",
       "position": "Développeur logiciel indépendant",
-      "startDate": "2016",
-      "endDate": "Août 2021",
+      "startDate": "2020",
+      "endDate": "2021",
       "location": "Algérie",
-      "description": "Livraison de projets logiciels privés en parallèle avec l'enseignement et le travail en entreprise — logistique, retail, santé et transport, de l'analyse à la livraison.",
+      "description": "Développeur indépendant sur des projets variés : système d'expédition et distribution, résolution de problèmes techniques pour différents clients, et missions via plateformes freelance. Les détails des réalisations sont dans la section Projets.",
       "technologies": [
         "Systèmes web",
-        "Applications desktop",
-        "Applications mobile",
-        "Tableaux opérationnels",
-        "Intégrations externes"
+        "Résolution de problèmes techniques",
+        "Plateformes freelance",
+        "Projets indépendants"
       ],
       "highlights": [
-        "Plateformes de distribution de colis, gestion de flotte et coordination transport",
-        "Application POS desktop optimisée pour la caisse quotidienne",
-        "Application mobile santé avec suivi guidé et UX claire",
-        "Systèmes de location VTC avec réservation, tarification et gestion opérationnelle",
-        "Travail direct avec clients sur exigences, délais et support post-lancement"
+        "Développement d'un système d'expédition et distribution pour un client privé",
+        "Résolution de problèmes logiciels sur des projets existants variés",
+        "Réalisation de missions via des plateformes de travail freelance",
+        "Communication directe avec les clients de l'analyse à la livraison"
       ],
-      "platformTags": [
-        "Distribution & expédition de colis",
-        "POS Desktop",
-        "App santé du côlon",
-        "Location VTC",
-        "Gestion de flotte",
-        "Gestion du transport"
-      ]
+      "platformTags": []
     },
     {
       "company": "Tawfiq Company",
       "position": "Développeur Laravel & Mobile",
       "startDate": "2019",
-      "endDate": "Août 2021",
+      "endDate": "2019",
       "location": "Algérie",
       "description": "Contribution au développement d'une plateforme de location de véhicules et de gestion du transport — API backend et workflows opérationnels pour réservation, flotte et suivi en temps réel.",
       "technologies": [
@@ -101,8 +92,7 @@
       ],
       "highlights": [
         "Préparation de cours et exercices pratiques en informatique",
-        "Simplification des concepts de programmation pour les élèves",
-        "Projets logiciels indépendants menés en parallèle"
+        "Simplification des concepts de programmation pour les élèves"
       ],
       "platformTags": [
         "Enseignement informatique",
@@ -220,7 +210,7 @@
   ],
   "about": {
     "summary": "Ingénieur Laravel senior qui conçoit des systèmes web évolutifs — plateformes SaaS, API, applications desktop et mobile — avec un accent sur l'architecture propre et la fiabilité en production.",
-    "extended": "Ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience dans la conception de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJ'interviens dans des domaines variés selon les besoins du produit. Avant mon rôle actuel, j'ai travaillé en freelance sur des projets privés en logistique, retail, santé et transport.\n\nJ'ai contribué au cycle de vie complet — analyse, architecture, implémentation, intégration, optimisation, déploiement et maintenance.\n\nJe me concentre sur des systèmes propres, maintenables, sécurisés et évolutifs."
+    "extended": "Ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience dans la conception de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJ'interviens dans des domaines variés selon les besoins du produit. Mon parcours inclut l'enseignement, Tawfiq Company, le freelance (2020–2021), puis le télétravail chez TechTrans.\n\nJ'ai contribué au cycle de vie complet — analyse, architecture, implémentation, intégration, optimisation, déploiement et maintenance.\n\nJe me concentre sur des systèmes propres, maintenables, sécurisés et évolutifs."
   },
   "resume": {
     "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience — plateformes SaaS, API, systèmes d'entreprise, desktop et mobile. Expérience en télétravail, projets indépendants et enseignement. Basé en Algérie.",
