@@ -1,0 +1,60 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminShell from '../../components/admin/AdminShell.astro';
+import { adminUi } from '../../lib/admin/ui/strings';
+
+export const prerender = false;
+---
+
+<AdminLayout title={adminUi.dashboard.title}>
+  <AdminShell>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{adminUi.dashboard.title}</h1>
+        <p class="admin-subtitle">{adminUi.dashboard.subtitle}</p>
+      </div>
+    </div>
+
+    <div class="admin-grid admin-grid-3">
+      <a href="/admin/articles" class="admin-card" style="text-decoration:none;color:inherit;">
+        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.articles}</h2>
+        <p class="admin-subtitle">إدارة مقالات المدونة بثلاث لغات</p>
+      </a>
+      <a href="/admin/projects" class="admin-card" style="text-decoration:none;color:inherit;">
+        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.projects}</h2>
+        <p class="admin-subtitle">إدارة مشاريع Portfolio</p>
+      </a>
+      <a href="/admin/deploy" class="admin-card" style="text-decoration:none;color:inherit;">
+        <h2 style="font-size:1rem;margin-bottom:0.5rem;">{adminUi.nav.deploy}</h2>
+        <p class="admin-subtitle">نشر التغييرات عبر GitHub Actions</p>
+      </a>
+    </div>
+
+    <div class="admin-card" style="margin-top: 1rem;">
+      <h2 style="font-size:1rem;margin-bottom:0.75rem;">حالة الاتصال</h2>
+      <div id="github-status" class="admin-subtitle">{adminUi.common.loading}</div>
+      <div id="deploy-status" class="admin-subtitle" style="margin-top:0.5rem;"></div>
+    </div>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ connected: adminUi.dashboard.githubConnected, disconnected: adminUi.dashboard.githubDisconnected, lastDeploy: adminUi.dashboard.lastDeploy }}>
+  async function loadStatus() {
+    const me = await fetch('/api/admin/auth/me').then((r) => r.json());
+    const githubEl = document.getElementById('github-status');
+    const deployEl = document.getElementById('deploy-status');
+
+    if (me.github?.connected) {
+      githubEl.textContent = `${connected}: ${me.github.owner}/${me.github.repo} (${me.github.branch})`;
+    } else {
+      githubEl.textContent = disconnected;
+    }
+
+    const deploy = await fetch('/api/admin/deploy').then((r) => r.json());
+    if (deploy.latestRun) {
+      deployEl.textContent = `${lastDeploy}: ${deploy.latestRun.status} — ${deploy.latestRun.conclusion || 'pending'}`;
+    }
+  }
+
+  loadStatus();
+</script>

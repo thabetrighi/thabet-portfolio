@@ -1,0 +1,179 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+
+export const prerender = false;
+const locale = Astro.url.searchParams.get('locale') || 'en';
+const slug = Astro.url.searchParams.get('slug') || '';
+const isNew = Astro.url.searchParams.get('new') === '1';
+---
+
+<AdminLayout title={isNew ? 'مقال جديد' : `تعديل: ${slug}`}>
+  <AdminShell>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{isNew ? 'مقال جديد' : `تعديل مقال`}</h1>
+        <p class="admin-subtitle">اللغة: {locale.toUpperCase()}</p>
+      </div>
+      <a href={`/admin/articles?locale=${locale}`} class="admin-btn admin-btn-ghost">{adminUi.common.cancel}</a>
+    </div>
+
+    <form id="article-form" class="admin-grid">
+      <input type="hidden" id="sha" name="sha" />
+      <input type="hidden" id="previousSlug" name="previousSlug" value={slug} />
+
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field">
+          <label class="admin-label" for="title">{adminUi.common.title}</label>
+          <input class="admin-input" id="title" name="title" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="slug">{adminUi.common.slug}</label>
+          <input class="admin-input" id="slug" name="slug" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="excerpt">المقتطف</label>
+        <textarea class="admin-textarea" id="excerpt" name="excerpt" rows="2" required></textarea>
+      </div>
+
+      <div class="admin-grid admin-grid-3">
+        <div class="admin-field">
+          <label class="admin-label" for="category">التصنيف</label>
+          <input class="admin-input" id="category" name="category" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="publishedAt">تاريخ النشر</label>
+          <input class="admin-input" type="date" id="publishedAt" name="publishedAt" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="readingTime">وقت القراءة (دقائق)</label>
+          <input class="admin-input" type="number" id="readingTime" name="readingTime" min="1" required />
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field">
+          <label class="admin-label" for="tags">الوسوم (مفصولة بفاصلة)</label>
+          <input class="admin-input" id="tags" name="tags" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="cover">صورة الغلاف</label>
+          <input class="admin-input" id="cover" name="cover" placeholder="/images/articles/example.svg" />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="body">المحتوى (Markdown)</label>
+        <textarea class="admin-textarea" id="body" name="body" rows="16" required></textarea>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:0.5rem;">
+        <input type="checkbox" id="draft" name="draft" />
+        مسودة
+      </label>
+
+      <div id="form-status" class="admin-alert hidden"></div>
+
+      <div class="admin-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" id="save-btn">{adminUi.common.save}</button>
+        {!isNew && <button type="button" class="admin-btn admin-btn-danger" id="delete-btn">{adminUi.common.delete}</button>}
+      </div>
+    </form>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ locale, slug, isNew, saveLabel: adminUi.common.save, savingLabel: adminUi.common.saving, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, confirmDelete: adminUi.common.confirmDelete }}>
+  const form = document.getElementById('article-form');
+  const status = document.getElementById('form-status');
+  const saveBtn = document.getElementById('save-btn');
+  const deleteBtn = document.getElementById('delete-btn');
+
+  function showStatus(message, ok) {
+    status.textContent = message;
+    status.className = `admin-alert ${ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.classList.remove('hidden');
+  }
+
+  async function loadArticle() {
+    if (isNew) return;
+    const res = await fetch(`/api/admin/articles?locale=${locale}&slug=${slug}`);
+    const data = await res.json();
+    const { article } = data;
+    if (!article) return;
+
+    document.getElementById('sha').value = article.sha || '';
+    document.getElementById('title').value = article.frontmatter.title || '';
+    document.getElementById('slug').value = article.slug || '';
+    document.getElementById('excerpt').value = article.frontmatter.excerpt || '';
+    document.getElementById('category').value = article.frontmatter.category || '';
+    document.getElementById('publishedAt').value = String(article.frontmatter.publishedAt).slice(0, 10);
+    document.getElementById('readingTime').value = article.frontmatter.readingTime || 5;
+    document.getElementById('tags').value = (article.frontmatter.tags || []).join(', ');
+    document.getElementById('cover').value = article.frontmatter.cover || '';
+    document.getElementById('body').value = article.body || '';
+    document.getElementById('draft').checked = Boolean(article.frontmatter.draft);
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    saveBtn.disabled = true;
+    saveBtn.textContent = savingLabel;
+
+    const payload = {
+      locale,
+      slug: document.getElementById('slug').value,
+      previousSlug: document.getElementById('previousSlug').value,
+      sha: document.getElementById('sha').value || undefined,
+      frontmatter: {
+        title: document.getElementById('title').value,
+        excerpt: document.getElementById('excerpt').value,
+        category: document.getElementById('category').value,
+        publishedAt: document.getElementById('publishedAt').value,
+        readingTime: Number(document.getElementById('readingTime').value),
+        tags: document.getElementById('tags').value.split(',').map((t) => t.trim()).filter(Boolean),
+        cover: document.getElementById('cover').value || undefined,
+        draft: document.getElementById('draft').checked,
+      },
+      body: document.getElementById('body').value,
+    };
+
+    try {
+      const res = await fetch('/api/admin/articles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showStatus(successMsg, true);
+        if (isNew) {
+          window.location.href = `/admin/articles/edit?locale=${locale}&slug=${data.slug}`;
+        } else {
+          document.getElementById('sha').value = '';
+          document.getElementById('previousSlug').value = data.slug;
+        }
+      } else {
+        showStatus(data.error || errorMsg, false);
+      }
+    } catch {
+      showStatus(errorMsg, false);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = saveLabel;
+    }
+  });
+
+  deleteBtn?.addEventListener('click', async () => {
+    if (!confirm(confirmDelete)) return;
+    const sha = document.getElementById('sha').value;
+    const res = await fetch(`/api/admin/articles/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
+    if (res.ok) window.location.href = `/admin/articles?locale=${locale}`;
+  });
+
+  loadArticle();
+</script>
+
+<style>.hidden { display: none; }</style>

@@ -1,0 +1,44 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { adminUi } from '../../lib/admin/ui/strings';
+import { site } from '../../lib/site';
+
+const t = adminUi.nav;
+const links = [
+  { href: '/admin', label: t.dashboard, icon: '⌂' },
+  { href: '/admin/articles', label: t.articles, icon: '✎' },
+  { href: '/admin/projects', label: t.projects, icon: '◫' },
+  { href: '/admin/settings/site', label: t.site, icon: '⚙' },
+  { href: '/admin/settings/social', label: t.social, icon: '◎' },
+  { href: '/admin/profile', label: t.profile, icon: '☺' },
+  { href: '/admin/deploy', label: t.deploy, icon: '↗' },
+];
+---
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">{adminUi.brand}</div>
+    <nav class="admin-nav">
+      {links.map((link) => (
+        <a href={link.href} class:list={{ 'is-active': Astro.url.pathname === link.href || Astro.url.pathname.startsWith(`${link.href}/`) }}>
+          <span aria-hidden="true">{link.icon}</span>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <div style="margin-top: 2rem; padding-inline: 0.75rem; display: grid; gap: 0.5rem;">
+      <a href={site.url} class="admin-btn admin-btn-ghost" target="_blank" rel="noopener">{t.viewSite}</a>
+      <button type="button" class="admin-btn admin-btn-ghost" id="admin-logout-btn">{t.logout}</button>
+    </div>
+  </aside>
+  <main class="admin-main">
+    <slot />
+  </main>
+</div>
+
+<script>
+  document.getElementById('admin-logout-btn')?.addEventListener('click', async () => {
+    await fetch('/api/admin/auth/logout', { method: 'POST' });
+    window.location.href = '/admin/login';
+  });
+</script>

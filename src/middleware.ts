@@ -2,13 +2,39 @@ import { defineMiddleware } from 'astro:middleware';
 import { detectLocale } from './lib/locale-detection';
 import { isValidLocale, LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './i18n/config';
 import { applySecurityHeaders } from './lib/security';
+import { requireAdminSession } from './lib/admin/auth/session';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
+
+  // Admin panel auth guard
+  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+    const session = await requireAdminSession(context.request);
+    if (!session) {
+      return applySecurityHeaders(context.redirect('/admin/login', 302));
+    }
+  }
+
+  if (
+    pathname.startsWith('/api/admin')
+    && !pathname.startsWith('/api/admin/auth/login')
+    && !pathname.startsWith('/api/admin/auth/logout')
+    && !pathname.startsWith('/api/admin/auth/me')
+  ) {
+    const session = await requireAdminSession(context.request);
+    if (!session) {
+      return applySecurityHeaders(
+        new Response(JSON.stringify({ error: 'unauthorized' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+    }
+  }
+
   const segments = pathname.split('/').filter(Boolean);
   const firstSegment = segments[0];
 
-  // Root redirect to detected locale
   if (pathname === '/' || pathname === '') {
     const cookie = context.cookies.get(LOCALE_COOKIE)?.value;
     const acceptLanguage = context.request.headers.get('accept-language');
@@ -18,7 +44,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return applySecurityHeaders(context.redirect(`/${locale}`, 302));
   }
 
-  // Set locale cookie when user navigates to a locale-prefixed URL
   if (isValidLocale(firstSegment)) {
     const existingCookie = context.cookies.get(LOCALE_COOKIE)?.value;
     if (existingCookie !== firstSegment) {

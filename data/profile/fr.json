@@ -1,0 +1,147 @@
+{
+  "experience": [
+    {
+      "company": "TechFlow SaaS",
+      "position": "Ingénieur logiciel senior",
+      "startDate": "2022",
+      "endDate": null,
+      "location": "Télétravail",
+      "description": "Direction de l'architecture backend d'une plateforme d'analytics multi-tenant pour 200+ clients entreprise.",
+      "technologies": [
+        "Laravel",
+        "PostgreSQL",
+        "Redis",
+        "Cloudflare Workers"
+      ],
+      "achievements": [
+        "Réduction du temps de réponse API de 60% via optimisation et cache edge",
+        "Conception d'un pipeline événementiel traitant 2M événements/jour",
+        "Mentorat d'une équipe de 4 ingénieurs sur les patterns API"
+      ]
+    },
+    {
+      "company": "DigitalCraft Agency",
+      "position": "Développeur Full-Stack",
+      "startDate": "2019",
+      "endDate": "2022",
+      "location": "Alger, Algérie",
+      "description": "Développement d'applications web et solutions e-commerce pour des clients régionaux.",
+      "technologies": [
+        "Vue.js",
+        "Laravel",
+        "MySQL",
+        "Docker"
+      ],
+      "achievements": [
+        "Livraison de 12 projets clients dans les délais",
+        "Introduction d'un pipeline CI/CD réduisant le déploiement de heures à minutes",
+        "Création d'une bibliothèque de composants réutilisables"
+      ]
+    },
+    {
+      "company": "StartupLab",
+      "position": "Développeur Backend",
+      "startDate": "2017",
+      "endDate": "2019",
+      "location": "Télétravail",
+      "description": "Développement d'API REST et microservices pour des produits SaaS en phase initiale.",
+      "technologies": [
+        "PHP",
+        "Node.js",
+        "MongoDB",
+        "AWS"
+      ],
+      "achievements": [
+        "Architecture d'un système d'authentification partagé entre 3 produits",
+        "Mise en place de tests automatisés portant la couverture à 85%"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Backend",
+      "items": [
+        "Laravel",
+        "PHP",
+        "Node.js",
+        "APIs",
+        "Bases de données"
+      ]
+    },
+    {
+      "name": "Frontend",
+      "items": [
+        "Vue",
+        "JavaScript",
+        "React",
+        "CSS",
+        "Web moderne"
+      ]
+    },
+    {
+      "name": "Infrastructure",
+      "items": [
+        "Cloudflare",
+        "Linux",
+        "Docker",
+        "CI/CD"
+      ]
+    },
+    {
+      "name": "Architecture",
+      "items": [
+        "SaaS",
+        "Architecture API",
+        "Systèmes distribués",
+        "Performance",
+        "Sécurité"
+      ]
+    }
+  ],
+  "about": {
+    "summary": "Je pense en systèmes. Qu'il s'agisse d'un contrat API, d'un schéma de base de données ou d'un pipeline de déploiement — je me soucie de la façon dont les pièces s'assemblent et échouent proprement.",
+    "extended": "En huit ans, j'ai alterné entre agences et équipes produit. Je préfère construire des produits qui résolvent de vrais problèmes opérationnels : des tableaux de bord utilisés, des API qui tiennent à l'échelle, et des outils qui respectent le développeur qui les maintient.\n\nEn dehors du code, j'écris sur l'architecture backend et l'infrastructure. Les meilleures décisions d'ingénierie sont celles qu'on peut expliquer simplement."
+  },
+  "resume": {
+    "profile": "Ingénieur logiciel avec 8+ ans d'expérience dans le développement de produits web, API et systèmes distribués. Expérience en Laravel, Vue.js et infrastructure Cloudflare. Basé en Algérie, travail à distance avec des équipes internationales.",
+    "education": [
+      {
+        "institution": "Université des Sciences et de la Technologie Houari Boumediene",
+        "degree": "Licence en informatique",
+        "period": "2013 – 2017",
+        "location": "Alger, Algérie"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certification développeur Cloudflare",
+        "issuer": "Cloudflare",
+        "year": "2024"
+      },
+      {
+        "name": "AWS Cloud Practitioner",
+        "issuer": "Amazon Web Services",
+        "year": "2022"
+      }
+    ],
+    "languages": [
+      {
+        "language": "Arabe",
+        "level": "Langue maternelle"
+      },
+      {
+        "language": "Anglais",
+        "level": "Professionnel"
+      },
+      {
+        "language": "Français",
+        "level": "Professionnel"
+      }
+    ],
+    "cvFiles": {
+      "fr": "/cv/thabet-cv-fr.pdf",
+      "en": "/cv/thabet-cv-en.pdf",
+      "ar": "/cv/thabet-cv-ar.pdf"
+    }
+  }
+}

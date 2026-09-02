@@ -1,0 +1,70 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+import { LOCALES } from '../../../lib/admin/config';
+
+export const prerender = false;
+const locale = Astro.url.searchParams.get('locale') || 'en';
+---
+
+<AdminLayout title={adminUi.nav.projects}>
+  <AdminShell>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{adminUi.nav.projects}</h1>
+      </div>
+      <div class="admin-actions">
+        <select class="admin-select" id="locale-select" style="width:auto;">
+          {LOCALES.map((l) => <option value={l} selected={l === locale}>{l.toUpperCase()}</option>)}
+        </select>
+        <a class="admin-btn admin-btn-primary" href={`/admin/projects/edit?locale=${locale}&new=1`}>{adminUi.common.create}</a>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>{adminUi.common.slug}</th>
+            <th>{adminUi.common.actions}</th>
+          </tr>
+        </thead>
+        <tbody id="projects-table">
+          <tr><td colspan="2">{adminUi.common.loading}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ editLabel: adminUi.common.edit, locale }}>
+  const select = document.getElementById('locale-select');
+  const table = document.getElementById('projects-table');
+
+  async function loadProjects(currentLocale) {
+    const res = await fetch(`/api/admin/projects?locale=${currentLocale}`);
+    const data = await res.json();
+    table.innerHTML = '';
+
+    if (!data.projects?.length) {
+      table.innerHTML = '<tr><td colspan="2">لا توجد مشاريع</td></tr>';
+      return;
+    }
+
+    for (const project of data.projects) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${project.slug}</td>
+        <td><a class="admin-btn admin-btn-ghost" href="/admin/projects/edit?locale=${currentLocale}&slug=${project.slug}">${editLabel}</a></td>
+      `;
+      table.appendChild(row);
+    }
+  }
+
+  select?.addEventListener('change', () => {
+    window.location.href = `/admin/projects?locale=${select.value}`;
+  });
+
+  loadProjects(locale);
+</script>

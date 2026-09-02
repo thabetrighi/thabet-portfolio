@@ -1,0 +1,78 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+
+export const prerender = false;
+---
+
+<AdminLayout title={adminUi.nav.site}>
+  <AdminShell>
+    <div class="admin-header">
+      <h1 class="admin-title">{adminUi.nav.site}</h1>
+    </div>
+
+    <form id="site-form" class="admin-card admin-grid">
+      <input type="hidden" id="sha" />
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field"><label class="admin-label">الاسم القصير</label><input class="admin-input" id="name" required /></div>
+        <div class="admin-field"><label class="admin-label">البريد</label><input class="admin-input" id="email" type="email" required /></div>
+      </div>
+      <div class="admin-grid admin-grid-3">
+        <div class="admin-field"><label class="admin-label">الاسم (عربي)</label><input class="admin-input" id="fullNameAr" required /></div>
+        <div class="admin-field"><label class="admin-label">الاسم (English)</label><input class="admin-input" id="fullNameEn" required /></div>
+        <div class="admin-field"><label class="admin-label">الاسم (Français)</label><input class="admin-input" id="fullNameFr" required /></div>
+      </div>
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field"><label class="admin-label">رابط الموقع</label><input class="admin-input" id="url" type="url" required /></div>
+        <div class="admin-field"><label class="admin-label">الشعار (مسار)</label><input class="admin-input" id="logo" placeholder="/images/logo.svg" /></div>
+      </div>
+      <div id="form-status" class="admin-alert hidden"></div>
+      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
+    </form>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+  const form = document.getElementById('site-form');
+  const status = document.getElementById('form-status');
+
+  async function load() {
+    const res = await fetch('/api/admin/settings/site');
+    const { data, sha } = await res.json();
+    document.getElementById('sha').value = sha || '';
+    document.getElementById('name').value = data.name;
+    document.getElementById('email').value = data.email;
+    document.getElementById('url').value = data.url;
+    document.getElementById('logo').value = data.logo || '';
+    document.getElementById('fullNameAr').value = data.fullName.ar;
+    document.getElementById('fullNameEn').value = data.fullName.en;
+    document.getElementById('fullNameFr').value = data.fullName.fr;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+      sha: document.getElementById('sha').value || undefined,
+      data: {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        url: document.getElementById('url').value,
+        logo: document.getElementById('logo').value,
+        fullName: {
+          ar: document.getElementById('fullNameAr').value,
+          en: document.getElementById('fullNameEn').value,
+          fr: document.getElementById('fullNameFr').value,
+        },
+      },
+    };
+    const res = await fetch('/api/admin/settings/site', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    status.textContent = res.ok ? successMsg : errorMsg;
+    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.classList.remove('hidden');
+    if (res.ok) load();
+  });
+
+  load();
+</script>
+<style>.hidden{display:none}</style>

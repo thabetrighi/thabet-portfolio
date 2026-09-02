@@ -1,0 +1,103 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+import { LOCALES } from '../../../lib/admin/config';
+
+export const prerender = false;
+const locale = Astro.url.searchParams.get('locale') || 'en';
+---
+
+<AdminLayout title={adminUi.nav.profile}>
+  <AdminShell>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{adminUi.nav.profile}</h1>
+        <p class="admin-subtitle">الخبرات، المهارات، نبذة About، والسيرة</p>
+      </div>
+      <select class="admin-select" id="locale-select" style="width:auto;">
+        {LOCALES.map((l) => <option value={l} selected={l === locale}>{l.toUpperCase()}</option>)}
+      </select>
+    </div>
+
+    <form id="profile-form" class="admin-grid">
+      <input type="hidden" id="sha" />
+
+      <div class="admin-card admin-field">
+        <label class="admin-label">نبذة مختصرة (About summary)</label>
+        <textarea class="admin-textarea" id="aboutSummary" rows="3"></textarea>
+      </div>
+
+      <div class="admin-card admin-field">
+        <label class="admin-label">نبذة موسعة (About extended)</label>
+        <textarea class="admin-textarea" id="aboutExtended" rows="6"></textarea>
+      </div>
+
+      <div class="admin-card admin-field">
+        <label class="admin-label">ملف السيرة (Resume profile)</label>
+        <textarea class="admin-textarea" id="resumeProfile" rows="4"></textarea>
+      </div>
+
+      <div class="admin-card admin-field">
+        <label class="admin-label">البيانات الكاملة (JSON — experience, skills, resume)</label>
+        <textarea class="admin-textarea" id="profileJson" rows="24" style="font-family:'IBM Plex Mono',monospace;"></textarea>
+        <p class="admin-subtitle" style="margin-top:0.5rem;">للتعديل المتقدم: الخبرات والمهارات والشهادات بصيغة JSON</p>
+      </div>
+
+      <div id="form-status" class="admin-alert hidden"></div>
+      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
+    </form>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ locale, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+  const select = document.getElementById('locale-select');
+
+  select?.addEventListener('change', () => {
+    window.location.href = `/admin/profile?locale=${select.value}`;
+  });
+
+  async function load() {
+    const res = await fetch(`/api/admin/profile/${locale}`);
+    const { data, sha } = await res.json();
+    document.getElementById('sha').value = sha || '';
+    document.getElementById('aboutSummary').value = data.about?.summary || '';
+    document.getElementById('aboutExtended').value = data.about?.extended || '';
+    document.getElementById('resumeProfile').value = data.resume?.profile || '';
+    document.getElementById('profileJson').value = JSON.stringify(data, null, 2);
+  }
+
+  document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let data;
+    try {
+      data = JSON.parse(document.getElementById('profileJson').value);
+      data.about = {
+        summary: document.getElementById('aboutSummary').value,
+        extended: document.getElementById('aboutExtended').value,
+      };
+      data.resume = { ...data.resume, profile: document.getElementById('resumeProfile').value };
+    } catch {
+      const status = document.getElementById('form-status');
+      status.textContent = 'JSON غير صالح';
+      status.className = 'admin-alert admin-alert-error';
+      status.classList.remove('hidden');
+      return;
+    }
+
+    const res = await fetch(`/api/admin/profile/${locale}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data }),
+    });
+
+    const status = document.getElementById('form-status');
+    status.textContent = res.ok ? successMsg : errorMsg;
+    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.classList.remove('hidden');
+    if (res.ok) load();
+  });
+
+  load();
+</script>
+<style>.hidden{display:none}</style>

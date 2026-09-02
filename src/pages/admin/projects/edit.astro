@@ -1,0 +1,201 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+
+export const prerender = false;
+const locale = Astro.url.searchParams.get('locale') || 'en';
+const slug = Astro.url.searchParams.get('slug') || '';
+const isNew = Astro.url.searchParams.get('new') === '1';
+---
+
+<AdminLayout title={isNew ? 'مشروع جديد' : `تعديل: ${slug}`}>
+  <AdminShell>
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">{isNew ? 'مشروع جديد' : 'تعديل مشروع'}</h1>
+        <p class="admin-subtitle">اللغة: {locale.toUpperCase()}</p>
+      </div>
+      <a href={`/admin/projects?locale=${locale}`} class="admin-btn admin-btn-ghost">{adminUi.common.cancel}</a>
+    </div>
+
+    <form id="project-form" class="admin-grid">
+      <input type="hidden" id="sha" name="sha" />
+
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field">
+          <label class="admin-label" for="title">{adminUi.common.title}</label>
+          <input class="admin-input" id="title" name="title" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="slug">{adminUi.common.slug}</label>
+          <input class="admin-input" id="slug" name="slug" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="excerpt">المقتطف</label>
+        <textarea class="admin-textarea" id="excerpt" rows="2" required></textarea>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="problem">المشكلة</label>
+        <textarea class="admin-textarea" id="problem" rows="3" required></textarea>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="solution">الحل</label>
+        <textarea class="admin-textarea" id="solution" rows="3" required></textarea>
+      </div>
+
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field">
+          <label class="admin-label" for="role">الدور</label>
+          <input class="admin-input" id="role" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="result">النتيجة</label>
+          <input class="admin-input" id="result" required />
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid-3">
+        <div class="admin-field">
+          <label class="admin-label" for="technologies">التقنيات (فاصلة)</label>
+          <input class="admin-input" id="technologies" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="cover">صورة الغلاف</label>
+          <input class="admin-input" id="cover" required />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="order">الترتيب</label>
+          <input class="admin-input" type="number" id="order" min="1" value="1" required />
+        </div>
+      </div>
+
+      <div class="admin-grid admin-grid-2">
+        <div class="admin-field">
+          <label class="admin-label" for="github">GitHub (اختياري)</label>
+          <input class="admin-input" id="github" type="url" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label" for="demo">Demo (اختياري)</label>
+          <input class="admin-input" id="demo" type="url" />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label" for="body">المحتوى (Markdown)</label>
+        <textarea class="admin-textarea" id="body" rows="14" required></textarea>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:0.5rem;">
+        <input type="checkbox" id="featured" checked />
+        مميز
+      </label>
+
+      <div id="form-status" class="admin-alert hidden"></div>
+
+      <div class="admin-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" id="save-btn">{adminUi.common.save}</button>
+        {!isNew && <button type="button" class="admin-btn admin-btn-danger" id="delete-btn">{adminUi.common.delete}</button>}
+      </div>
+    </form>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ locale, slug, isNew, saveLabel: adminUi.common.save, savingLabel: adminUi.common.saving, successMsg: adminUi.common.success, errorMsg: adminUi.common.error, confirmDelete: adminUi.common.confirmDelete }}>
+  const form = document.getElementById('project-form');
+  const status = document.getElementById('form-status');
+  const saveBtn = document.getElementById('save-btn');
+  const deleteBtn = document.getElementById('delete-btn');
+
+  function showStatus(message, ok) {
+    status.textContent = message;
+    status.className = `admin-alert ${ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.classList.remove('hidden');
+  }
+
+  async function loadProject() {
+    if (isNew) return;
+    const res = await fetch(`/api/admin/projects?locale=${locale}&slug=${slug}`);
+    const data = await res.json();
+    const { project } = data;
+    if (!project) return;
+
+    document.getElementById('sha').value = project.sha || '';
+    document.getElementById('title').value = project.frontmatter.title || '';
+    document.getElementById('slug').value = project.slug || '';
+    document.getElementById('excerpt').value = project.frontmatter.excerpt || '';
+    document.getElementById('problem').value = project.frontmatter.problem || '';
+    document.getElementById('solution').value = project.frontmatter.solution || '';
+    document.getElementById('role').value = project.frontmatter.role || '';
+    document.getElementById('result').value = project.frontmatter.result || '';
+    document.getElementById('technologies').value = (project.frontmatter.technologies || []).join(', ');
+    document.getElementById('cover').value = project.frontmatter.cover || '';
+    document.getElementById('order').value = project.frontmatter.order || 1;
+    document.getElementById('github').value = project.frontmatter.github || '';
+    document.getElementById('demo').value = project.frontmatter.demo || '';
+    document.getElementById('body').value = project.body || '';
+    document.getElementById('featured').checked = project.frontmatter.featured !== false;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    saveBtn.disabled = true;
+    saveBtn.textContent = savingLabel;
+
+    const payload = {
+      locale,
+      slug: document.getElementById('slug').value,
+      sha: document.getElementById('sha').value || undefined,
+      frontmatter: {
+        title: document.getElementById('title').value,
+        excerpt: document.getElementById('excerpt').value,
+        problem: document.getElementById('problem').value,
+        solution: document.getElementById('solution').value,
+        role: document.getElementById('role').value,
+        result: document.getElementById('result').value,
+        technologies: document.getElementById('technologies').value.split(',').map((t) => t.trim()).filter(Boolean),
+        cover: document.getElementById('cover').value,
+        order: Number(document.getElementById('order').value),
+        featured: document.getElementById('featured').checked,
+        github: document.getElementById('github').value || undefined,
+        demo: document.getElementById('demo').value || undefined,
+      },
+      body: document.getElementById('body').value,
+    };
+
+    try {
+      const res = await fetch('/api/admin/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showStatus(successMsg, true);
+        if (isNew) window.location.href = `/admin/projects/edit?locale=${locale}&slug=${data.slug}`;
+      } else {
+        showStatus(data.error || errorMsg, false);
+      }
+    } catch {
+      showStatus(errorMsg, false);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = saveLabel;
+    }
+  });
+
+  deleteBtn?.addEventListener('click', async () => {
+    if (!confirm(confirmDelete)) return;
+    const sha = document.getElementById('sha').value;
+    const res = await fetch(`/api/admin/projects/${slug}?locale=${locale}&sha=${sha}`, { method: 'DELETE' });
+    if (res.ok) window.location.href = `/admin/projects?locale=${locale}`;
+  });
+
+  loadProject();
+</script>
+
+<style>.hidden { display: none; }</style>

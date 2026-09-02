@@ -29,6 +29,12 @@ npm run dev
 
 The dev server runs at `http://localhost:4891`.
 
+## Admin panel
+
+Git-backed CMS at **`/admin`** — manage articles, projects, site settings, and trigger deploys.
+
+See [docs/ADMIN.md](./docs/ADMIN.md) for setup (GitHub token, admin password, CI secrets).
+
 ## Environment Variables
 
 Copy `.env.example` to `.env`:

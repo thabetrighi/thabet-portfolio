@@ -1,0 +1,147 @@
+{
+  "experience": [
+    {
+      "company": "TechFlow SaaS",
+      "position": "Senior Software Engineer",
+      "startDate": "2022",
+      "endDate": null,
+      "location": "Remote",
+      "description": "Lead backend architecture for a multi-tenant analytics platform serving 200+ enterprise clients.",
+      "technologies": [
+        "Laravel",
+        "PostgreSQL",
+        "Redis",
+        "Cloudflare Workers"
+      ],
+      "achievements": [
+        "Reduced API response time by 60% through query optimization and edge caching",
+        "Designed event-driven pipeline processing 2M events/day",
+        "Mentored team of 4 engineers on API design patterns"
+      ]
+    },
+    {
+      "company": "DigitalCraft Agency",
+      "position": "Full-Stack Developer",
+      "startDate": "2019",
+      "endDate": "2022",
+      "location": "Algiers, Algeria",
+      "description": "Built custom web applications and e-commerce solutions for regional clients.",
+      "technologies": [
+        "Vue.js",
+        "Laravel",
+        "MySQL",
+        "Docker"
+      ],
+      "achievements": [
+        "Delivered 12 client projects on time and within budget",
+        "Introduced CI/CD pipeline reducing deployment time from hours to minutes",
+        "Built reusable component library adopted across projects"
+      ]
+    },
+    {
+      "company": "StartupLab",
+      "position": "Backend Developer",
+      "startDate": "2017",
+      "endDate": "2019",
+      "location": "Remote",
+      "description": "Developed REST APIs and microservices for early-stage SaaS products.",
+      "technologies": [
+        "PHP",
+        "Node.js",
+        "MongoDB",
+        "AWS"
+      ],
+      "achievements": [
+        "Architected authentication system used across 3 products",
+        "Implemented automated testing increasing coverage to 85%"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Backend",
+      "items": [
+        "Laravel",
+        "PHP",
+        "Node.js",
+        "APIs",
+        "Databases"
+      ]
+    },
+    {
+      "name": "Frontend",
+      "items": [
+        "Vue",
+        "JavaScript",
+        "React",
+        "CSS",
+        "Modern Web"
+      ]
+    },
+    {
+      "name": "Infrastructure",
+      "items": [
+        "Cloudflare",
+        "Linux",
+        "Docker",
+        "CI/CD"
+      ]
+    },
+    {
+      "name": "Architecture",
+      "items": [
+        "SaaS",
+        "API Architecture",
+        "Distributed Systems",
+        "Performance",
+        "Security"
+      ]
+    }
+  ],
+  "about": {
+    "summary": "I think in systems. Whether it is an API contract, a database schema, or a deployment pipeline — I care about how pieces connect and how they fail gracefully.",
+    "extended": "Over eight years, I have moved between agency work and product teams. I prefer building products that solve real operational problems: dashboards that teams actually use, APIs that do not break at scale, and tools that respect the developer maintaining them.\n\nOutside of code, I write about backend architecture and infrastructure. I believe the best engineering decisions are the ones you can explain simply."
+  },
+  "resume": {
+    "profile": "Software engineer with 8+ years building web products, APIs, and distributed systems. Experienced in Laravel, Vue.js, and Cloudflare infrastructure. Based in Algeria, working remotely with international teams.",
+    "education": [
+      {
+        "institution": "University of Science and Technology Houari Boumediene",
+        "degree": "B.S. Computer Science",
+        "period": "2013 – 2017",
+        "location": "Algiers, Algeria"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Cloudflare Developer Certification",
+        "issuer": "Cloudflare",
+        "year": "2024"
+      },
+      {
+        "name": "AWS Cloud Practitioner",
+        "issuer": "Amazon Web Services",
+        "year": "2022"
+      }
+    ],
+    "languages": [
+      {
+        "language": "Arabic",
+        "level": "Native"
+      },
+      {
+        "language": "English",
+        "level": "Professional"
+      },
+      {
+        "language": "French",
+        "level": "Professional"
+      }
+    ],
+    "cvFiles": {
+      "en": "/cv/thabet-cv-en.pdf",
+      "ar": "/cv/thabet-cv-ar.pdf",
+      "fr": "/cv/thabet-cv-fr.pdf"
+    }
+  }
+}

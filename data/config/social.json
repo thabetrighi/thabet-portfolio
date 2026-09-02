@@ -1,0 +1,13 @@
+{
+  "links": [
+    { "platform": "github", "url": "https://github.com/thabet" },
+    { "platform": "gitlab", "url": "" },
+    { "platform": "linkedin", "url": "https://linkedin.com/in/thabet" },
+    { "platform": "facebook", "url": "" },
+    { "platform": "x", "url": "https://x.com/thabet" },
+    { "platform": "instagram", "url": "" },
+    { "platform": "youtube", "url": "" },
+    { "platform": "stackoverflow", "url": "" },
+    { "platform": "devto", "url": "" }
+  ]
+}

@@ -1,0 +1,292 @@
+/* Admin panel — isolated design system */
+
+.admin-root {
+  --admin-bg: #0f1117;
+  --admin-surface: #171a22;
+  --admin-surface-2: #1f2430;
+  --admin-border: #2a3142;
+  --admin-text: #e8ecf4;
+  --admin-muted: #9aa3b5;
+  --admin-accent: #5b8def;
+  --admin-accent-hover: #7aa3f5;
+  --admin-success: #3ecf8e;
+  --admin-danger: #ef6b6b;
+  --admin-warning: #f0b429;
+  --admin-radius: 10px;
+  --admin-sidebar: 260px;
+  min-height: 100vh;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: var(--admin-sidebar) 1fr;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  border-inline-end: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  padding: 1.5rem 1rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.admin-brand {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  padding-inline: 0.75rem;
+}
+
+.admin-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  color: var(--admin-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  margin-bottom: 0.2rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.admin-nav a:hover,
+.admin-nav a.is-active {
+  background: var(--admin-surface-2);
+  color: var(--admin-text);
+}
+
+.admin-main {
+  padding: 2rem;
+  max-width: 1100px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.admin-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.admin-subtitle {
+  color: var(--admin-muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.admin-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.25rem;
+}
+
+.admin-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--admin-muted);
+  margin-bottom: 0.35rem;
+}
+
+.admin-input,
+.admin-textarea,
+.admin-select {
+  width: 100%;
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  color: var(--admin-text);
+  padding: 0.65rem 0.8rem;
+  font-size: 0.92rem;
+}
+
+.admin-textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+  outline: none;
+  border-color: var(--admin-accent);
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.admin-btn-primary {
+  background: var(--admin-accent);
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  background: var(--admin-accent-hover);
+}
+
+.admin-btn-ghost {
+  background: transparent;
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+.admin-btn-ghost:hover {
+  background: var(--admin-surface-2);
+}
+
+.admin-btn-danger {
+  background: transparent;
+  border-color: var(--admin-danger);
+  color: var(--admin-danger);
+}
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.admin-badge-success {
+  background: color-mix(in srgb, var(--admin-success) 20%, transparent);
+  color: var(--admin-success);
+}
+
+.admin-badge-warning {
+  background: color-mix(in srgb, var(--admin-warning) 20%, transparent);
+  color: var(--admin-warning);
+}
+
+.admin-badge-muted {
+  background: var(--admin-surface-2);
+  color: var(--admin-muted);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: start;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.9rem;
+}
+
+.admin-table th {
+  color: var(--admin-muted);
+  font-weight: 500;
+}
+
+.admin-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.admin-alert-success {
+  background: color-mix(in srgb, var(--admin-success) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--admin-success) 35%, transparent);
+}
+
+.admin-alert-error {
+  background: color-mix(in srgb, var(--admin-danger) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--admin-danger) 35%, transparent);
+}
+
+.admin-login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  padding: 1rem;
+}
+
+.admin-login-card {
+  width: min(100%, 420px);
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.admin-field {
+  margin-bottom: 1rem;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.admin-hidden {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+    height: auto;
+    border-inline-end: none;
+    border-bottom: 1px solid var(--admin-border);
+  }
+
+  .admin-grid-2,
+  .admin-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

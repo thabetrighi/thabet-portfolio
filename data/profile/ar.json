@@ -1,0 +1,147 @@
+{
+  "experience": [
+    {
+      "company": "TechFlow SaaS",
+      "position": "مهندس برمجيات أول",
+      "startDate": "2022",
+      "endDate": null,
+      "location": "عن بُعد",
+      "description": "قيادة الهندسة الخلفية لمنصة تحليلات متعددة المستأجرين تخدم أكثر من 200 عميل مؤسسي.",
+      "technologies": [
+        "Laravel",
+        "PostgreSQL",
+        "Redis",
+        "Cloudflare Workers"
+      ],
+      "achievements": [
+        "تقليل زمن استجابة API بنسبة 60% عبر تحسين الاستعلامات والتخزين المؤقت على الحافة",
+        "تصميم خط أنابيب قائم على الأحداث يعالج 2 مليون حدث يوميًا",
+        "إرشاد فريق من 4 مهندسين حول أنماط تصميم API"
+      ]
+    },
+    {
+      "company": "DigitalCraft Agency",
+      "position": "مطور Full-Stack",
+      "startDate": "2019",
+      "endDate": "2022",
+      "location": "الجزائر",
+      "description": "بناء تطبيقات ويب مخصصة وحلول تجارة إلكترونية لعملاء إقليميين.",
+      "technologies": [
+        "Vue.js",
+        "Laravel",
+        "MySQL",
+        "Docker"
+      ],
+      "achievements": [
+        "تسليم 12 مشروعًا للعملاء في الوقت المحدد",
+        "إدخال خط CI/CD قلّص وقت النشر من ساعات إلى دقائق",
+        "بناء مكتبة مكونات قابلة لإعادة الاستخدام"
+      ]
+    },
+    {
+      "company": "StartupLab",
+      "position": "مطور Backend",
+      "startDate": "2017",
+      "endDate": "2019",
+      "location": "عن بُعد",
+      "description": "تطوير REST APIs وخدمات مصغرة لمنتجات SaaS ناشئة.",
+      "technologies": [
+        "PHP",
+        "Node.js",
+        "MongoDB",
+        "AWS"
+      ],
+      "achievements": [
+        "تصميم نظام مصادقة مستخدم عبر 3 منتجات",
+        "تنفيذ اختبارات آلية رفعت التغطية إلى 85%"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "Backend",
+      "items": [
+        "Laravel",
+        "PHP",
+        "Node.js",
+        "APIs",
+        "قواعد البيانات"
+      ]
+    },
+    {
+      "name": "Frontend",
+      "items": [
+        "Vue",
+        "JavaScript",
+        "React",
+        "CSS",
+        "الويب الحديث"
+      ]
+    },
+    {
+      "name": "البنية التحتية",
+      "items": [
+        "Cloudflare",
+        "Linux",
+        "Docker",
+        "CI/CD"
+      ]
+    },
+    {
+      "name": "الهندسة المعمارية",
+      "items": [
+        "SaaS",
+        "تصميم API",
+        "أنظمة موزعة",
+        "الأداء",
+        "الأمان"
+      ]
+    }
+  ],
+  "about": {
+    "summary": "أفكر بمنطق الأنظمة. سواء كان عقد API أو مخطط قاعدة بيانات أو خط نشر — يهمّني كيف تتصل القطع وكيف تتعامل مع الأعطال.",
+    "extended": "على مدى ثماني سنوات، انتقلت بين عمل الوكالات وفرق المنتجات. أفضل بناء منتجات تحل مشاكل تشغيلية حقيقية: لوحات يستخدمها الفريق فعلًا، وواجهات برمجة لا تنهار عند التوسع، وأدوات تحترم المطور الذي يصونها.\n\nخارج البرمجة، أكتب عن الهندسة الخلفية والبنية التحتية. أؤمن أن أفضل القرارات الهندسية هي التي يمكن شرحها ببساطة."
+  },
+  "resume": {
+    "profile": "مهندس برمجيات بخبرة تتجاوز 8 سنوات في بناء منتجات ويب وواجهات برمجة وأنظمة موزعة. خبرة في Laravel وVue.js وبنية Cloudflare. مقيم في الجزائر، أعمل عن بُعد مع فرق دولية.",
+    "education": [
+      {
+        "institution": "جامعة العلوم والتكنولوجيا هواري بومدين",
+        "degree": "بكالوريوس علوم الحاسوب",
+        "period": "2013 – 2017",
+        "location": "الجزائر"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "شهادة مطور Cloudflare",
+        "issuer": "Cloudflare",
+        "year": "2024"
+      },
+      {
+        "name": "AWS Cloud Practitioner",
+        "issuer": "Amazon Web Services",
+        "year": "2022"
+      }
+    ],
+    "languages": [
+      {
+        "language": "العربية",
+        "level": "لغة أم"
+      },
+      {
+        "language": "الإنجليزية",
+        "level": "احترافية"
+      },
+      {
+        "language": "الفرنسية",
+        "level": "احترافية"
+      }
+    ],
+    "cvFiles": {
+      "ar": "/cv/thabet-cv-ar.pdf",
+      "en": "/cv/thabet-cv-en.pdf",
+      "fr": "/cv/thabet-cv-fr.pdf"
+    }
+  }
+}

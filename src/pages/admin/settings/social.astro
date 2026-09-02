@@ -1,0 +1,66 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminShell from '../../../components/admin/AdminShell.astro';
+import { adminUi } from '../../../lib/admin/ui/strings';
+
+export const prerender = false;
+const platforms = ['github','gitlab','linkedin','facebook','x','instagram','youtube','stackoverflow','devto'];
+---
+
+<AdminLayout title={adminUi.nav.social}>
+  <AdminShell>
+    <div class="admin-header"><h1 class="admin-title">{adminUi.nav.social}</h1></div>
+    <form id="social-form" class="admin-card admin-grid">
+      <input type="hidden" id="sha" />
+      <div id="links-container" class="admin-grid"></div>
+      <div id="form-status" class="admin-alert hidden"></div>
+      <button type="submit" class="admin-btn admin-btn-primary">{adminUi.common.save}</button>
+    </form>
+  </AdminShell>
+</AdminLayout>
+
+<script define:vars={{ platforms, successMsg: adminUi.common.success, errorMsg: adminUi.common.error }}>
+  const container = document.getElementById('links-container');
+
+  function renderLinks(links) {
+    container.innerHTML = '';
+    for (const platform of platforms) {
+      const existing = links.find((l) => l.platform === platform) || { platform, url: '' };
+      const field = document.createElement('div');
+      field.className = 'admin-field';
+      field.innerHTML = `
+        <label class="admin-label">${platform}</label>
+        <input class="admin-input" data-platform="${platform}" value="${existing.url || ''}" placeholder="https://..." />
+      `;
+      container.appendChild(field);
+    }
+  }
+
+  async function load() {
+    const res = await fetch('/api/admin/settings/social');
+    const { data, sha } = await res.json();
+    document.getElementById('sha').value = sha || '';
+    renderLinks(data.links || []);
+  }
+
+  document.getElementById('social-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const links = [...container.querySelectorAll('input[data-platform]')].map((input) => ({
+      platform: input.dataset.platform,
+      url: input.value.trim(),
+    }));
+    const res = await fetch('/api/admin/settings/social', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sha: document.getElementById('sha').value || undefined, data: { links } }),
+    });
+    const status = document.getElementById('form-status');
+    status.textContent = res.ok ? successMsg : errorMsg;
+    status.className = `admin-alert ${res.ok ? 'admin-alert-success' : 'admin-alert-error'}`;
+    status.classList.remove('hidden');
+    if (res.ok) load();
+  });
+
+  load();
+</script>
+<style>.hidden{display:none}</style>
