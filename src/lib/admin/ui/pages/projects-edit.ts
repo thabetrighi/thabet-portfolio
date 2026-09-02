@@ -39,7 +39,10 @@ function buildPayload() {
   return {
     locale: readPageConfig<EditConfig>().locale,
     slug: field<HTMLInputElement>('slug').value.trim(),
-    sha: field<HTMLInputElement>('sha').value || undefined,
+    sha: (() => {
+      const value = field<HTMLInputElement>('sha').value.trim();
+      return value && !value.startsWith('local:') ? value : undefined;
+    })(),
     frontmatter: {
       title: field<HTMLInputElement>('title').value.trim(),
       excerpt: field<HTMLTextAreaElement>('excerpt').value.trim(),
@@ -141,7 +144,11 @@ export function initProjectsEditPage() {
       });
       if (res.ok) {
         showStatus(config.successMsg, true);
-        if (config.isNew) window.location.href = `/admin/projects/edit?locale=${config.locale}&slug=${data.slug}`;
+        if (config.isNew) {
+          window.location.href = `/admin/projects/edit?locale=${config.locale}&slug=${data.slug}`;
+        } else if (data.contentSha) {
+          field<HTMLInputElement>('sha').value = data.contentSha;
+        }
       } else {
         showStatus(translateValidationError(data.error) || config.errorMsg, false);
       }

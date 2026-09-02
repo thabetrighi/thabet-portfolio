@@ -40,7 +40,10 @@ function buildPayload() {
     locale: readPageConfig<EditConfig>().locale,
     slug: field<HTMLInputElement>('slug').value.trim(),
     previousSlug: field<HTMLInputElement>('previousSlug').value || undefined,
-    sha: field<HTMLInputElement>('sha').value || undefined,
+    sha: (() => {
+      const value = field<HTMLInputElement>('sha').value.trim();
+      return value && !value.startsWith('local:') ? value : undefined;
+    })(),
     frontmatter: {
       title: field<HTMLInputElement>('title').value.trim(),
       excerpt: field<HTMLTextAreaElement>('excerpt').value.trim(),
@@ -135,7 +138,9 @@ export function initArticlesEditPage() {
         if (config.isNew) {
           window.location.href = `/admin/articles/edit?locale=${config.locale}&slug=${data.slug}`;
         } else {
-          field<HTMLInputElement>('sha').value = '';
+          if (data.contentSha) {
+            field<HTMLInputElement>('sha').value = data.contentSha;
+          }
           field<HTMLInputElement>('previousSlug').value = data.slug;
         }
       } else {

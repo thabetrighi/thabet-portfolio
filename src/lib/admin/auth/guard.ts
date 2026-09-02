@@ -10,9 +10,13 @@ export async function requireAdminApi(request: Request): Promise<Response | null
 
   const rateLimiter = env.ADMIN_RATE_LIMITER;
   if (rateLimiter?.limit) {
-    const { success } = await rateLimiter.limit({ key: `admin:${session.id}` });
-    if (!success) {
-      return adminError('rate_limited', 429);
+    try {
+      const { success } = await rateLimiter.limit({ key: `admin:${session.id}` });
+      if (!success) {
+        return adminError('rate_limited', 429);
+      }
+    } catch {
+      // Continue if rate limiter binding is unavailable
     }
   }
 

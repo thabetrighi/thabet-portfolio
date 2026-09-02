@@ -136,6 +136,10 @@ export async function listDirectory(path: string): Promise<GitHubDirectoryItem[]
   }
 }
 
+function isGitHubContentSha(sha?: string): sha is string {
+  return Boolean(sha && !sha.startsWith('local:'));
+}
+
 export async function upsertFile(
   path: string,
   content: string,
@@ -145,19 +149,25 @@ export async function upsertFile(
   const config = getGitHubConfig();
   if (!config) throw new GitHubError('GitHub is not configured', 503);
 
+  let sha = isGitHubContentSha(existingSha) ? existingSha : undefined;
+  if (!sha) {
+    const existing = await getFile(path);
+    if (existing) sha = existing.sha;
+  }
+
   const body: Record<string, string> = {
     message,
     content: encodeContent(content),
     branch: config.branch,
   };
-  if (existingSha) body.sha = existingSha;
+  if (sha) body.sha = sha;
 
-  const result = await githubFetch<{ commit: { sha: string } }>(
+  const result = await githubFetch<{ commit: { sha: string }; content: { sha: string } }>(
     `/repos/${config.owner}/${config.repo}/contents/${path}`,
     { method: 'PUT', body: JSON.stringify(body) },
   );
 
-  return { commitSha: result.commit.sha, path };
+  return { commitSha: result.commit.sha, contentSha: result.content.sha, path };
 }
 
 export async function deleteFile(
@@ -176,7 +186,7 @@ export async function deleteFile(
     },
   );
 
-  return { commitSha: result.commit.sha, path };
+  return { commitSha: result.commit.sha, contentSha: sha, path };
 }
 
 export async function triggerDeploy(): Promise<{ triggered: boolean; message: string }> {

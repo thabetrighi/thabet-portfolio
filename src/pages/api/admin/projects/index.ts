@@ -57,7 +57,12 @@ export const POST: APIRoute = async ({ request }) => {
       body.body,
       body.sha,
     );
-    return adminJson({ success: true, slug: body.slug, commitSha: result.commitSha });
+    return adminJson({
+      success: true,
+      slug: body.slug,
+      commitSha: result.commitSha,
+      contentSha: result.contentSha,
+    });
   } catch (error) {
     return adminError((error as Error).message, 500);
   }

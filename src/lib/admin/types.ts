@@ -6,6 +6,7 @@ export interface GitHubFile {
 
 export interface GitHubCommitResult {
   commitSha: string;
+  contentSha: string;
   path: string;
 }
 

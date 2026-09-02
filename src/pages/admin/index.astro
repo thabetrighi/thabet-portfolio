@@ -22,7 +22,7 @@ export const prerender = false;
       <a href="/admin/deploy" class="adm-btn adm-btn--primary">{adminUi.common.deploy}</a>
     </div>
 
-    <div class="adm-grid adm-grid-4">
+    <div class="adm-stat-grid">
       <div class="adm-panel adm-stat">
         <div class="adm-stat-label">{adminUi.dashboard.totalArticles}</div>
         <div class="adm-stat-value" id="stat-articles">—</div>
@@ -40,14 +40,14 @@ export const prerender = false;
       </div>
       <div class="adm-panel adm-stat">
         <div class="adm-stat-label">GitHub</div>
-        <div class="adm-stat-value" style="font-size:16px;" id="stat-github">...</div>
+        <div class="adm-stat-value adm-stat-value--compact" id="stat-github">...</div>
         <div class="adm-stat-meta" id="stat-deploy">...</div>
       </div>
     </div>
 
-    <div class="adm-panel adm-panel-pad" style="margin-top:16px;">
-      <div class="adm-h1" style="font-size:14px;margin-bottom:12px;">{adminUi.dashboard.quickActions}</div>
-      <div class="adm-grid adm-grid-3">
+    <div class="adm-panel adm-panel-pad adm-section">
+      <h2 class="adm-section-title">{adminUi.dashboard.quickActions}</h2>
+      <div class="adm-card-grid">
         <a href="/admin/articles" class="adm-panel adm-link-card">
           <strong>{adminUi.nav.articles}</strong>
           <span>إدارة مقالات المدونة</span>
@@ -63,8 +63,8 @@ export const prerender = false;
       </div>
     </div>
 
-    <div class="adm-panel adm-panel-pad" style="margin-top:16px;">
-      <div class="adm-h1" style="font-size:14px;margin-bottom:8px;">{adminUi.dashboard.systemStatus}</div>
+    <div class="adm-panel adm-panel-pad adm-section">
+      <h2 class="adm-section-title">{adminUi.dashboard.systemStatus}</h2>
       <div id="github-status" class="adm-lead">{adminUi.common.loading}</div>
       <div id="deploy-status" class="adm-lead" style="margin-top:6px;"></div>
     </div>

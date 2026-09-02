@@ -208,10 +208,19 @@ export async function getDashboardStats() {
   const projects: Record<string, number> = {};
 
   for (const locale of locales) {
-    const articleList = await getArticlesList(locale);
-    const projectList = await getProjectsList(locale);
-    articles[locale] = articleList.articles.length;
-    projects[locale] = projectList.projects.length;
+    try {
+      const articleList = await getArticlesList(locale);
+      articles[locale] = articleList.articles.length;
+    } catch {
+      articles[locale] = 0;
+    }
+
+    try {
+      const projectList = await getProjectsList(locale);
+      projects[locale] = projectList.projects.length;
+    } catch {
+      projects[locale] = 0;
+    }
   }
 
   return {
