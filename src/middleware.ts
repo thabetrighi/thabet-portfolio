@@ -1,6 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { detectLocale } from './lib/locale-detection';
 import { isValidLocale, LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE } from './i18n/config';
+import { applySecurityHeaders } from './lib/security';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
@@ -14,7 +15,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const country = context.request.headers.get('cf-ipcountry');
 
     const locale = detectLocale({ cookie, acceptLanguage, country });
-    return context.redirect(`/${locale}`, 302);
+    return applySecurityHeaders(context.redirect(`/${locale}`, 302));
   }
 
   // Set locale cookie when user navigates to a locale-prefixed URL
@@ -31,5 +32,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  return next();
+  const response = await next();
+  return applySecurityHeaders(response);
 });

@@ -9,5 +9,5 @@ export const site = {
   logo: '' as string,
   email: 'contact@thabetrighi.com',
   url: 'https://thabetrighi.com',
-  turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA',
+  turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '',
 } as const;

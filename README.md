@@ -36,8 +36,10 @@ Copy `.env.example` to `.env`:
 ```bash
 PUBLIC_TURNSTILE_SITE_KEY=your_turnstile_site_key
 TURNSTILE_SECRET_KEY=your_turnstile_secret_key
-CONTACT_EMAIL=contact@thabetrighi.com
+CONTACT_EMAIL=righithabt@gmail.com
 ```
+
+Contact form delivery uses the Cloudflare **Email Workers** binding (`send_email` in `wrangler.jsonc`). In production, set secrets with `npx wrangler secret put`.
 
 Turnstile test keys work in development. Never expose secret keys in the frontend.
 

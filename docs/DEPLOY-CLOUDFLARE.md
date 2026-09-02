@@ -14,6 +14,10 @@
 
 راجع [EMAIL-SETUP.md](./EMAIL-SETUP.md) لربط `contact@thabetrighi.com` مع `righithabt@gmail.com`.
 
+## الأمان
+
+راجع [SECURITY.md](./SECURITY.md) — Turnstile إلزامي، rate limiting، security headers، honeypot.
+
 ---
 
 ## ما الذي أحتاجه منك؟ (إذا أردت أن أنشره لك)

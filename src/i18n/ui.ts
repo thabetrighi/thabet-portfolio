@@ -71,6 +71,8 @@ export const ui = {
       sending: 'جارٍ الإرسال...',
       success: 'تم إرسال رسالتك. سأرد عليك قريبًا.',
       error: 'حدث خطأ. حاول مرة أخرى أو راسلني مباشرة.',
+      rateLimited: 'طلبات كثيرة. انتظر دقيقة ثم حاول مجددًا.',
+      captchaFailed: 'فشل التحقق الأمني. أعد المحاولة.',
       social: 'وسائل التواصل',
     },
     footer: {
@@ -181,6 +183,8 @@ export const ui = {
       sending: 'Sending...',
       success: 'Message sent. I will get back to you soon.',
       error: 'Something went wrong. Please try again or email me directly.',
+      rateLimited: 'Too many requests. Please wait a minute and try again.',
+      captchaFailed: 'Security check failed. Please try again.',
       social: 'Social profiles',
     },
     footer: {
@@ -291,6 +295,8 @@ export const ui = {
       sending: 'Envoi en cours...',
       success: 'Message envoyé. Je vous répondrai bientôt.',
       error: 'Une erreur s\'est produite. Réessayez ou contactez-moi directement.',
+      rateLimited: 'Trop de requêtes. Attendez une minute puis réessayez.',
+      captchaFailed: 'Échec de la vérification de sécurité. Réessayez.',
       social: 'Réseaux sociaux',
     },
     footer: {

@@ -18,12 +18,18 @@ interface EmailMessageBuilder {
   replyTo?: string | EmailAddress;
 }
 
+interface RateLimit {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}
+
 interface SendEmail {
   send(message: EmailMessageBuilder): Promise<EmailSendResult>;
 }
 
 interface Env {
   EMAIL: SendEmail;
+  CONTACT_RATE_LIMITER: RateLimit;
   CONTACT_EMAIL?: string;
   TURNSTILE_SECRET_KEY?: string;
+  PUBLIC_TURNSTILE_SITE_KEY?: string;
 }
