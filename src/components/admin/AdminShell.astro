@@ -4,9 +4,10 @@ import { buildAdminBreadcrumbs } from '../../lib/admin/ui/breadcrumbs';
 
 interface Props {
   title?: string;
+  hideTitle?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, hideTitle = false } = Astro.props;
 const path = Astro.url.pathname;
 const searchParams = Astro.url.searchParams;
 
@@ -36,6 +37,10 @@ if (isEditPage && editSlug) {
 } else if (isEditPage && searchParams.get('new') === '1') {
   breadcrumbs.push({ label: 'جديد' });
 }
+
+const isDashboardHome = path === '/admin' || path === '/admin/';
+const showBreadcrumb = !isDashboardHome && breadcrumbs.length > 0;
+const showTopbarTitle = !hideTitle;
 
 const sections = [
   { id: 'main', label: adminUi.sections.main },
@@ -98,23 +103,25 @@ const sections = [
           <svg class="adm-icon-close hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
         </button>
         <div class="adm-topbar-heading">
-          <h1 class="adm-page-title">{pageTitle}</h1>
-          <nav class="adm-breadcrumb" aria-label="مسار التنقل">
-            <ol>
-              {breadcrumbs.map((crumb, index) => (
-                <li class:list={['adm-breadcrumb__item', { 'is-current': !crumb.href }]}>
-                  {crumb.href ? (
-                    <a href={crumb.href}>{crumb.label}</a>
-                  ) : (
-                    <span aria-current="page">{crumb.label}</span>
-                  )}
-                  {index < breadcrumbs.length - 1 && (
-                    <span class="adm-breadcrumb__sep" aria-hidden="true">/</span>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </nav>
+          {showTopbarTitle && <h1 class="adm-page-title">{pageTitle}</h1>}
+          {showBreadcrumb && (
+            <nav class="adm-breadcrumb" aria-label="مسار التنقل">
+              <ol>
+                {breadcrumbs.map((crumb, index) => (
+                  <li class:list={['adm-breadcrumb__item', { 'is-current': !crumb.href }]}>
+                    {crumb.href ? (
+                      <a href={crumb.href}>{crumb.label}</a>
+                    ) : (
+                      <span aria-current="page">{crumb.label}</span>
+                    )}
+                    {index < breadcrumbs.length - 1 && (
+                      <span class="adm-breadcrumb__sep" aria-hidden="true">/</span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
           {locale && isEditPage && (
             <span class="adm-locale-pill">{locale.toUpperCase()}</span>
           )}

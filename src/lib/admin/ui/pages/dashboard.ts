@@ -46,8 +46,10 @@ export function initDashboardPage() {
 
     if (data.deploy && deployEl && statDeploy) {
       const label = `${data.deploy.status} — ${data.deploy.conclusion || 'pending'}`;
-      deployEl.textContent = `${lastDeploy}: ${label}`;
+      deployEl.textContent = label;
       statDeploy.textContent = label;
+    } else if (deployEl) {
+      deployEl.textContent = '—';
     }
   }
 

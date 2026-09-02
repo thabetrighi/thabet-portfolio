@@ -22,7 +22,7 @@ export function buildAdminBreadcrumbs(pathname: string): BreadcrumbItem[] {
   ];
 
   const normalized = pathname.replace(/\/$/, '') || '/admin';
-  if (normalized === '/admin') return crumbs;
+  if (normalized === '/admin') return [];
 
   const parts = normalized.replace(/^\/admin\/?/, '').split('/').filter(Boolean);
   let acc = '/admin';
