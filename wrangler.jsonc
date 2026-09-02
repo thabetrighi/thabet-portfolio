@@ -15,7 +15,7 @@
 	},
 	"vars": {
 		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAEktppIf2m0GrFD7",
-		"GITHUB_OWNER": "thabet-righi",
+		"GITHUB_OWNER": "thabetrighi",
 		"GITHUB_REPO": "thabet-portfolio",
 		"GITHUB_BRANCH": "main"
 	},
