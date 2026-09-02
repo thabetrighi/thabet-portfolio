@@ -55,7 +55,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Secrets stay server-side only.
     const contactEmail = (locals as { runtime?: { env?: Record<string, string> } }).runtime?.env?.CONTACT_EMAIL
       || import.meta.env.CONTACT_EMAIL
-      || 'hello@thabetrighi.com';
+      || 'contact@thabetrighi.com';
 
     // Log for dev; replace with actual email sending in production
     console.log('Contact form submission:', { name, email, message, to: contactEmail });

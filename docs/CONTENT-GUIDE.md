@@ -34,7 +34,7 @@ export const site = {
     fr: 'Thabet',
   },
   logo: '',                          // مسار الشعار — اتركه فارغًا للنص فقط
-  email: 'hello@thabetrighi.com',
+  email: 'contact@thabetrighi.com',
   url: 'https://thabetrighi.com',         // يجب أن يطابق نطاقك الفعلي
   github: 'https://github.com/thabet',
   linkedin: 'https://linkedin.com/in/thabet',
@@ -358,7 +358,7 @@ npx wrangler deploy    # نشر على Cloudflare
 ```bash
 PUBLIC_TURNSTILE_SITE_KEY=...   # مفتاح عام (واجهة)
 TURNSTILE_SECRET_KEY=...        # سري — Cloudflare dashboard فقط
-CONTACT_EMAIL=hello@thabetrighi.com    # مستلم نموذج التواصل
+CONTACT_EMAIL=contact@thabetrighi.com    # مستلم نموذج التواصل (أو righithabt@gmail.com)
 ```
 
 انسخ من `.env.example`. **لا ترفع `.env` إلى Git.**

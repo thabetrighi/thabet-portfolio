@@ -36,7 +36,7 @@ Copy `.env.example` to `.env`:
 ```bash
 PUBLIC_TURNSTILE_SITE_KEY=your_turnstile_site_key
 TURNSTILE_SECRET_KEY=your_turnstile_secret_key
-CONTACT_EMAIL=hello@thabetrighi.com
+CONTACT_EMAIL=contact@thabetrighi.com
 ```
 
 Turnstile test keys work in development. Never expose secret keys in the frontend.
