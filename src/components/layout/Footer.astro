@@ -2,6 +2,7 @@
 import type { Locale } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { site } from '../../lib/site';
+import SocialLinks from '../SocialLinks.astro';
 
 interface Props {
   locale: Locale;
@@ -13,19 +14,27 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-border dark:border-border-dark mt-auto">
-  <div class="mx-auto flex max-w-wide flex-col gap-4 px-5 py-10 md:flex-row md:items-center md:justify-between md:px-8">
-    <div>
-      <p class="text-sm text-ink-secondary dark:text-ink-secondary-dark">
-        © {year} {site.fullName[locale]}. {t.footer.rights}.
-      </p>
-      <p class="mt-1 font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
-        {t.footer.built}
-      </p>
-    </div>
-    <div class="flex items-center gap-5">
-      <a href={site.github} class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href={site.linkedin} class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href={`mailto:${site.email}`} class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark">{site.email}</a>
+  <div class="mx-auto max-w-wide px-5 py-12 md:px-8">
+    <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+      <div>
+        <p class="font-display text-lg text-ink dark:text-ink-dark">{site.fullName[locale]}</p>
+        <p class="mt-2 text-sm text-ink-secondary dark:text-ink-secondary-dark">
+          © {year}. {t.footer.rights}.
+        </p>
+        <p class="mt-1 font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+          {t.footer.built}
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <SocialLinks size="md" />
+        <a
+          href={`mailto:${site.email}`}
+          class="text-sm text-ink-secondary link-underline dark:text-ink-secondary-dark no-underline"
+        >
+          {site.email}
+        </a>
+      </div>
     </div>
   </div>
 </footer>

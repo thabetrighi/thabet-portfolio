@@ -2,6 +2,7 @@
 import type { Locale } from '../i18n/config';
 import { localeDirection } from '../i18n/config';
 import { site } from '../lib/site';
+import { socialLinks } from '../lib/social';
 import '../styles/global.css';
 
 interface Props {
@@ -95,7 +96,7 @@ const fullTitle = title.includes(site.name) ? title : `${title} — ${site.fullN
       name: site.fullName[locale],
       url: site.url,
       email: site.email,
-      sameAs: [site.github, site.linkedin, site.twitter],
+      sameAs: socialLinks.map((l) => l.url),
     },
   })} />
   </head>

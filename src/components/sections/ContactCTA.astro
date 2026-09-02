@@ -4,6 +4,7 @@ import { getLocalizedPath } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { site } from '../../lib/site';
 import Reveal from '../ui/Reveal.astro';
+import SocialLinks from '../SocialLinks.astro';
 
 interface Props {
   locale: Locale;
@@ -24,13 +25,16 @@ const t = useTranslations(locale);
           <p class="section-label mb-4">06</p>
           <h2 class="font-display text-3xl tracking-tight md:text-4xl">{t.cta.title}</h2>
           <p class="mt-4 text-lg text-ink-secondary dark:text-ink-secondary-dark">{t.cta.subtitle}</p>
-          <div class="mt-8 flex flex-wrap gap-4">
+          <div class="mt-8 flex flex-wrap items-center gap-4">
             <a href={getLocalizedPath(locale, 'contact')} class="btn btn-primary no-underline">
               {t.cta.button}
             </a>
             <a href={`mailto:${site.email}`} class="btn btn-ghost no-underline">
               {site.email}
             </a>
+          </div>
+          <div class="mt-8">
+            <SocialLinks size="md" />
           </div>
         </div>
       </div>

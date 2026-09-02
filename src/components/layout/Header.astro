@@ -56,14 +56,14 @@ function isActive(href: string): boolean {
         {item.label}
       </a>
     ))}
-    <div class="ms-3 flex items-center gap-2 border-s border-border ps-3 dark:border-border-dark">
+    <div class="ms-3 flex items-center gap-1.5 border-s border-border ps-3 dark:border-border-dark">
       <LanguageSwitcher locale={locale} currentPath={currentPath} />
       <ThemeToggle />
     </div>
   </nav>
 
   <!-- Mobile nav -->
-  <nav class="flex items-center gap-2 md:hidden" aria-label="Mobile navigation">
+  <nav class="flex items-center gap-1.5 md:hidden" aria-label="Mobile navigation">
     <LanguageSwitcher locale={locale} currentPath={currentPath} compact />
     <ThemeToggle />
   </nav>

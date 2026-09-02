@@ -9,6 +9,7 @@
 | ماذا تريد تعديله؟ | الملف |
 |-------------------|-------|
 | الاسم، البريد، الروابط، الشعار | `src/lib/site.ts` |
+| **روابط التواصل الاجتماعي + الأيقونات** | `src/lib/social.ts` |
 | نصوص الواجهة (أزرار، عناوين أقسام) | `src/i18n/ui.ts` |
 | الخبرات، المهارات، السيرة، نبذة About | `src/lib/content.ts` |
 | مقال جديد | `content/articles/{ar,en,fr}/` |
@@ -51,6 +52,15 @@ logo: '/images/logo.svg',
 ```
 
 3. يظهر الشعار بجانب الاسم في الـ header تلقائيًا.
+
+### التواصل الاجتماعي — `src/lib/social.ts`
+
+```typescript
+{ platform: 'github', url: 'https://github.com/username' },
+{ platform: 'facebook', url: '' },  // فارغ = مخفي
+```
+
+المنصات: `github` · `gitlab` · `linkedin` · `facebook` · `x` · `instagram` · `youtube` · `stackoverflow` · `devto` · `medium`
 
 ### Favicon (أيقونة التبويب)
 

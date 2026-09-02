@@ -71,6 +71,7 @@ export const ui = {
       sending: 'جارٍ الإرسال...',
       success: 'تم إرسال رسالتك. سأرد عليك قريبًا.',
       error: 'حدث خطأ. حاول مرة أخرى أو راسلني مباشرة.',
+      social: 'وسائل التواصل',
     },
     footer: {
       rights: 'جميع الحقوق محفوظة',
@@ -180,6 +181,7 @@ export const ui = {
       sending: 'Sending...',
       success: 'Message sent. I will get back to you soon.',
       error: 'Something went wrong. Please try again or email me directly.',
+      social: 'Social profiles',
     },
     footer: {
       rights: 'All rights reserved',
@@ -289,6 +291,7 @@ export const ui = {
       sending: 'Envoi en cours...',
       success: 'Message envoyé. Je vous répondrai bientôt.',
       error: 'Une erreur s\'est produite. Réessayez ou contactez-moi directement.',
+      social: 'Réseaux sociaux',
     },
     footer: {
       rights: 'Tous droits réservés',
