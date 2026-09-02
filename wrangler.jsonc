@@ -5,10 +5,11 @@
 	"name": "thabet-portfolio",
 	"account_id": "e095867da83877c667d0817a1596c5a9",
 	"workers_dev": true,
-	"main": "@astrojs/cloudflare/entrypoints/server",
+	"main": "src/worker.ts",
 	"assets": {
 		"directory": "./dist",
-		"binding": "ASSETS"
+		"binding": "ASSETS",
+		"run_worker_first": true
 	},
 	"observability": {
 		"enabled": true
