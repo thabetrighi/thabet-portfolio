@@ -1,0 +1,57 @@
+---
+import { site } from '../lib/site';
+
+const gaId = site.gaMeasurementId;
+const cfBeacon = site.cfBeaconToken;
+---
+
+{gaId && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', gaId, { anonymize_ip: true, send_page_view: true });
+    </script>
+  </>
+)}
+
+{cfBeacon && (
+  <script
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon={`{"token":"${cfBeacon}"}`}
+  ></script>
+)}
+
+<script is:inline>
+  (function () {
+    if (location.pathname.startsWith('/admin')) return;
+
+    const STORAGE_KEY = 'site_vid';
+    let visitorId = localStorage.getItem(STORAGE_KEY);
+    if (!visitorId) {
+      visitorId = (crypto.randomUUID?.() || Math.random().toString(36).slice(2, 12)).replace(/[^a-zA-Z0-9_-]/g, '');
+      localStorage.setItem(STORAGE_KEY, visitorId);
+    }
+
+    const payload = JSON.stringify({
+      path: location.pathname,
+      referrer: document.referrer || undefined,
+      visitorId,
+    });
+
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/analytics/collect', new Blob([payload], { type: 'application/json' }));
+      return;
+    }
+
+    fetch('/api/analytics/collect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true,
+    }).catch(function () {});
+  })();
+</script>

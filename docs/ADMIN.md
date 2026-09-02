@@ -62,6 +62,16 @@ npx wrangler secret put ADMIN_PASSWORD
 | `ADMIN_GITHUB_TOKEN` | نفس GITHUB_TOKEN |
 | `GITHUB_OWNER` | مالك المستودع |
 | `GITHUB_REPO` | اسم المستودع |
+| `PUBLIC_GA_MEASUREMENT_ID` | (اختياري) Google Analytics 4 — مثل `G-XXXXXXXX` |
+| `PUBLIC_CF_BEACON_TOKEN` | (اختياري) Cloudflare Web Analytics |
+
+### تحليلات الزوار
+
+- **تحليلات داخلية**: تُسجَّل تلقائياً في KV وتظهر في لوحة المعلومات (مشاهدات، زوار، أكثر الصفحات).
+- **Google Analytics 4**: أضف `PUBLIC_GA_MEASUREMENT_ID` في أسرار Cloudflare/GitHub Actions.
+- **Cloudflare Analytics**: أضف `PUBLIC_CF_BEACON_TOKEN` من لوحة Cloudflare → Analytics.
+
+إحصائيات المحتوى في الداشبورد تُخزَّن مؤقتاً **120 ثانية** لتسريع التحميل. استخدم زر «تحديث الإحصائيات» لإجبار التحديث.
 
 ### 4. النشر
 

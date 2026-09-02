@@ -2,6 +2,7 @@
 import type { Locale } from '../i18n/config';
 import { localeDirection } from '../i18n/config';
 import { site } from '../lib/site';
+import Analytics from '../components/Analytics.astro';
 import {
   buildCanonicalUrl,
   getOgLocale,
@@ -106,6 +107,8 @@ const ogLocaleAlternates = getOgLocaleAlternates(locale, hreflangLinks);
     {structuredData.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
+
+    <Analytics />
 
   <script is:inline>
     (function () {

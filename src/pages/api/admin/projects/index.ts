@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { requireAdminApi } from '../../../../lib/admin/auth/guard';
 import { adminError, adminJson } from '../../../../lib/admin/api/response';
+import { invalidateStatsCache } from '../../../../lib/admin/stats-cache';
 import { parseValidatedJsonBody } from '../../../../lib/admin/validation';
 import { projectSaveSchema } from '../../../../lib/admin/schemas/content';
 import {
@@ -57,6 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
       body.body,
       body.sha,
     );
+    await invalidateStatsCache();
     return adminJson({
       success: true,
       slug: body.slug,

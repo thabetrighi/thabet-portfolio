@@ -12,6 +12,19 @@ export const prerender = false;
     connected: adminUi.dashboard.githubConnected,
     disconnected: adminUi.dashboard.githubDisconnected,
     lastDeploy: adminUi.dashboard.lastDeploy,
+    todayViews: adminUi.dashboard.todayViews,
+    todayVisitors: adminUi.dashboard.todayVisitors,
+    weekViews: adminUi.dashboard.weekViews,
+    weekVisitors: adminUi.dashboard.weekVisitors,
+    topPages: adminUi.dashboard.topPages,
+    topReferrers: adminUi.dashboard.topReferrers,
+    trackingGa4: adminUi.dashboard.trackingGa4,
+    trackingCf: adminUi.dashboard.trackingCf,
+    trackingInternal: adminUi.dashboard.trackingInternal,
+    openGa: adminUi.dashboard.openGa,
+    cachedStats: adminUi.dashboard.cachedStats,
+    refreshStats: adminUi.dashboard.refreshStats,
+    noVisitorData: adminUi.dashboard.noVisitorData,
   }} />
   <AdminShell title={adminUi.dashboard.title} hideTitle>
     <div class="adm-dashboard">
@@ -26,6 +39,58 @@ export const prerender = false;
           {adminUi.common.deploy}
         </a>
       </header>
+
+      <section class="adm-dashboard-section adm-panel adm-panel-pad">
+        <div class="adm-section-head">
+          <div>
+            <h2 class="adm-section-title">{adminUi.dashboard.visitors}</h2>
+            <div class="adm-tracking-badges" id="tracking-badges"></div>
+          </div>
+          <div class="adm-section-actions">
+            <span class="adm-cache-badge hidden" id="stats-cache-badge"></span>
+            <button type="button" class="adm-btn adm-btn--secondary adm-btn--sm" id="refresh-stats-btn">
+              {adminUi.dashboard.refreshStats}
+            </button>
+            <a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer" class="adm-btn adm-btn--secondary adm-btn--sm hidden" id="ga-dashboard-link">
+              {adminUi.dashboard.openGa}
+            </a>
+          </div>
+        </div>
+
+        <div class="adm-stat-grid adm-stat-grid--visitors">
+          <article class="adm-stat-card">
+            <div class="adm-stat-label">{adminUi.dashboard.todayViews}</div>
+            <div class="adm-stat-value" id="stat-today-views">—</div>
+            <div class="adm-stat-meta">آخر 24 ساعة</div>
+          </article>
+          <article class="adm-stat-card">
+            <div class="adm-stat-label">{adminUi.dashboard.todayVisitors}</div>
+            <div class="adm-stat-value" id="stat-today-visitors">—</div>
+            <div class="adm-stat-meta">زوار فريدون</div>
+          </article>
+          <article class="adm-stat-card">
+            <div class="adm-stat-label">{adminUi.dashboard.weekViews}</div>
+            <div class="adm-stat-value" id="stat-week-views">—</div>
+            <div class="adm-stat-meta">إجمالي المشاهدات</div>
+          </article>
+          <article class="adm-stat-card">
+            <div class="adm-stat-label">{adminUi.dashboard.weekVisitors}</div>
+            <div class="adm-stat-value" id="stat-week-visitors">—</div>
+            <div class="adm-stat-meta">إجمالي الزوار</div>
+          </article>
+        </div>
+
+        <div class="adm-analytics-panels">
+          <div class="adm-analytics-panel">
+            <h3 class="adm-analytics-panel__title">{adminUi.dashboard.topPages}</h3>
+            <div id="top-pages-list" class="adm-analytics-panel__body">{adminUi.common.loading}</div>
+          </div>
+          <div class="adm-analytics-panel">
+            <h3 class="adm-analytics-panel__title">{adminUi.dashboard.topReferrers}</h3>
+            <div id="top-referrers-list" class="adm-analytics-panel__body">{adminUi.common.loading}</div>
+          </div>
+        </div>
+      </section>
 
       <section class="adm-dashboard-section" aria-label="إحصائيات المحتوى">
         <div class="adm-stat-grid">
