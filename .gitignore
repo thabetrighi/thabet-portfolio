@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # wrangler local state
 .wrangler/
+
+# generated wrangler runtime types (run: npm run generate-types)
+worker-configuration.d.ts

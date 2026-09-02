@@ -13,6 +13,13 @@
 	"observability": {
 		"enabled": true
 	},
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"destination_address": "righithabt@gmail.com",
+			"allowed_sender_addresses": ["contact@thabetrighi.com"]
+		}
+	],
 	"routes": [
 		{
 			"pattern": "thabetrighi.com",

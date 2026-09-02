@@ -2,6 +2,18 @@
 
 الموقع مبني على **Astro + Cloudflare Workers** (ليس Pages تقليدي). النشر يتم عبر **Wrangler**.
 
+## النطاقات النشطة
+
+| الرابط | الاستخدام |
+|--------|-----------|
+| https://thabetrighi.com | النطاق الرئيسي |
+| https://www.thabetrighi.com | نسخة www |
+| https://thabet-portfolio.righithabt.workers.dev | رابط احتياطي (workers.dev) |
+
+## البريد الإلكتروني
+
+راجع [EMAIL-SETUP.md](./EMAIL-SETUP.md) لربط `contact@thabetrighi.com` مع `righithabt@gmail.com`.
+
 ---
 
 ## ما الذي أحتاجه منك؟ (إذا أردت أن أنشره لك)

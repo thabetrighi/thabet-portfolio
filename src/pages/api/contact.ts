@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
+import { buildContactEmailBody, EMAIL_FROM, EMAIL_TO } from '../../lib/email';
 
 export const prerender = false;
 
@@ -9,7 +11,7 @@ interface ContactBody {
   'cf-turnstile-response'?: string;
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const body = (await request.json()) as ContactBody;
     const { name, email, message, 'cf-turnstile-response': turnstileToken } = body;
@@ -29,11 +31,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
       });
     }
 
-    // Verify Turnstile token
-    const turnstileSecret = (locals as { runtime?: { env?: Record<string, string> } }).runtime?.env?.TURNSTILE_SECRET_KEY
-      || import.meta.env.TURNSTILE_SECRET_KEY;
+    const turnstileSecret = env.TURNSTILE_SECRET_KEY;
+    if (turnstileSecret) {
+      if (!turnstileToken) {
+        return new Response(JSON.stringify({ error: 'Captcha required' }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
 
-    if (turnstileSecret && turnstileToken) {
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -51,20 +57,32 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
     }
 
-    // In production: send via Cloudflare Email Workers / Resend / etc.
-    // Secrets stay server-side only.
-    const contactEmail = (locals as { runtime?: { env?: Record<string, string> } }).runtime?.env?.CONTACT_EMAIL
-      || import.meta.env.CONTACT_EMAIL
-      || 'contact@thabetrighi.com';
+    const emailBinding = env.EMAIL;
+    if (!emailBinding?.send) {
+      return new Response(JSON.stringify({ error: 'Email service unavailable' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-    // Log for dev; replace with actual email sending in production
-    console.log('Contact form submission:', { name, email, message, to: contactEmail });
+    const recipient = env.CONTACT_EMAIL || EMAIL_TO;
+    const { text, html } = buildContactEmailBody(name.trim(), email.trim(), message.trim());
+
+    await emailBinding.send({
+      to: recipient,
+      from: { email: EMAIL_FROM, name: 'Thabet Portfolio' },
+      replyTo: { email: email.trim(), name: name.trim() },
+      subject: `Portfolio contact: ${name.trim()}`,
+      text,
+      html,
+    });
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch {
+  } catch (error) {
+    console.error('Contact form error:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

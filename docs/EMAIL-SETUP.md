@@ -1,40 +1,52 @@
 # إعداد البريد: contact@thabetrighi.com → righithabt@gmail.com
 
-تم تفعيل **Cloudflare Email Routing** على النطاق `thabetrighi.com` وسجلات MX جاهزة.  
-تبقى خطوة واحدة يدوية في لوحة Cloudflare (لا يمكن إكمالها عبر API Token الحالي).
+تم تفعيل **Cloudflare Email Routing** و**Email Workers** على النطاق `thabetrighi.com`.
 
-## الخطوات في لوحة Cloudflare
+## ما يعمل الآن
 
-1. افتح [Cloudflare Dashboard](https://dash.cloudflare.com) → اختر **thabetrighi.com**
-2. من القائمة الجانبية: **Email** → **Email Routing**
-3. **Destination addresses** → **Add destination address**
-   - أدخل: `righithabt@gmail.com`
-   - افتح Gmail واضغط رابط التأكيد الذي يرسله Cloudflare
-4. **Routing rules** → **Create address**
-   - **Custom address:** `contact`
-   - **Action:** Send to → `righithabt@gmail.com`
-   - احفظ القاعدة
-5. (اختياري) كرّر للعناوين الأخرى مثل `hello@` أو `info@`
+| الميزة | الحالة |
+|--------|--------|
+| توجيه البريد الوارد `contact@` → Gmail | مفعّل |
+| نموذج التواصل يرسل بريداً عبر Email Workers | مفعّل |
+| المرسل: `contact@thabetrighi.com` | مضبوط |
+| المستلم: `righithabt@gmail.com` | مضبوط |
 
-## التحقق
+## إعدادات Wrangler (تمت)
 
-- أرسل رسالة اختبار من Gmail إلى `contact@thabetrighi.com`
-- يجب أن تصل إلى `righithabt@gmail.com` خلال دقائق
+```jsonc
+"send_email": [{
+  "name": "EMAIL",
+  "destination_address": "righithabt@gmail.com",
+  "allowed_sender_addresses": ["contact@thabetrighi.com"]
+}]
+```
 
-## نموذج التواصل في الموقع
+## اختبار نموذج التواصل
 
-العنوان المعروض على الموقع: `contact@thabetrighi.com`
+1. افتح https://thabetrighi.com/en/contact
+2. املأ النموذج وأرسل
+3. تحقق من وصول الرسالة إلى `righithabt@gmail.com`
+4. الرد المباشر يذهب لبريد الزائر (عبر `replyTo`)
 
-نموذج التواصل (`/contact`) لا يرسل بريداً فعلياً بعد — يحتاج لاحقاً ربط **Email Workers** أو **Resend**.  
-عند التفعيل، عيّن السر:
+## Turnstile (اختياري — موصى به)
+
+لتفعيل CAPTCHA في الإنتاج:
+
+```bash
+npx wrangler secret put TURNSTILE_SECRET_KEY
+npx wrangler secret put PUBLIC_TURNSTILE_SITE_KEY
+```
+
+ثم أعد النشر: `npm run build && npx wrangler deploy`
+
+## تغيير مستلم النموذج
 
 ```bash
 npx wrangler secret put CONTACT_EMAIL
-# أدخل: righithabt@gmail.com
-# أو contact@thabetrighi.com بعد تفعيل التوجيه
+# أدخل البريد المطلوب (يجب أن يكون مُتحققاً في Email Routing)
 ```
 
-## سجلات DNS (تم إنشاؤها تلقائياً)
+## سجلات DNS (تلقائية)
 
 | النوع | الاسم | القيمة |
 |-------|--------|--------|
