@@ -1,0 +1,35 @@
+---
+import type { Locale } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import Reveal from '../ui/Reveal.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="border-t border-border dark:border-border-dark">
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
+    <Reveal>
+      <h2 class="section-label mb-12">{t.principles.title}</h2>
+    </Reveal>
+    <div class="stagger-children grid gap-10 md:grid-cols-2 lg:gap-12">
+      {t.principles.items.map((item, i) => (
+        <Reveal delay={i * 60}>
+          <article class="principle-card">
+            <span class="font-mono text-xs text-accent dark:text-accent-dark">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-2 font-display text-xl">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-secondary dark:text-ink-secondary-dark">
+              {item.description}
+            </p>
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import type { Locale } from '../../i18n/config';
+import { useTranslations } from '../../i18n/ui';
+import Reveal from '../ui/Reveal.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const stats = [t.stats.years, t.stats.projects, t.stats.clients, t.stats.uptime];
+---
+
+<section class="border-y border-border bg-surface/50 dark:border-border-dark dark:bg-surface-dark/30">
+  <div class="mx-auto max-w-wide px-5 py-12 md:px-8 md:py-16">
+    <div class="stagger-children grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+      {stats.map((stat) => (
+        <Reveal>
+          <div class="stat-card text-center md:text-start">
+            <p class="font-display text-3xl tracking-tight text-accent dark:text-accent-dark md:text-4xl">
+              {stat.value}
+            </p>
+            <p class="mt-2 font-mono text-xs uppercase tracking-wider text-ink-muted dark:text-ink-muted-dark">
+              {stat.label}
+            </p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

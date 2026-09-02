@@ -85,6 +85,30 @@ export const ui = {
       title: 'الصفحة غير موجودة',
       back: 'العودة للرئيسية',
     },
+    stats: {
+      years: { value: '8+', label: 'سنوات خبرة' },
+      projects: { value: '40+', label: 'مشروعًا منجزًا' },
+      clients: { value: '30+', label: 'عميلًا' },
+      uptime: { value: '99.9%', label: 'جاهزية الأنظمة' },
+    },
+    principles: {
+      title: 'طريقة العمل',
+      items: [
+        { title: 'البساطة أولًا', description: 'أبني ما يحتاجه المنتج فعلًا — لا أكثر ولا أقل.' },
+        { title: 'الأداء ميزة', description: 'كل ميلي ثانية في الاستجابة تؤثر على تجربة المستخدم والتحويل.' },
+        { title: 'قابلية الصيانة', description: 'الكود الذي يصعب فهمه اليوم سيكلفك غدًا.' },
+        { title: 'التواصل الواضح', description: 'أشرح القرارات التقنية بلغة يفهمها الفريق والعميل.' },
+      ],
+    },
+    techMarquee: {
+      title: 'التقنيات التي أعمل بها',
+      items: ['Laravel', 'Vue.js', 'TypeScript', 'PostgreSQL', 'Cloudflare', 'Docker', 'Redis', 'Astro', 'Node.js', 'Tailwind'],
+    },
+    cta: {
+      title: 'لديك مشروع في بالك؟',
+      subtitle: 'أنا متاح للتعاون على منتجات SaaS وأنظمة ويب معقدة. لنتحدث.',
+      button: 'ابدأ محادثة',
+    },
   },
   en: {
     nav: {
@@ -170,6 +194,30 @@ export const ui = {
       title: 'Page not found',
       back: 'Back to home',
     },
+    stats: {
+      years: { value: '8+', label: 'Years experience' },
+      projects: { value: '40+', label: 'Projects delivered' },
+      clients: { value: '30+', label: 'Clients served' },
+      uptime: { value: '99.9%', label: 'System uptime' },
+    },
+    principles: {
+      title: 'How I work',
+      items: [
+        { title: 'Simplicity first', description: 'Build what the product actually needs — nothing more, nothing less.' },
+        { title: 'Performance matters', description: 'Every millisecond in response time affects user experience and conversion.' },
+        { title: 'Maintainability', description: 'Code that is hard to understand today will cost you tomorrow.' },
+        { title: 'Clear communication', description: 'I explain technical decisions in language the team and client understand.' },
+      ],
+    },
+    techMarquee: {
+      title: 'Technologies I work with',
+      items: ['Laravel', 'Vue.js', 'TypeScript', 'PostgreSQL', 'Cloudflare', 'Docker', 'Redis', 'Astro', 'Node.js', 'Tailwind'],
+    },
+    cta: {
+      title: 'Have a project in mind?',
+      subtitle: 'I am available for SaaS products and complex web systems. Let us talk.',
+      button: 'Start a conversation',
+    },
   },
   fr: {
     nav: {
@@ -254,6 +302,30 @@ export const ui = {
     notFound: {
       title: 'Page introuvable',
       back: 'Retour à l\'accueil',
+    },
+    stats: {
+      years: { value: '8+', label: 'Ans d\'expérience' },
+      projects: { value: '40+', label: 'Projets livrés' },
+      clients: { value: '30+', label: 'Clients servis' },
+      uptime: { value: '99.9%', label: 'Disponibilité système' },
+    },
+    principles: {
+      title: 'Ma méthode',
+      items: [
+        { title: 'Simplicité d\'abord', description: 'Construire ce dont le produit a réellement besoin — ni plus, ni moins.' },
+        { title: 'La performance compte', description: 'Chaque milliseconde de temps de réponse affecte l\'expérience utilisateur.' },
+        { title: 'Maintenabilité', description: 'Le code difficile à comprendre aujourd\'hui coûtera cher demain.' },
+        { title: 'Communication claire', description: 'J\'explique les décisions techniques dans un langage compréhensible.' },
+      ],
+    },
+    techMarquee: {
+      title: 'Technologies que j\'utilise',
+      items: ['Laravel', 'Vue.js', 'TypeScript', 'PostgreSQL', 'Cloudflare', 'Docker', 'Redis', 'Astro', 'Node.js', 'Tailwind'],
+    },
+    cta: {
+      title: 'Un projet en tête ?',
+      subtitle: 'Je suis disponible pour des produits SaaS et des systèmes web complexes. Parlons-en.',
+      button: 'Démarrer une conversation',
     },
   },
 } as const satisfies Record<Locale, Record<string, unknown>>;

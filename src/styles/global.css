@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-display: 'Newsreader', 'Noto Naskh Arabic', Georgia, serif;
   --font-body: 'IBM Plex Sans', 'IBM Plex Sans Arabic', system-ui, sans-serif;
@@ -41,8 +43,13 @@
   body {
     @apply bg-paper text-ink font-body text-[17px] leading-relaxed antialiased;
     @apply dark:bg-paper-dark dark:text-ink-dark;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
   }
+
+  html.dark .icon-sun { display: block; }
+  html.dark .icon-moon { display: none; }
+  html:not(.dark) .icon-sun { display: none; }
+  html:not(.dark) .icon-moon { display: block; }
 
   h1, h2, h3, h4 {
     @apply font-display font-medium tracking-tight;
@@ -101,14 +108,16 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium transition-colors duration-200;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium;
     @apply border border-border dark:border-border-dark;
-    @apply hover:border-accent hover:text-accent dark:hover:border-accent-dark dark:hover:text-accent-dark;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:border-accent hover:text-accent hover:-translate-y-px;
+    @apply dark:hover:border-accent-dark dark:hover:text-accent-dark;
   }
 
   .btn-primary {
-    @apply bg-accent text-white border-accent;
-    @apply hover:bg-accent-hover hover:border-accent-hover hover:text-white;
+    @apply bg-accent text-white border-accent shadow-sm;
+    @apply hover:bg-accent-hover hover:border-accent-hover hover:text-white hover:shadow-md;
     @apply dark:bg-accent-dark dark:border-accent-dark dark:hover:bg-accent-dark-hover;
   }
 
@@ -176,6 +185,79 @@
 
   .prose-content img {
     @apply w-full my-8;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger children */
+  .stagger-children > .reveal:nth-child(1) { --reveal-delay: 0ms; }
+  .stagger-children > .reveal:nth-child(2) { --reveal-delay: 80ms; }
+  .stagger-children > .reveal:nth-child(3) { --reveal-delay: 160ms; }
+  .stagger-children > .reveal:nth-child(4) { --reveal-delay: 240ms; }
+
+  /* Marquee */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  [dir='rtl'] .marquee-track {
+    animation-name: marquee-rtl;
+  }
+
+  @keyframes marquee-rtl {
+    from { transform: translateX(0); }
+    to { transform: translateX(50%); }
+  }
+
+  /* Header scroll state */
+  .site-header.is-scrolled {
+    @apply border-border/80 shadow-sm dark:border-border-dark/80;
+  }
+
+  /* Stat card */
+  .stat-card {
+    @apply border border-border dark:border-border-dark p-6;
+    @apply transition-all duration-300 hover:border-accent/40 dark:hover:border-accent-dark/40;
+  }
+
+  /* Principle card */
+  .principle-card {
+    @apply border-s-2 border-accent/30 ps-5 py-2;
+    @apply dark:border-accent-dark/30;
+    @apply transition-all duration-300 hover:border-accent dark:hover:border-accent-dark;
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply mx-auto max-w-wide px-5 md:px-8;
+  }
+
+  .section-divider hr {
+    @apply border-0 border-t border-border dark:border-border-dark;
   }
 }
 

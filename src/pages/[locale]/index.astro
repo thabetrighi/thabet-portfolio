@@ -3,11 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import Hero from '../../components/sections/Hero.astro';
+import Stats from '../../components/sections/Stats.astro';
 import AboutPreview from '../../components/sections/AboutPreview.astro';
+import Principles from '../../components/sections/Principles.astro';
 import Experience from '../../components/sections/Experience.astro';
 import Skills from '../../components/sections/Skills.astro';
+import TechMarquee from '../../components/sections/TechMarquee.astro';
 import WorkPreview from '../../components/sections/WorkPreview.astro';
 import ArticlesPreview from '../../components/sections/ArticlesPreview.astro';
+import ContactCTA from '../../components/sections/ContactCTA.astro';
 import { useTranslations } from '../../i18n/ui';
 import { getProjectCollection, getArticleCollection } from '../../lib/content';
 import { getCollection } from 'astro:content';
@@ -56,10 +60,14 @@ const articles = (await getCollection(articleCollection))
 >
   <Header slot="header" locale={locale} currentPath="" />
   <Hero locale={locale} />
+  <Stats locale={locale} />
   <AboutPreview locale={locale} />
+  <Principles locale={locale} />
   <Experience locale={locale} />
   <Skills locale={locale} />
+  <TechMarquee locale={locale} />
   <WorkPreview locale={locale} projects={projects} />
   <ArticlesPreview locale={locale} articles={articles} />
+  <ContactCTA locale={locale} />
   <Footer slot="footer" locale={locale} />
 </BaseLayout>

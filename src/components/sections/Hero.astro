@@ -3,6 +3,7 @@ import type { Locale } from '../../i18n/config';
 import { getLocalizedPath } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { site } from '../../lib/site';
+import Reveal from '../ui/Reveal.astro';
 
 interface Props {
   locale: Locale;
@@ -12,43 +13,74 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<section class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24 lg:py-32">
-  <div class="grid gap-12 lg:grid-cols-[1fr_auto] lg:gap-16">
+<section class="relative mx-auto max-w-wide overflow-hidden px-5 py-20 md:px-8 md:py-28 lg:py-36">
+  <!-- Subtle accent line -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute -top-24 end-0 h-64 w-64 rounded-full bg-accent/5 blur-3xl dark:bg-accent-dark/5"></div>
+  </div>
+
+  <div class="relative grid gap-12 lg:grid-cols-[1fr_auto] lg:gap-20">
     <div class="max-w-2xl">
-      <p class="section-label mb-6">Software Engineer</p>
-      <h1 class="font-display text-4xl leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
-        {site.fullName[locale]}
-      </h1>
-      <p class="mt-6 text-xl leading-relaxed text-ink-secondary dark:text-ink-secondary-dark md:text-2xl md:leading-relaxed">
-        {t.hero.identity}
-      </p>
-      <p class="mt-4 max-w-lg text-ink-muted dark:text-ink-muted-dark">
-        {t.hero.description}
-      </p>
-      <div class="mt-10 flex flex-wrap gap-3">
-        <a href={getLocalizedPath(locale, 'work')} class="btn btn-primary no-underline">
-          {t.hero.ctaWork}
-        </a>
-        <a href={getLocalizedPath(locale, 'articles')} class="btn no-underline">
-          {t.hero.ctaArticles}
-        </a>
-        <a href={getLocalizedPath(locale, 'contact')} class="btn btn-ghost no-underline">
-          {t.hero.ctaContact}
-        </a>
-      </div>
+      <Reveal>
+        <p class="section-label mb-6 flex items-center gap-3">
+          <span class="inline-block h-px w-8 bg-accent dark:bg-accent-dark"></span>
+          Software Engineer
+        </p>
+      </Reveal>
+      <Reveal delay={80}>
+        <h1 class="font-display text-4xl leading-[1.08] tracking-tight md:text-5xl lg:text-[3.5rem]">
+          {site.fullName[locale]}
+        </h1>
+      </Reveal>
+      <Reveal delay={160}>
+        <p class="mt-6 text-xl leading-relaxed text-ink-secondary dark:text-ink-secondary-dark md:text-2xl md:leading-relaxed">
+          {t.hero.identity}
+        </p>
+      </Reveal>
+      <Reveal delay={240}>
+        <p class="mt-4 max-w-lg text-ink-muted dark:text-ink-muted-dark">
+          {t.hero.description}
+        </p>
+      </Reveal>
+      <Reveal delay={320}>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href={getLocalizedPath(locale, 'work')} class="btn btn-primary no-underline">
+            {t.hero.ctaWork}
+          </a>
+          <a href={getLocalizedPath(locale, 'articles')} class="btn no-underline">
+            {t.hero.ctaArticles}
+          </a>
+          <a href={getLocalizedPath(locale, 'contact')} class="btn btn-ghost no-underline">
+            {t.hero.ctaContact}
+          </a>
+        </div>
+      </Reveal>
     </div>
 
-    <aside class="flex flex-col gap-4 border-s border-border ps-6 dark:border-border-dark lg:min-w-[220px]">
-      <div class="flex items-center gap-2">
-        <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-40"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-        </span>
-        <span class="font-mono text-xs text-ink-secondary dark:text-ink-secondary-dark">{t.hero.available}</span>
-      </div>
-      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.timezone}</p>
-      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.building}</p>
-      <p class="font-mono text-xs text-ink-muted dark:text-ink-muted-dark">{t.hero.years}</p>
-    </aside>
+    <Reveal delay={200}>
+      <aside class="flex flex-col gap-5 border-s-2 border-accent/20 ps-6 dark:border-accent-dark/20 lg:min-w-[240px]">
+        <div class="flex items-center gap-2.5">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-30"></span>
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+          </span>
+          <span class="font-mono text-xs text-ink-secondary dark:text-ink-secondary-dark">{t.hero.available}</span>
+        </div>
+        <div class="space-y-3 font-mono text-xs text-ink-muted dark:text-ink-muted-dark">
+          <p class="flex items-center gap-2">
+            <span class="text-accent dark:text-accent-dark">→</span>
+            {t.hero.timezone}
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="text-accent dark:text-accent-dark">→</span>
+            {t.hero.building}
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="text-accent dark:text-accent-dark">→</span>
+            {t.hero.years}
+          </p>
+        </div>
+      </aside>
+    </Reveal>
   </div>
 </section>

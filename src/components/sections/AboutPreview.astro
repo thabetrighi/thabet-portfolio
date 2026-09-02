@@ -3,6 +3,7 @@ import type { Locale } from '../../i18n/config';
 import { getLocalizedPath } from '../../i18n/config';
 import { useTranslations } from '../../i18n/ui';
 import { getAbout } from '../../lib/content';
+import Reveal from '../ui/Reveal.astro';
 
 interface Props {
   locale: Locale;
@@ -14,21 +15,25 @@ const about = getAbout(locale);
 ---
 
 <section class="border-t border-border dark:border-border-dark">
-  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-20">
+  <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
     <div class="grid gap-10 md:grid-cols-[200px_1fr]">
-      <h2 class="section-label md:pt-1">{t.about.title}</h2>
-      <div class="max-w-2xl">
-        <p class="text-lg leading-relaxed text-ink-secondary dark:text-ink-secondary-dark">
-          {about.summary}
-        </p>
-        <a
-          href={getLocalizedPath(locale, 'about')}
-          class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent link-underline dark:text-accent-dark no-underline"
-        >
-          {t.about.more}
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
+      <Reveal>
+        <h2 class="section-label md:pt-1">02 · {t.about.title}</h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <div class="max-w-2xl">
+          <p class="text-lg leading-relaxed text-ink-secondary dark:text-ink-secondary-dark md:text-xl">
+            {about.summary}
+          </p>
+          <a
+            href={getLocalizedPath(locale, 'about')}
+            class="group mt-8 inline-flex items-center gap-2 text-sm font-medium text-accent link-underline dark:text-accent-dark no-underline"
+          >
+            {t.about.more}
+            <span class="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </Reveal>
     </div>
   </div>
 </section>
