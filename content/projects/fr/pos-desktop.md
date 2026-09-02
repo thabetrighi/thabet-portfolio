@@ -1,30 +1,30 @@
 ---
-title: "Application POS desktop"
-excerpt: "Application de point de vente multiplateforme avec Tauri, React et SyncPower."
-problem: "Les points de vente avaient besoin d'un POS rapide et fiable sur desktop avec une UI réactive."
-solution: "Développement d'une application POS desktop Tauri + React avec intégration SyncPower, axée sur la rapidité de caisse et l'architecture composants."
-role: "Développeur full-stack/desktop — UI, intégration Tauri et workflows POS."
-result: "Expérience POS desktop légère avec UI moderne et opérations fiables."
+title: "Application de point de vente (POS) desktop"
+excerpt: "POS desktop rapide et fiable pour les opérations retail quotidiennes — caisse, stock et expérience caissier fluide."
+problem: "Les points de vente avaient besoin d'un POS instantané aux heures de pointe, stable sur poste fixe toute la journée."
+solution: "Application desktop avec interface moderne axée vitesse, clarté et fiabilité — flux de caisse, stock et transactions optimisés."
+role: "Développeur indépendant — architecture, UI desktop, workflows POS et performance."
+result: "Caissiers plus rapides, moins d'erreurs, opérations plus claires et base évolutive."
 technologies:
-  - Tauri
-  - React
-  - SyncPower
-  - Desktop App
-  - Offline-first
+  - "Application desktop"
+  - "Opérations retail"
+  - "Caisse rapide"
+  - "Gestion stock"
+  - "UX stable"
 cover: /images/projects/placeholder.svg
-order: 9
+order: 2
 featured: true
-company: "TechTrans"
 translationOf: pos-desktop
 ---
 
-## Contexte
+### Conçu pour le comptoir
 
-Conçue pour les workflows caissiers avec interactions performantes.
+Pensé pour le rythme d'un magasin chargé : recherche rapide, minimum de clics, états toujours explicites.
 
-## Points techniques clés
+### Piliers de l'expérience
 
-- Shell desktop Tauri + React
-- Intégration SyncPower
-- UI composants et flux de caisse
-- Gestion d'état structurée des transactions
+- **Rapidité en caisse** — flux optimisés aux heures de pointe
+- **États opérationnels clairs** — vente en cours, terminée ou à traiter
+- **Interaction stock** — accès stock sans casser le flux de vente
+- **Fiabilité desktop** — performance stable toute la journée
+- **Structure maintenable** — écrans modulaires pour faire évoluer les règles métier

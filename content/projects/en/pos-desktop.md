@@ -1,30 +1,34 @@
 ---
-title: "Desktop POS Application"
-excerpt: "Cross-platform point-of-sale app built with Tauri, React, and SyncPower for retail operations."
-problem: "Retail points needed a fast, reliable POS that works on desktop with responsive UI and stable local/offline-capable operations."
-solution: "Developed a desktop POS application using Tauri + React with SyncPower integration, focused on checkout speed, inventory interaction, and a maintainable component architecture."
-role: "Full-stack/desktop developer — UI architecture, Tauri integration, and POS workflow implementation."
-result: "A lightweight desktop POS experience with modern UI patterns and reliable day-to-day retail operations."
+title: "Desktop Point-of-Sale (POS) Application"
+excerpt: "A fast, reliable desktop POS built for daily retail operations — checkout, inventory interaction, and a smooth cashier experience."
+problem: "Retail points needed a POS that responds instantly during peak hours, handles frequent transactions without friction, and stays stable on desktop hardware used all day by cashiers."
+solution: "I built a cross-platform desktop POS with a modern interface focused on speed, clarity, and operational reliability. The application streamlines checkout flows, inventory lookups, and transaction handling for real retail environments."
+role: "Independent developer — application architecture, desktop UI, POS workflows, and hardware-oriented performance tuning."
+result: "Cashiers work faster with fewer errors, managers get clearer daily operations, and the POS remains maintainable for future retail feature expansion."
 technologies:
-  - Tauri
-  - React
-  - SyncPower
-  - Desktop App
-  - Offline-first
+  - "Desktop Application"
+  - "Retail Operations"
+  - "Fast Checkout"
+  - "Inventory Interaction"
+  - "Offline-capable UX"
 cover: /images/projects/placeholder.svg
-order: 9
+order: 2
 featured: true
-company: "TechTrans"
 translationOf: pos-desktop
 ---
 
-## Context
+### Built for the counter, not the slide deck
 
-The application is designed for cashier workflows with performance-sensitive interactions and clear operational states.
+This POS was designed around the rhythm of a busy shop floor: quick product lookup, minimal clicks to complete a sale, and interface states that make the next action obvious.
 
-## Technical highlights
+### Key experience pillars
 
-- Tauri + React cross-platform desktop shell
-- SyncPower integration for POS operations
-- Component-based UI with responsive checkout flows
-- Structured state management for retail transactions
+- **Speed at checkout** — optimized flows for high-frequency transactions during rush periods
+- **Clear operational states** — cashiers always know whether a sale is in progress, completed, or needs attention
+- **Inventory interaction** — fast access to stock information without breaking the sales flow
+- **Desktop reliability** — stable performance on machines that run all day, every day
+- **Maintainable structure** — modular screens and logic so new retail rules can be added safely
+
+### Business impact
+
+The product reduces friction at the point of sale — where every second matters. It gives small and mid-size retail operations a professional tool that feels modern without sacrificing dependability.

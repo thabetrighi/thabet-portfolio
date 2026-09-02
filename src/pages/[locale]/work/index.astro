@@ -52,9 +52,6 @@ const hreflangAlternates = staticPageAlternates('work');
                 {project.data.title}
               </a>
             </h2>
-            {project.data.company && (
-              <p class="mt-2 font-mono text-xs text-accent dark:text-accent-dark">{project.data.company}</p>
-            )}
             <p class="mt-4 text-ink-secondary dark:text-ink-secondary-dark">{project.data.excerpt}</p>
             <div class="mt-4 flex flex-wrap gap-2">
               {project.data.technologies.map((tech) => (

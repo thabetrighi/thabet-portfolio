@@ -1,30 +1,34 @@
 ---
-title: "VTC Car Rental Management System"
-excerpt: "Vehicle rental and transportation platform with booking, fleet ops, pricing, and real-time tracking."
-problem: "A transportation company needed unified control over fleet availability, driver scheduling, pricing rules, and live vehicle tracking."
-solution: "Contributed to a VTC rental management platform with vehicle/fleet modules, booking workflows, driver scheduling, automated pricing, and real-time tracking."
-role: "Laravel & mobile developer — backend APIs, booking logic, and tracking integrations."
-result: "More efficient fleet utilization and clearer operational visibility for dispatch and administrative teams."
+title: "Vehicle Rental (VTC) Platform"
+excerpt: "A rental and ride platform connecting bookings, fleet availability, pricing, and customer management in one system."
+problem: "The rental business managed reservations through calls and informal tracking. Vehicle availability was unclear, pricing varied manually, and customers had no consistent booking experience."
+solution: "I built a VTC rental platform that centralizes bookings, vehicle assignment, automated pricing rules, and customer records — giving operators a professional system instead of improvised tools."
+role: "Independent full-stack developer — booking logic, operational workflows, and admin tooling."
+result: "Faster booking cycles, fewer scheduling conflicts, and a customer experience that feels organized and trustworthy."
 technologies:
-  - Laravel
-  - PHP
-  - MySQL
-  - REST APIs
-  - GPS Tracking
+  - "Web Platform"
+  - "Booking & Reservations"
+  - "Pricing Automation"
+  - "Customer Management"
+  - "Operations Dashboard"
 cover: /images/projects/placeholder.svg
-order: 11
+order: 4
 featured: true
-company: "Tawfiq Company"
 translationOf: vtc-rental
 ---
 
-## Context
+### From phone calls to a real booking engine
 
-Administrative dashboards support daily rental operations, driver coordination, and reporting.
+The platform replaces ad-hoc coordination with structured rental workflows — from the moment a customer requests a vehicle to trip completion and billing.
 
-## Technical highlights
+### Highlights
 
-- Fleet and vehicle management
-- Booking and driver scheduling workflows
-- Automated pricing rules
-- Real-time tracking and admin reporting
+- **Online booking flows** — customers reserve vehicles with clear availability and confirmation
+- **Vehicle assignment** — match requests to fleet capacity with operational rules
+- **Automated pricing** — distance, duration, and service-type rules applied consistently
+- **Customer profiles** — history, preferences, and repeat booking support
+- **Operator dashboard** — daily schedule, active rentals, and exception management
+
+### Operational value
+
+Rental businesses win on reliability and speed. This system gives operators confidence that nothing falls through the cracks when volume increases.

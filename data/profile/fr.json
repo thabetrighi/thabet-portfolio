@@ -6,26 +6,21 @@
       "startDate": "Sept. 2021",
       "endDate": null,
       "location": "Riyad, Arabie saoudite",
-      "description": "Je conçois, développe et maintiens des plateformes web à grande échelle et des systèmes d'entreprise internes. Mon travail couvre l'architecture backend, les API REST, Vue.js, les bases de données, les intégrations tierces, l'authentification, les jobs en arrière-plan, l'optimisation et le support production — dans tout domaine requis par le produit.",
+      "description": "Je conçois, développe et maintiens des plateformes web à grande échelle et des systèmes d'entreprise internes — architecture backend, API, applications admin, bases de données, intégrations, authentification, traitement asynchrone et support production.",
       "technologies": [
-        "Laravel",
-        "Vue.js",
-        "PHP",
-        "MySQL",
-        "PostgreSQL",
-        "Redis",
-        "REST APIs",
-        "Queues & Jobs",
-        "Tauri",
-        "React",
-        "Expo"
+        "Plateformes web",
+        "Développement API",
+        "Systèmes d'administration",
+        "Intégrations externes",
+        "Traitement asynchrone",
+        "Optimisation performance"
       ],
       "highlights": [
-        "Architecture et extension de plateformes Laravel multi-tenant avec couches de services maintenables",
-        "Intégration de passerelles de paiement, SMS, SAP, CRM et services de streaming",
-        "Pipelines de traitement asynchrone avec files d'attente, Redis et optimisation des requêtes",
-        "Livraison de produits desktop (Tauri + React) et mobile (Expo) aux côtés des plateformes web",
-        "Résolution de problèmes de production, modernisation legacy et déploiements CI/CD"
+        "Architecture et extension de plateformes multi-tenant avec couches de services maintenables",
+        "Intégration de paiements, SMS, SAP, CRM et services de streaming",
+        "Pipelines de traitement avec cache et optimisation des données",
+        "Résolution de problèmes de production et modernisation legacy",
+        "Participation au cycle de vie complet des projets"
       ],
       "platformTags": [
         "Gestion d'événements",
@@ -35,35 +30,36 @@
         "Subventions & SAP",
         "Adhésions",
         "Auto-écoles",
-        "Distribution de colis",
-        "POS Desktop",
-        "App santé du côlon",
         "Systèmes d'entreprise internes"
       ]
     },
     {
-      "company": "Tawfiq Company",
-      "position": "Développeur Laravel & Mobile",
-      "startDate": "Août 2019",
-      "endDate": "Nov. 2019",
-      "location": "Algérie",
-      "description": "Contribution au développement d'une plateforme de location de véhicules et de gestion du transport, avec APIs backend et workflows opérationnels pour réservation, flotte et suivi en temps réel.",
+      "company": "Freelance",
+      "position": "Développeur logiciel indépendant",
+      "startDate": "2018",
+      "endDate": "Août 2021",
+      "location": "Algérie · À distance",
+      "description": "Livraison de projets logiciels privés pour des clients dans la logistique, le retail, la santé et le transport — de l'analyse à l'architecture, l'implémentation, l'intégration et la livraison.",
       "technologies": [
-        "Laravel",
-        "PHP",
-        "MySQL",
-        "REST APIs",
-        "Mobile Integration",
-        "GPS Tracking"
+        "Systèmes web",
+        "Applications desktop",
+        "Applications mobile",
+        "Tableaux opérationnels",
+        "Intégrations externes"
       ],
       "highlights": [
-        "Développement des modules flotte et véhicules avec workflows de réservation",
-        "Mise en place de la planification chauffeurs et de la tarification automatisée",
-        "Intégration du suivi en temps réel et des tableaux de bord de reporting"
+        "Plateformes de distribution de colis, gestion de flotte et coordination transport",
+        "Application POS desktop optimisée pour la caisse quotidienne",
+        "Application mobile santé avec suivi guidé et UX claire",
+        "Systèmes de location VTC avec réservation, tarification et gestion opérationnelle",
+        "Travail direct avec clients sur exigences, délais et support post-lancement"
       ],
       "platformTags": [
+        "Distribution & expédition de colis",
+        "POS Desktop",
+        "App santé du côlon",
         "Location VTC",
-        "Opérations de flotte",
+        "Gestion de flotte",
         "Gestion du transport"
       ]
     }
@@ -130,7 +126,6 @@
         "Systèmes CRM",
         "APIs SMS",
         "Passerelles de paiement",
-        "SyncPower",
         "REST APIs tierces"
       ]
     },
@@ -178,11 +173,11 @@
     }
   ],
   "about": {
-    "summary": "Ingénieur Laravel senior qui conçoit des systèmes web évolutifs — plateformes SaaS, API, applications desktop et mobile — avec un accent sur l'architecture propre, la maintenabilité et la fiabilité en production.",
-    "extended": "Je suis ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience dans la conception et le développement d'applications web évolutives, de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJ'interviens dans des domaines variés selon les besoins du produit — sans me limiter à un seul secteur. Mon expérience couvre l'éducation, les événements, la logistique, le POS retail, les apps santé, les consultations, les adhésions, les subventions et les workflows d'entreprise.\n\nTout au long de ma carrière, j'ai contribué et dirigé le développement sur l'ensemble du cycle de vie logiciel — de l'analyse des besoins à la maintenance continue.\n\nJe me concentre sur la construction de systèmes propres, maintenables, sécurisés et évolutifs. Je suis particulièrement expérimenté sur des applications Laravel existantes, la compréhension de logiques métier complexes, la résolution de problèmes backend difficiles et la modernisation legacy."
+    "summary": "Ingénieur Laravel senior qui conçoit des systèmes web évolutifs — plateformes SaaS, API, applications desktop et mobile — avec un accent sur l'architecture propre et la fiabilité en production.",
+    "extended": "Ingénieur logiciel senior et développeur Laravel avec plus de 5 ans d'expérience dans la conception de plateformes SaaS, d'API REST et de systèmes d'entreprise.\n\nJ'interviens dans des domaines variés selon les besoins du produit. Avant mon rôle actuel, j'ai travaillé en freelance sur des projets privés en logistique, retail, santé et transport.\n\nJ'ai contribué au cycle de vie complet — analyse, architecture, implémentation, intégration, optimisation, déploiement et maintenance.\n\nJe me concentre sur des systèmes propres, maintenables, sécurisés et évolutifs."
   },
   "resume": {
-    "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience dans la construction de plateformes SaaS, API REST, systèmes d'entreprise, applications desktop (Tauri + React) et mobile (Expo). Spécialisé en Laravel, Vue.js, multi-tenant et intégrations tierces. Actuellement chez TechTrans, Riyad.",
+    "profile": "Ingénieur Laravel senior avec plus de 5 ans d'expérience — plateformes SaaS, API, systèmes d'entreprise, desktop et mobile. Expérience salariée et projets indépendants. Basé à Riyad.",
     "education": [
       {
         "institution": "Université d'El Oued",

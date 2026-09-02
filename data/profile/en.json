@@ -6,26 +6,21 @@
       "startDate": "Sep 2021",
       "endDate": null,
       "location": "Riyadh, Saudi Arabia",
-      "description": "I design, build, and maintain large-scale web platforms and internal business systems. My work spans backend architecture, REST APIs, Vue.js applications, database design, third-party integrations, authentication, background jobs, performance optimization, and production support — across whatever domain the product requires.",
+      "description": "I design, build, and maintain large-scale web platforms and internal business systems. My work spans backend architecture, APIs, admin applications, database design, third-party integrations, authentication, background processing, performance optimization, and production support — across whatever domain the product requires.",
       "technologies": [
-        "Laravel",
-        "Vue.js",
-        "PHP",
-        "MySQL",
-        "PostgreSQL",
-        "Redis",
-        "REST APIs",
-        "Queues & Jobs",
-        "Tauri",
-        "React",
-        "Expo"
+        "Web Platforms",
+        "API Development",
+        "Admin Systems",
+        "Integrations",
+        "Background Processing",
+        "Performance Optimization"
       ],
       "highlights": [
-        "Architected and extended multi-tenant Laravel platforms with clean service layers and maintainable APIs",
-        "Integrated payment gateways (Mada, HyperPay, Tap, Moyasar), SMS providers, SAP, CRM, and streaming services",
-        "Built background processing pipelines with queues, Redis caching, and performance-focused query optimization",
-        "Delivered desktop (Tauri + React) and mobile (Expo) products alongside core web platforms",
-        "Resolved complex production issues, modernized legacy modules, and supported CI/CD deployments"
+        "Architected and extended multi-tenant platforms with maintainable service layers and APIs",
+        "Integrated payment gateways, SMS providers, SAP, CRM, and streaming services",
+        "Built background processing pipelines with caching and database performance tuning",
+        "Resolved complex production issues, modernized legacy modules, and supported deployments",
+        "Collaborated across the full lifecycle from requirements to ongoing maintenance"
       ],
       "platformTags": [
         "Event Management",
@@ -35,36 +30,37 @@
         "Grants & SAP",
         "Memberships",
         "Driving Schools",
-        "Parcel Distribution",
-        "POS Desktop",
-        "Health Mobile App",
         "Internal Enterprise Systems"
       ]
     },
     {
-      "company": "Tawfiq Company",
-      "position": "Laravel & Mobile Developer",
-      "startDate": "Aug 2019",
-      "endDate": "Nov 2019",
-      "location": "Algeria",
-      "description": "Contributed to a vehicle rental and transportation management platform, working on backend APIs and operational workflows for booking, fleet management, and real-time tracking.",
+      "company": "Freelance",
+      "position": "Independent Software Developer",
+      "startDate": "2018",
+      "endDate": "Aug 2021",
+      "location": "Algeria · Remote",
+      "description": "Delivered private, client-specific software projects across logistics, retail, health, and transport. Each project was scoped independently — from analysis and architecture to implementation, integration, and handover.",
       "technologies": [
-        "Laravel",
-        "PHP",
-        "MySQL",
-        "REST APIs",
-        "Mobile Integration",
-        "GPS Tracking"
+        "Web Systems",
+        "Desktop Applications",
+        "Mobile Applications",
+        "Operations Dashboards",
+        "External Integrations"
       ],
       "highlights": [
-        "Developed fleet and vehicle management modules with booking workflows",
-        "Implemented driver scheduling and automated pricing logic",
-        "Integrated real-time tracking features and administrative reporting dashboards"
+        "Built end-to-end platforms for parcel distribution, fleet operations, and transport coordination",
+        "Delivered a desktop POS application optimized for daily retail checkout workflows",
+        "Developed a mobile health application focused on guided tracking and user clarity",
+        "Created VTC rental systems with booking, pricing, and operational management modules",
+        "Worked directly with clients on requirements, delivery timelines, and post-launch support"
       ],
       "platformTags": [
-        "VTC Car Rental",
-        "Fleet Operations",
-        "Transportation Management"
+        "Parcel Distribution & Shipping",
+        "Desktop POS",
+        "Colon Health Mobile App",
+        "VTC Vehicle Rental",
+        "Fleet Management",
+        "Transport Management"
       ]
     }
   ],
@@ -130,7 +126,6 @@
         "CRM Systems",
         "SMS APIs",
         "Payment Gateways",
-        "SyncPower",
         "Third-Party REST APIs"
       ]
     },
@@ -179,10 +174,10 @@
   ],
   "about": {
     "summary": "Senior Laravel engineer who builds scalable web systems — SaaS platforms, APIs, desktop and mobile applications — with a focus on clean architecture, maintainability, and production reliability.",
-    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI work across diverse business domains depending on product needs — not limited to one industry. My experience includes education, events, logistics, retail POS, health apps, consultations, memberships, grants, and internal enterprise workflows.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality. I am particularly experienced in working with existing Laravel applications, understanding complex business logic, resolving difficult backend issues, modernizing legacy implementations, and extending systems with new features and integrations."
+    "extended": "I am a Senior Software Engineer and Laravel Developer with 5+ years of professional experience designing and developing scalable web applications, SaaS platforms, REST APIs, and enterprise systems.\n\nI work across diverse business domains depending on product needs — not limited to one industry. Before my current role, I spent several years as an independent developer delivering private projects in logistics, retail, health, and transport.\n\nThroughout my career, I have contributed to and led development across the full software lifecycle — from requirements analysis and system architecture to implementation, integration, debugging, optimization, deployment, and ongoing maintenance.\n\nI focus on building clean, maintainable, secure, and scalable systems rather than simply delivering functionality."
   },
   "resume": {
-    "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, enterprise systems, desktop (Tauri + React), and mobile (Expo) applications. Specialized in Laravel, Vue.js, multi-tenant architecture, and third-party integrations. Currently at TechTrans, Riyadh.",
+    "profile": "Senior Laravel Engineer with 5+ years of experience building SaaS platforms, REST APIs, enterprise systems, desktop and mobile applications. Experienced in employment and independent client projects across multiple industries. Currently based in Riyadh.",
     "education": [
       {
         "institution": "University of El Oued",

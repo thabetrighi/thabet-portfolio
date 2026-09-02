@@ -1,30 +1,30 @@
 ---
-title: "Système de location VTC"
-excerpt: "Plateforme de location et transport : réservation, flotte, tarification et suivi en temps réel."
-problem: "Une entreprise de transport avait besoin d'un contrôle unifié de la flotte, des chauffeurs, des tarifs et du suivi GPS."
-solution: "Contribution à une plateforme VTC avec gestion de flotte, réservations, planification chauffeurs, tarification automatisée et suivi temps réel."
-role: "Développeur Laravel & mobile — API, logique de réservation et suivi."
-result: "Meilleure utilisation de la flotte et visibilité opérationnelle pour les équipes."
+title: "Plateforme de location de véhicules (VTC)"
+excerpt: "Plateforme reliant réservations, disponibilité flotte, tarification et gestion clients."
+problem: "Réservations par téléphone, disponibilité floue, tarifs manuels et expérience client incohérente."
+solution: "Plateforme VTC centralisant réservations, affectation véhicules, tarification automatisée et dossiers clients."
+role: "Développeur full-stack indépendant — logique réservation et workflows opérationnels."
+result: "Réservations plus rapides, moins de conflits, expérience client organisée."
 technologies:
-  - Laravel
-  - PHP
-  - MySQL
-  - REST APIs
-  - GPS Tracking
+  - "Plateforme web"
+  - "Réservations"
+  - "Tarification auto"
+  - "Gestion clients"
+  - "Tableau opérationnel"
 cover: /images/projects/placeholder.svg
-order: 11
+order: 4
 featured: true
-company: "Tawfiq Company"
 translationOf: vtc-rental
 ---
 
-## Contexte
+### D'un flux téléphonique à un vrai moteur de réservation
 
-Tableaux de bord pour opérations quotidiennes et coordination des chauffeurs.
+Workflows structurés de la demande client à la facturation finale.
 
-## Points techniques clés
+### Points forts
 
-- Gestion véhicules et flotte
-- Réservation et planification chauffeurs
-- Tarification automatisée
-- Suivi temps réel et reporting
+- **Réservation en ligne** — disponibilité et confirmation claires
+- **Affectation véhicules** — règles opérationnelles de capacité
+- **Tarification automatisée** — distance, durée et type de service
+- **Profils clients** — historique et réservations récurrentes
+- **Tableau opérateur** — planning quotidien et exceptions

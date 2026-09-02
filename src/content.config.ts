@@ -24,7 +24,6 @@ const projectSchema = z.object({
   cover: z.string(),
   order: z.number(),
   featured: z.boolean().default(true),
-  company: z.string().optional(),
   github: z.string().url().optional(),
   demo: z.string().url().optional(),
   translationOf: z.string().optional(),

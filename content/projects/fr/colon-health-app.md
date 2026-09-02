@@ -1,30 +1,30 @@
 ---
 title: "Application mobile santé du côlon"
-excerpt: "Application Android Expo pour le suivi de la santé du côlon et l'accompagnement utilisateur."
-problem: "Les utilisateurs avaient besoin d'une app mobile accessible pour suivre des indicateurs de santé du côlon."
-solution: "Construction d'une application Expo/React Native avec suivi santé, contenu éducatif et UX mobile optimisée."
-role: "Développeur mobile — architecture app, écrans de suivi et workflow Expo."
-result: "Application santé focalisée avec suivi structuré et interface mobile claire."
+excerpt: "Application Android focalisée pour suivre la santé du côlon et suivre des conseils structurés et accessibles."
+problem: "Les utilisateurs avaient besoin d'un suivi simple et fiable, sans interface médicale surchargée."
+solution: "Application mobile avec parcours de suivi guidés, contenu éducatif et UX calme pour un usage quotidien."
+role: "Développeur mobile indépendant — architecture, écrans de suivi et préparation release."
+result: "Compagnon santé soigné encourageant un suivi régulier par la clarté."
 technologies:
-  - Expo
-  - React Native
-  - TypeScript
-  - Health Tracking
-  - Mobile
+  - "Application mobile"
+  - "Santé & bien-être"
+  - "Parcours guidés"
+  - "Suivi de données"
+  - "Expérience Android"
 cover: /images/projects/placeholder.svg
-order: 10
+order: 3
 featured: true
-company: "TechTrans"
 translationOf: colon-health-app
 ---
 
-## Contexte
+### Une app santé doit rassurer, pas submerger
 
-L'app privilégie la clarté, les parcours guidés et une architecture évolutive.
+Chaque écran répond à une question simple : que faire ensuite ?
 
-## Points techniques clés
+### Ce que l'utilisateur obtient
 
-- Application Expo/React Native Android
-- Suivi santé et parcours guidés
-- Architecture UI mobile composants
-- Présentation structurée des données santé
+- **Suivi structuré** — indicateurs et habitudes sans aspect clinique froid
+- **Parcours guidés** — étapes qui expliquent l'essentiel
+- **Contenu éducatif** — information lisible sur mobile
+- **Design apaisant** — charge cognitive réduite
+- **Évolutif** — architecture prête pour de nouveaux modules
