@@ -80,10 +80,13 @@ export const ui = {
       rateLimited: 'طلبات كثيرة. انتظر دقيقة ثم حاول مجددًا.',
       captchaFailed: 'فشل التحقق الأمني. أعد المحاولة.',
       social: 'وسائل التواصل',
+      nameRequired: 'يرجى إدخال الاسم.',
+      emailRequired: 'يرجى إدخال البريد الإلكتروني.',
+      messageRequired: 'يرجى كتابة الرسالة.',
+      invalidEmail: 'يرجى إدخال بريد إلكتروني صالح.',
     },
     footer: {
       rights: 'جميع الحقوق محفوظة',
-      built: 'مبني بـ Astro على Cloudflare',
     },
     meta: {
       homeTitle: 'ثابت ريغي — مهندس Laravel أول',
@@ -202,10 +205,13 @@ export const ui = {
       rateLimited: 'Too many requests. Please wait a minute and try again.',
       captchaFailed: 'Security check failed. Please try again.',
       social: 'Social profiles',
+      nameRequired: 'Please enter your name.',
+      emailRequired: 'Please enter your email address.',
+      messageRequired: 'Please enter your message.',
+      invalidEmail: 'Please enter a valid email address.',
     },
     footer: {
       rights: 'All rights reserved',
-      built: 'Built with Astro on Cloudflare',
     },
     meta: {
       homeTitle: 'Thabet Righi — Senior Laravel Engineer',
@@ -324,10 +330,13 @@ export const ui = {
       rateLimited: 'Trop de requêtes. Attendez une minute puis réessayez.',
       captchaFailed: 'Échec de la vérification de sécurité. Réessayez.',
       social: 'Réseaux sociaux',
+      nameRequired: 'Veuillez saisir votre nom.',
+      emailRequired: 'Veuillez saisir votre adresse email.',
+      messageRequired: 'Veuillez saisir votre message.',
+      invalidEmail: 'Veuillez saisir une adresse email valide.',
     },
     footer: {
       rights: 'Tous droits réservés',
-      built: 'Construit avec Astro sur Cloudflare',
     },
     meta: {
       homeTitle: 'Thabet Righi — Ingénieur Laravel Senior',
