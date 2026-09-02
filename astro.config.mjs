@@ -16,6 +16,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/admin'),
       i18n: {
         defaultLocale: 'en',
         locales: {
@@ -29,9 +30,7 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'en',
     locales: ['ar', 'en', 'fr'],
-    routing: {
-      prefixDefaultLocale: true,
-    },
+    routing: 'manual',
   },
   prefetch: {
     prefetchAll: false,
