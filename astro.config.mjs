@@ -7,6 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://thabetrighi.com',
+  trailingSlash: 'never',
   output: 'server',
   adapter: cloudflare({
     imageService: 'cloudflare',
@@ -16,7 +17,12 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/admin'),
+      filter: (page) => {
+        const url = page.toLowerCase();
+        return !url.includes('/admin')
+          && !url.includes('/404')
+          && !url.includes('www.thabetrighi.com');
+      },
       i18n: {
         defaultLocale: 'en',
         locales: {

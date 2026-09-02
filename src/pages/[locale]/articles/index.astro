@@ -7,6 +7,7 @@ import { getLocalizedPath } from '../../../i18n/config';
 import { getArticleCollection } from '../../../lib/content';
 import { getCollection } from 'astro:content';
 import type { Locale } from '../../../i18n/config';
+import { buildLocalizedCanonical, staticPageAlternates } from '../../../lib/seo';
 
 export const prerender = true;
 
@@ -29,12 +30,16 @@ function formatDate(date: Date): string {
     day: 'numeric',
   });
 }
+
+const hreflangAlternates = staticPageAlternates('articles');
 ---
 
 <BaseLayout
   title={t.articles.title}
-  description={t.articles.title}
+  description={t.meta.articlesDescription}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale, 'articles')}
+  hreflangAlternates={hreflangAlternates}
 >
   <Header slot="header" locale={locale} currentPath="articles" />
   <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">

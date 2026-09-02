@@ -6,6 +6,7 @@ import Experience from '../../components/sections/Experience.astro';
 import { useTranslations } from '../../i18n/ui';
 import { getResume, getSkills } from '../../lib/content';
 import type { Locale } from '../../i18n/config';
+import { buildLocalizedCanonical, staticPageAlternates } from '../../lib/seo';
 
 export const prerender = true;
 
@@ -19,12 +20,15 @@ const t = useTranslations(locale);
 const resume = getResume(locale);
 const skills = getSkills(locale);
 const cvFile = resume.cvFiles[locale] || resume.cvFiles.en;
+const hreflangAlternates = staticPageAlternates('resume');
 ---
 
 <BaseLayout
   title={t.resume.title}
   description={resume.profile}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale, 'resume')}
+  hreflangAlternates={hreflangAlternates}
 >
   <Header slot="header" locale={locale} currentPath="resume" />
   <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">

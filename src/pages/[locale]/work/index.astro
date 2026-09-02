@@ -7,6 +7,7 @@ import { getLocalizedPath } from '../../../i18n/config';
 import { getProjectCollection } from '../../../lib/content';
 import { getCollection } from 'astro:content';
 import type { Locale } from '../../../i18n/config';
+import { buildLocalizedCanonical, staticPageAlternates } from '../../../lib/seo';
 
 export const prerender = true;
 
@@ -21,12 +22,16 @@ const t = useTranslations(locale);
 const projects = (await getCollection(getProjectCollection(locale)))
   .filter((p) => !p.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
+
+const hreflangAlternates = staticPageAlternates('work');
 ---
 
 <BaseLayout
   title={t.work.title}
-  description={t.work.title}
+  description={t.meta.workDescription}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale, 'work')}
+  hreflangAlternates={hreflangAlternates}
 >
   <Header slot="header" locale={locale} currentPath="work" />
   <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">
@@ -63,7 +68,7 @@ const projects = (await getCollection(getProjectCollection(locale)))
           <a href={getLocalizedPath(locale, `work/${project.id}`)} class="block overflow-hidden border border-border dark:border-border-dark">
             <img
               src={project.data.cover}
-              alt=""
+              alt={project.data.title}
               loading="lazy"
               width="800"
               height="500"

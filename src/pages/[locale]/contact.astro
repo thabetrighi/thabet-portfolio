@@ -7,6 +7,7 @@ import SocialLinks from '../../components/SocialLinks.astro';
 import { useTranslations } from '../../i18n/ui';
 import { site } from '../../lib/site';
 import type { Locale } from '../../i18n/config';
+import { buildLocalizedCanonical, staticPageAlternates } from '../../lib/seo';
 
 export const prerender = true;
 
@@ -17,12 +18,15 @@ export async function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
+const hreflangAlternates = staticPageAlternates('contact');
 ---
 
 <BaseLayout
   title={t.contact.title}
   description={t.contact.subtitle}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale, 'contact')}
+  hreflangAlternates={hreflangAlternates}
 >
   <Header slot="header" locale={locale} currentPath="contact" />
   <div class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">

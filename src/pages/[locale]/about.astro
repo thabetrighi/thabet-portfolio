@@ -7,6 +7,7 @@ import Skills from '../../components/sections/Skills.astro';
 import { useTranslations } from '../../i18n/ui';
 import { getAbout } from '../../lib/content';
 import type { Locale } from '../../i18n/config';
+import { buildLocalizedCanonical, staticPageAlternates } from '../../lib/seo';
 
 export const prerender = true;
 
@@ -19,12 +20,15 @@ const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
 const about = getAbout(locale);
 const paragraphs = about.extended.split('\n\n');
+const hreflangAlternates = staticPageAlternates('about');
 ---
 
 <BaseLayout
   title={t.about.title}
   description={about.summary}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale, 'about')}
+  hreflangAlternates={hreflangAlternates}
 >
   <Header slot="header" locale={locale} currentPath="about" />
   <article class="mx-auto max-w-wide px-5 py-16 md:px-8 md:py-24">

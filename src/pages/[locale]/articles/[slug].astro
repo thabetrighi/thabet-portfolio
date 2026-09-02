@@ -5,14 +5,21 @@ import Footer from '../../../components/layout/Footer.astro';
 import { useTranslations } from '../../../i18n/ui';
 import { getArticleCollection } from '../../../lib/content';
 import { getCollection, render } from 'astro:content';
-import { locales, getLocalizedPath, type Locale } from '../../../i18n/config';
-import { site } from '../../../lib/site';
+import { getLocalizedPath, type Locale } from '../../../i18n/config';
+import {
+  buildBlogPostingSchema,
+  buildLocalizedCanonical,
+} from '../../../lib/seo';
+import {
+  findArticleAlternates,
+  toHreflangAlternates,
+} from '../../../lib/content-alternates';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
   const paths = [];
-  for (const locale of locales) {
+  for (const locale of ['ar', 'en', 'fr'] as Locale[]) {
     const collection = getArticleCollection(locale);
     const articles = await getCollection(collection);
     for (const article of articles) {
@@ -37,18 +44,20 @@ if (!articleEntry) {
 const { Content } = await render(articleEntry);
 const article = articleEntry.data;
 
-// Find alternate translations
-const alternates: { locale: Locale; slug: string }[] = [];
-for (const loc of locales) {
-  const altCollection = getArticleCollection(loc);
-  const altArticles = await getCollection(altCollection);
-  const match = altArticles.find(
-    (a) => a.id === slug || a.data.translationOf === slug || (article.translationOf && a.id === article.translationOf)
-  );
-  if (match && !match.data.draft) {
-    alternates.push({ locale: loc, slug: match.id });
-  }
-}
+const contentAlternates = await findArticleAlternates(locale, slug, article.translationOf);
+const alternates = contentAlternates;
+const hreflangAlternates = toHreflangAlternates(contentAlternates, 'articles');
+const canonicalUrl = buildLocalizedCanonical(locale, `articles/${slug}`);
+const structuredData = [
+  buildBlogPostingSchema({
+    locale,
+    title: article.title,
+    description: article.excerpt,
+    url: canonicalUrl,
+    publishedAt: article.publishedAt,
+    image: article.cover,
+  }),
+];
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString(locale === 'ar' ? 'ar-DZ' : locale === 'fr' ? 'fr-FR' : 'en-US', {
@@ -57,8 +66,6 @@ function formatDate(date: Date): string {
     day: 'numeric',
   });
 }
-
-const canonicalUrl = new URL(getLocalizedPath(locale, `articles/${slug}`), site.url).href;
 ---
 
 <BaseLayout
@@ -68,7 +75,9 @@ const canonicalUrl = new URL(getLocalizedPath(locale, `articles/${slug}`), site.
   ogType="article"
   ogImage={article.cover || '/og/default.svg'}
   canonical={canonicalUrl}
+  hreflangAlternates={hreflangAlternates}
   article={{ publishedAt: article.publishedAt, tags: article.tags }}
+  structuredData={structuredData}
 >
   <Header slot="header" locale={locale} currentPath="articles" />
 
@@ -88,7 +97,7 @@ const canonicalUrl = new URL(getLocalizedPath(locale, `articles/${slug}`), site.
     {article.cover && (
       <img
         src={article.cover}
-        alt=""
+        alt={article.title}
         class="my-12 w-full max-w-content mx-auto"
         width="840"
         height="472"
@@ -121,18 +130,6 @@ const canonicalUrl = new URL(getLocalizedPath(locale, `articles/${slug}`), site.
       </nav>
     )}
   </article>
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: article.excerpt,
-    datePublished: article.publishedAt.toISOString(),
-    author: { '@type': 'Person', name: site.fullName[locale], url: site.url },
-    image: article.cover ? new URL(article.cover, site.url).href : undefined,
-    inLanguage: locale,
-    url: canonicalUrl,
-  })} />
 
   <Footer slot="footer" locale={locale} />
 </BaseLayout>

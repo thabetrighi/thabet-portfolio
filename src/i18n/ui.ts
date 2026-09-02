@@ -83,6 +83,10 @@ export const ui = {
       homeTitle: 'ثابت — مهندس برمجيات',
       homeDescription:
         'مهندس برمجيات يبني منتجات ويب موثوقة وأنظمة رقمية. مشاريع، مقالات، وسيرة ذاتية.',
+      aboutDescription: 'نبذة عن ثابت — خبرات، مهارات، ومبادئ العمل في هندسة البرمجيات.',
+      workDescription: 'مشاريع مختارة: SaaS، أنظمة ويب، وبنية تحتية على Cloudflare.',
+      articlesDescription: 'مقالات تقنية عن Laravel، Cloudflare، الأداء، وهندسة الأنظمة.',
+      resumeDescription: 'السيرة الذاتية، التعليم، الشهادات، واللغات.',
     },
     notFound: {
       title: 'الصفحة غير موجودة',
@@ -195,6 +199,10 @@ export const ui = {
       homeTitle: 'Thabet — Software Engineer',
       homeDescription:
         'Software engineer building reliable web products and digital systems. Projects, articles, and resume.',
+      aboutDescription: 'About Thabet — experience, skills, and engineering principles.',
+      workDescription: 'Selected projects: SaaS platforms, web systems, and Cloudflare infrastructure.',
+      articlesDescription: 'Technical articles on Laravel, Cloudflare, performance, and system design.',
+      resumeDescription: 'Resume, education, certifications, and languages.',
     },
     notFound: {
       title: 'Page not found',
@@ -307,6 +315,10 @@ export const ui = {
       homeTitle: 'Thabet — Ingénieur logiciel',
       homeDescription:
         'Ingénieur logiciel qui conçoit des produits web fiables et des systèmes numériques. Projets, articles et CV.',
+      aboutDescription: 'À propos de Thabet — expérience, compétences et principes d\'ingénierie.',
+      workDescription: 'Projets sélectionnés : SaaS, systèmes web et infrastructure Cloudflare.',
+      articlesDescription: 'Articles techniques sur Laravel, Cloudflare, performance et architecture.',
+      resumeDescription: 'CV, formation, certifications et langues.',
     },
     notFound: {
       title: 'Page introuvable',

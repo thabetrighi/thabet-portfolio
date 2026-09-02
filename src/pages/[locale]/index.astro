@@ -16,6 +16,12 @@ import { useTranslations } from '../../i18n/ui';
 import { getProjectCollection, getArticleCollection } from '../../lib/content';
 import { getCollection } from 'astro:content';
 import type { Locale } from '../../i18n/config';
+import {
+  buildLocalizedCanonical,
+  buildPersonSchema,
+  buildWebSiteSchema,
+  staticPageAlternates,
+} from '../../lib/seo';
 
 export const prerender = true;
 
@@ -51,12 +57,20 @@ const articles = (await getCollection(articleCollection))
     publishedAt: a.data.publishedAt,
     readingTime: a.data.readingTime,
   }));
+const hreflangAlternates = staticPageAlternates();
+const structuredData = [
+  buildPersonSchema(locale),
+  buildWebSiteSchema(locale, t.meta.homeDescription),
+];
 ---
 
 <BaseLayout
   title={t.meta.homeTitle}
   description={t.meta.homeDescription}
   locale={locale}
+  canonical={buildLocalizedCanonical(locale)}
+  hreflangAlternates={hreflangAlternates}
+  structuredData={structuredData}
 >
   <Header slot="header" locale={locale} currentPath="" />
   <Hero locale={locale} />
