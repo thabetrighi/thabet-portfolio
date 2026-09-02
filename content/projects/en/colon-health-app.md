@@ -12,7 +12,7 @@ technologies:
   - "Data Tracking"
   - "Android Experience"
 cover: /images/projects/placeholder.svg
-order: 3
+order: 10
 featured: true
 translationOf: colon-health-app
 ---

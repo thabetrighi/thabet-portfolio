@@ -12,7 +12,7 @@ technologies:
   - "Admin Dashboards"
   - "External Integrations"
 cover: /images/projects/placeholder.svg
-order: 1
+order: 8
 featured: true
 translationOf: parcel-distribution
 ---

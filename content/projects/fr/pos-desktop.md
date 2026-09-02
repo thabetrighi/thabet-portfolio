@@ -12,7 +12,7 @@ technologies:
   - "Gestion stock"
   - "UX stable"
 cover: /images/projects/placeholder.svg
-order: 2
+order: 9
 featured: true
 translationOf: pos-desktop
 ---

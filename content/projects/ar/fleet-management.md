@@ -12,7 +12,7 @@ technologies:
   - "تقارير الاستغلال"
   - "إدارة ويب"
 cover: /images/projects/placeholder.svg
-order: 5
+order: 12
 featured: true
 translationOf: fleet-management
 ---

@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 /**
- * Generates localized freelancer portfolio case studies (no company names, generic categories only).
+ * Generates localized portfolio case studies (enterprise + freelance).
+ * No company names, generic scope labels only — no technical stack names.
  */
 import { writeFileSync, mkdirSync, unlinkSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { enterpriseProjects } from './project-data-enterprise.mjs';
 
 const locales = ['en', 'ar', 'fr'];
 const base = '/workspace/content/projects';
 
-const projects = [
+const freelancerProjects = [
   {
     slug: 'parcel-distribution',
-    order: 1,
+    order: 8,
     categories: {
       en: ['Integrated Web System', 'Logistics Operations', 'Real-time Tracking', 'Admin Dashboards', 'External Integrations'],
       ar: ['نظام ويب متكامل', 'عمليات لوجستية', 'تتبع لحظي', 'لوحات إدارة', 'تكاملات خارجية'],
@@ -92,7 +94,7 @@ Conçu pour la pression opérationnelle réelle : volume élevé, multiples tran
   },
   {
     slug: 'pos-desktop',
-    order: 2,
+    order: 9,
     categories: {
       en: ['Desktop Application', 'Retail Operations', 'Fast Checkout', 'Inventory Interaction', 'Offline-capable UX'],
       ar: ['تطبيق سطح مكتب', 'عمليات التجزئة', 'دفع سريع', 'تفاعل المخزون', 'تجربة مستقرة'],
@@ -166,7 +168,7 @@ Pensé pour le rythme d\'un magasin chargé : recherche rapide, minimum de clics
   },
   {
     slug: 'colon-health-app',
-    order: 3,
+    order: 10,
     categories: {
       en: ['Mobile Application', 'Health & Wellness', 'Guided User Journeys', 'Data Tracking', 'Android Experience'],
       ar: ['تطبيق جوال', 'الصحة والعافية', 'مسارات إرشادية', 'تتبع البيانات', 'تجربة أندرويد'],
@@ -240,7 +242,7 @@ Chaque écran répond à une question simple : que faire ensuite ?
   },
   {
     slug: 'vtc-rental',
-    order: 4,
+    order: 11,
     categories: {
       en: ['Web Platform', 'Booking & Reservations', 'Pricing Automation', 'Customer Management', 'Operations Dashboard'],
       ar: ['منصة ويب', 'حجز ومواعيد', 'تسعير آلي', 'إدارة العملاء', 'لوحة تشغيل'],
@@ -314,7 +316,7 @@ Workflows structurés de la demande client à la facturation finale.
   },
   {
     slug: 'fleet-management',
-    order: 5,
+    order: 12,
     categories: {
       en: ['Fleet Operations', 'Asset Management', 'Maintenance Tracking', 'Utilization Reports', 'Web Administration'],
       ar: ['عمليات الأسطول', 'إدارة الأصول', 'تتبع الصيانة', 'تقارير الاستغلال', 'إدارة ويب'],
@@ -388,7 +390,7 @@ La gestion de flotte est une discipline opérationnelle, pas un tableur.
   },
   {
     slug: 'transport-management',
-    order: 6,
+    order: 13,
     categories: {
       en: ['Transport Operations', 'Dispatch Coordination', 'Route Planning', 'Driver Management', 'Live Operations'],
       ar: ['عمليات النقل', 'تنسيق الإرسال', 'تخطيط المسارات', 'إدارة السائقين', 'تشغيل لحظي'],
@@ -462,6 +464,11 @@ Conçu pour le rythme de la coordination live, pas les rapports de fin de journ�
   },
 ];
 
+const projects = [
+  ...enterpriseProjects.map((p, i) => ({ ...p, order: i + 1 })),
+  ...freelancerProjects,
+];
+
 function renderProject(locale, project) {
   const data = project[locale];
   const categories = project.categories[locale];
@@ -496,4 +503,4 @@ for (const locale of locales) {
   }
 }
 
-console.log(`Generated ${projects.length * locales.length} freelancer portfolio files.`);
+console.log(`Generated ${projects.length * locales.length} portfolio files (${enterpriseProjects.length} enterprise + ${freelancerProjects.length} freelance).`);

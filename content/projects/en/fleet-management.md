@@ -12,7 +12,7 @@ technologies:
   - "Utilization Reports"
   - "Web Administration"
 cover: /images/projects/placeholder.svg
-order: 5
+order: 12
 featured: true
 translationOf: fleet-management
 ---

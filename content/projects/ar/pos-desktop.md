@@ -12,7 +12,7 @@ technologies:
   - "تفاعل المخزون"
   - "تجربة مستقرة"
 cover: /images/projects/placeholder.svg
-order: 2
+order: 9
 featured: true
 translationOf: pos-desktop
 ---

@@ -90,7 +90,7 @@ export const ui = {
       homeDescription:
         'ثابت ريغي — مهندس Laravel أول يبني منصات SaaS وواجهات REST API وأنظمة مؤسسية. مشاريع، مقالات، وسيرة ذاتية.',
       aboutDescription: 'نبذة عن ثابت ريغي — خبرة في Laravel وVue.js، منصات مؤسسية، وتكاملات SAP والدفع وSMS.',
-      workDescription: 'أعمال مستقلة مختارة: لوجستيات، تجزئة، صحة، ونقل — بشرح تفصيلي دون الكشف عن بيانات العملاء.',
+      workDescription: 'أعمال منجزة: منصات مؤسسية (فعاليات، تعليم، منح…) ومشاريع مستقلة — دراسات حالة تفصيلية دون ذكر تقنيات أو عملاء.',
       articlesDescription: 'مقالات تقنية عن Laravel، Vue.js، الأداء، التكاملات، وهندسة الأنظمة.',
       resumeDescription: 'السيرة الذاتية، التعليم، المهارات، واللغات.',
     },
@@ -100,7 +100,7 @@ export const ui = {
     },
     stats: {
       years: { value: '5+', label: 'سنوات خبرة' },
-      projects: { value: '6', label: 'أعمال مستقلة' },
+      projects: { value: '13', label: 'مشروعًا منجزًا' },
       clients: { value: '8+', label: 'مجالات أعمال' },
       integrations: { value: '15+', label: 'تكامل خارجي' },
     },
@@ -212,7 +212,7 @@ export const ui = {
       homeDescription:
         'Thabet Righi — Senior Laravel Engineer building SaaS platforms, REST APIs, and enterprise systems. Projects, articles, and resume.',
       aboutDescription: 'About Thabet Righi — Laravel & Vue.js experience, enterprise platforms, and SAP, payment & SMS integrations.',
-      workDescription: 'Selected independent work: logistics, retail, health, and transport — detailed case studies without client disclosure.',
+      workDescription: 'Delivered work: enterprise platforms (events, e-learning, grants…) and independent projects — detailed case studies without tech stack or client names.',
       articlesDescription: 'Technical articles on Laravel, Vue.js, performance, integrations, and system design.',
       resumeDescription: 'Resume, education, skills, and languages.',
     },
@@ -222,7 +222,7 @@ export const ui = {
     },
     stats: {
       years: { value: '5+', label: 'Years experience' },
-      projects: { value: '6', label: 'Independent projects' },
+      projects: { value: '13', label: 'Projects delivered' },
       clients: { value: '8+', label: 'Business domains' },
       integrations: { value: '15+', label: 'External integrations' },
     },
@@ -334,7 +334,7 @@ export const ui = {
       homeDescription:
         'Thabet Righi — Ingénieur Laravel Senior qui conçoit des plateformes SaaS, des API REST et des systèmes d\'entreprise. Projets, articles et CV.',
       aboutDescription: 'À propos de Thabet Righi — expérience Laravel & Vue.js, plateformes d\'entreprise, intégrations SAP, paiement et SMS.',
-      workDescription: 'Projets indépendants sélectionnés : logistique, retail, santé et transport — études de cas détaillées et confidentielles.',
+      workDescription: 'Projets livrés : plateformes d\'entreprise et projets indépendants — études de cas détaillées sans technologies ni clients.',
       articlesDescription: 'Articles techniques sur Laravel, Vue.js, performance, intégrations et architecture.',
       resumeDescription: 'CV, formation, compétences et langues.',
     },
@@ -344,7 +344,7 @@ export const ui = {
     },
     stats: {
       years: { value: '5+', label: 'Ans d\'expérience' },
-      projects: { value: '6', label: 'Projets indépendants' },
+      projects: { value: '13', label: 'Projets livrés' },
       clients: { value: '8+', label: 'Domaines métier' },
       integrations: { value: '15+', label: 'Intégrations externes' },
     },

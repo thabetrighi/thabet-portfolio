@@ -12,7 +12,7 @@ technologies:
   - "Gestion clients"
   - "Tableau opérationnel"
 cover: /images/projects/placeholder.svg
-order: 4
+order: 11
 featured: true
 translationOf: vtc-rental
 ---

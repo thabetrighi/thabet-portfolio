@@ -12,7 +12,7 @@ technologies:
   - "إدارة العملاء"
   - "لوحة تشغيل"
 cover: /images/projects/placeholder.svg
-order: 4
+order: 11
 featured: true
 translationOf: vtc-rental
 ---
