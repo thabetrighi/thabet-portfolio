@@ -1,12 +1,12 @@
 {
   "name": "thabet-portfolio",
   "user": "ubuntu",
-  "install": "npm ci\nbash scripts/warm-dev-cache.sh",
+  "install": "npm ci",
   "terminals": [
     {
       "name": "astro-dev",
-      "command": "until npx astro dev --port 4891 --host; do echo 'astro dev exited (likely cold Vite cache); restarting in 2s'; sleep 2; done",
-      "description": "Astro dev server for the portfolio at http://localhost:4891. Auto-restarts if the Vite dep-optimizer reload crashes on a cold cache."
+      "command": "until npx astro dev --port 4891 --host; do echo 'astro dev exited; restarting in 2s'; sleep 2; done",
+      "description": "Astro dev server for the portfolio at http://localhost:4891. On a cold Vite cache the Astro + @astrojs/cloudflare dev server re-optimizes SSR deps and can crash on the first boot; this loop auto-restarts until it converges (~15-30s) and then stays stable."
     }
   ],
   "ports": [
