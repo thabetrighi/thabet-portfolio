@@ -1,0 +1,18 @@
+{
+  "name": "thabet-portfolio",
+  "user": "ubuntu",
+  "install": "npm ci",
+  "terminals": [
+    {
+      "name": "astro-dev",
+      "command": "npx astro dev --port 4891 --host",
+      "description": "Astro dev server for the portfolio (http://localhost:4891)."
+    }
+  ],
+  "ports": [
+    {
+      "name": "astro-dev",
+      "port": 4891
+    }
+  ]
+}
