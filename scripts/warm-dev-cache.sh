@@ -24,7 +24,13 @@ fi
 
 # Run the resilient dev-server loop in its own process group so we can tear
 # down astro and its workerd children together when the cache is warm.
-setsid bash -c "until npx astro dev --port ${PORT} >/tmp/warm-dev-cache.log 2>&1; do sleep 1; done" &
+#
+# NOTE: the flags here must match the dev-server terminal command in
+# .cursor/environment.json exactly (including --host). Vite derives its
+# optimized-deps cache key from the resolved config, and --host changes that
+# key, so warming without --host would leave the cache invalid for a boot that
+# uses --host and trigger a re-optimization crash on first start.
+setsid bash -c "until npx astro dev --port ${PORT} --host >/tmp/warm-dev-cache.log 2>&1; do sleep 1; done" &
 loop_pid=$!
 
 stable=0
